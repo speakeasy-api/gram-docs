@@ -103,6 +103,26 @@
     }
   }
 
+  site-search {
+    & > button {
+      border-color: var(--color-neutral-300);
+
+      &:hover {
+        border-color: var(--color-neutral-400);
+      }
+    }
+
+    &:where([data-theme='dark'], [data-theme='dark'] *) {
+      & > button {
+        border-color: var(--color-neutral-700);
+  
+        &:hover {
+          border-color: var(--color-neutral-600);
+        }
+      }
+    }
+  }
+
   .sidebar { /* global sidebar styles */
     details {
       & > summary > .group-label > .large {
