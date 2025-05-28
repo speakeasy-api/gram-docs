@@ -55,6 +55,15 @@
 }
 
 @layer theme {
+  :root {
+    --sl-color-bg-sidebar: var(--color-neutral-100);
+    --sl-color-hairline-shade: var(--color-neutral-300);
+    &[data-theme='dark'], &:where([data-theme='dark'], [data-theme='dark'] *) {
+      --sl-color-bg-sidebar: var(--color-neutral-900);
+      --sl-color-hairline-shade: var(--color-neutral-700);
+    }
+  }
+
   body {
     @apply bg-neutral-100 dark:bg-neutral-900;
   }
