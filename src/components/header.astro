@@ -1,0 +1,54 @@
+---
+import config from "virtual:starlight/user-config";
+
+import LanguageSelect from "@astrojs/starlight/components/LanguageSelect.astro";
+import Search from "@astrojs/starlight/components/Search.astro";
+import SiteTitle from "@astrojs/starlight/components/SiteTitle.astro";
+import SocialIcons from "@astrojs/starlight/components/SocialIcons.astro";
+import ThemeSelect from "@astrojs/starlight/components/ThemeSelect.astro";
+import { LinkButton } from "@astrojs/starlight/components";
+
+/**
+ * Render the `Search` component if Pagefind is enabled or the default search component has been overridden.
+ */
+const shouldRenderSearch =
+  config.pagefind ||
+  config.components.Search !== "@astrojs/starlight/components/Search.astro";
+const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
+---
+
+<div
+  class="flex h-full items-center justify-between gap-4 text-xl md:grid md:grid-cols-[1fr_1fr_1fr] md:content-center"
+>
+  <div>
+    <a
+      href={siteTitleHref}
+      class="font-serif font-light text-content lowercase no-underline md:text-2xl"
+      >{siteTitle}</a
+    >
+  </div>
+  <div class="flex print:hidden">
+    {shouldRenderSearch && <Search />}
+  </div>
+  <div
+    class="hidden items-center gap-4 md:flex md:justify-self-end print:hidden"
+  >
+    <div
+      class="after:height-[2rem] flex gap-4 after:border-e after:border-e-neutral-300 after:content-[''] after:dark:border-e-neutral-700"
+    >
+      <LinkButton
+        class="p-0"
+        href="https://app.getgram.ai"
+        variant="minimal"
+        icon="external">Go to app</LinkButton
+      >
+    </div>
+    <div
+      class="after:height-[2rem] flex gap-4 after:border-e after:border-e-neutral-300 after:content-[''] after:dark:border-e-neutral-700"
+    >
+      <SocialIcons />
+    </div>
+    <ThemeSelect />
+    <LanguageSelect />
+  </div>
+</div>

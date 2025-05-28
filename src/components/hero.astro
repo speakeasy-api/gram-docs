@@ -15,10 +15,13 @@ const imageAttrs = {
 
 let darkImage: ImageMetadata | undefined;
 let lightImage: ImageMetadata | undefined;
+let darkInvert = false;
 let rawHtml: string | undefined;
 if (image) {
   if ("file" in image) {
     darkImage = image.file;
+    lightImage = image.file;
+    darkInvert = true;
   } else if ("dark" in image) {
     darkImage = image.dark;
     lightImage = image.light;
@@ -36,7 +39,11 @@ if (image) {
       <Image
         src={darkImage}
         {...imageAttrs}
-        class:list={["lg:order-2", !!lightImage && "hidden dark:block"]}
+        class:list={[
+          "lg:order-2",
+          !!lightImage && "hidden dark:block",
+          darkInvert && "invert",
+        ]}
       />
     )
   }

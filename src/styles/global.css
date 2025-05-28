@@ -9,6 +9,10 @@
   --font-sans: "Diatype", ui-serif, sans-serif;
   --font-mono: "Diatype Mono", ui-monospace, monospace;
 
+  --breakpoint-md: 50rem;
+
+  --color-content: var(--text-foreground);
+
   --color-neutral-50: #f0f0f0;
   --color-neutral-100: #fafafa;
   --color-neutral-200: #ebebeb;
@@ -90,7 +94,45 @@
     }
   }
 
-  .site-title {
-    @apply font-serif font-light text-neutral-950 lowercase dark:text-neutral-50;
+  .sidebar { /* global sidebar styles */
+    details {
+      & > summary > .group-label > .large {
+        @apply font-mono font-normal text-sm text-neutral-500 dark:text-neutral-400 uppercase;
+      }
+  
+      & > summary > .caret {
+        @apply text-neutral-500 dark:text-neutral-400;
+      }
+  
+      & > ul > li {
+        @apply border-0;
+      }
+  
+      & > ul > li > a {
+        @apply text-base;
+      }
+  
+      & > ul > li > [aria-current=page] {
+        @apply bg-[unset] text-[unset];
+      }
+    }
+  }
+}
+
+@layer utilities {
+  :root {
+    --text-foreground: var(--color-neutral-700);
+
+    &[data-theme='light'], &:where([data-theme='light'], [data-theme='light'] *) {
+      --text-foreground: var(--color-neutral-700);
+      --sl-color-text: var(--text-foreground);
+      --sl-color-white: var(--text-foreground);
+    }
+
+    &[data-theme='dark'], &:where([data-theme='dark'], [data-theme='dark'] *) {
+      --text-foreground: var(--color-neutral-300);
+      --sl-color-text: var(--text-foreground);
+      --sl-color-white: var(--text-foreground);
+    }
   }
 }
