@@ -17,6 +17,29 @@ export default defineConfig({
     starlight({
       title: "Gram",
       tagline: "Ship powerful integrations for agents and LLMs ",
+      favicon: "/favicon.png",
+      head: [
+        {
+          tag: "link",
+          attrs: {
+            rel: "icon",
+            href: "/favicon.ico",
+            type: "image/x-icon",
+            sizes: "256x256",
+          },
+        },
+        {
+          tag: "link",
+          attrs: {
+            rel: "icon",
+            href: "/favicon-dark.ico",
+            media: "(prefers-color-scheme: dark)",
+            type: "image/x-icon",
+            sizes: "256x256",
+          },
+        },
+      ],
+
       social: [
         {
           icon: "github",
