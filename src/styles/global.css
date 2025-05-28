@@ -58,10 +58,10 @@
   :root {
     --sl-color-bg-sidebar: var(--color-neutral-100);
     --sl-color-hairline-shade: var(--color-neutral-300);
-    &[data-theme='dark'], &:where([data-theme='dark'], [data-theme='dark'] *) {
-      --sl-color-bg-sidebar: var(--color-neutral-900);
-      --sl-color-hairline-shade: var(--color-neutral-700);
-    }
+  }
+  :root:where([data-theme='dark'], [data-theme='dark'] *) {
+    --sl-color-bg-sidebar: var(--color-neutral-900);
+    --sl-color-hairline-shade: var(--color-neutral-700);
   }
 
   body {
@@ -151,17 +151,17 @@
 @layer utilities {
   :root {
     --text-foreground: var(--color-neutral-700);
-
-    &[data-theme='light'], &:where([data-theme='light'], [data-theme='light'] *) {
-      --text-foreground: var(--color-neutral-700);
-      --sl-color-text: var(--text-foreground);
-      --sl-color-white: var(--text-foreground);
-    }
-
-    &[data-theme='dark'], &:where([data-theme='dark'], [data-theme='dark'] *) {
-      --text-foreground: var(--color-neutral-300);
-      --sl-color-text: var(--text-foreground);
-      --sl-color-white: var(--text-foreground);
-    }
   }
+
+  :root:where([data-theme='light'], [data-theme='light'] *) {
+    --text-foreground: var(--color-neutral-700);
+    --sl-color-text: var(--text-foreground);
+    --sl-color-white: var(--text-foreground);
+  }
+
+  :root:where([data-theme='dark'], [data-theme='dark'] *) {
+    --text-foreground: var(--color-neutral-300);
+    --sl-color-text: var(--text-foreground);
+    --sl-color-white: var(--text-foreground);
+}
 }
