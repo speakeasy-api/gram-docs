@@ -1,4 +1,5 @@
 {
+  "tailwindCSS.classAttributes": ["class", "className", "class:list"],
   "debug.javascript.defaultRuntimeExecutable": {
     "pwa-node": "/home/disintegrator/.local/share/mise/shims/node"
   },

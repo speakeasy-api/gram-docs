@@ -17,7 +17,7 @@ export default defineConfig({
   },
   integrations: [
     starlight({
-      title: "Gram Docs",
+      title: "Gram",
       social: [
         {
           icon: "github",
@@ -25,10 +25,13 @@ export default defineConfig({
           href: "https://github.com/speakeasy-api/gram",
         },
       ],
-      logo: {
-        light: "./src/assets/logo-light.png",
-        dark: "./src/assets/logo-dark.png",
+      components: {
+        Hero: "./src/components/hero.astro",
       },
+      // logo: {
+      //   light: "./src/assets/logo-light.png",
+      //   dark: "./src/assets/logo-dark.png",
+      // },
       editLink: {
         baseUrl: "https://github.com/speakeasy-api/gram/edit/main/docs/",
       },
