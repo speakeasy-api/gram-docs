@@ -1,11 +1,12 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
-
 import tailwindcss from "@tailwindcss/vite";
+import vercel from "@astrojs/vercel";
 
 // https://astro.build/config
 export default defineConfig({
+  adapter: vercel(),
   site: import.meta.env.VITE_SITE,
   vite: {
     server: {
@@ -13,6 +14,7 @@ export default defineConfig({
     },
     plugins: [tailwindcss()],
   },
+
   integrations: [
     starlight({
       routeMiddleware: ["./src/route-data.ts"],
