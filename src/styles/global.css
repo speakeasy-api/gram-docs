@@ -24,6 +24,28 @@
   --color-neutral-800: #232323;
   --color-neutral-900: #111111;
   --color-neutral-950: #010101;
+
+  --color-blue-50: #9bc3ff;
+  --color-blue-100: #9bc3ff;
+  --color-blue-200: #7eaff5;
+  --color-blue-300: #629beb;
+  --color-blue-400: #4587e1;
+  --color-blue-500: #2873d7;
+  --color-blue-600: #1e5bb0;
+  --color-blue-700: #144489;
+  --color-blue-800: #0a2c63;
+  --color-blue-900: #00143c;
+  --color-blue-950: #00143c;
+
+  --color-info-100: #e3f0ff;
+  --color-info-200: #b9d8ff;
+  --color-info-300: #8abdff;
+  --color-info-400: #5ea0f6;
+  --color-info-500: #2873d7;
+  --color-info-600: #1f5cb0;
+  --color-info-700: #17468a;
+  --color-info-800: #103165;
+  --color-info-900: #0a1e40;
 }
 
 @theme inline {
@@ -144,6 +166,20 @@
       & > ul > li > [aria-current=page] {
         @apply bg-[unset] text-[unset];
       }
+    }
+  }
+
+  .starlight-aside--tip {
+    --sl-color-asides-text-accent: var(--color-info-500);
+    --sl-color-asides-border: var(--color-info-400);
+    background-color: var(--color-info-100);
+  }
+
+  &:where([data-theme='dark'], [data-theme='dark'] *) {
+    .starlight-aside--tip {
+      --sl-color-asides-text-accent: var(--color-info-100);
+      --sl-color-asides-border: var(--color-info-400);
+      background-color: var(--color-info-500);
     }
   }
 }

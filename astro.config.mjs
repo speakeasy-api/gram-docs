@@ -60,12 +60,12 @@ export default defineConfig({
       customCss: ["./src/fonts/font-face.css", "./src/styles/global.css"],
       sidebar: [
         {
-          label: "Guides",
-          items: [{ label: "Example Guide", slug: "guides/example" }],
+          label: "Overview",
+          autogenerate: { directory: "overview" },
         },
         {
-          label: "Reference",
-          autogenerate: { directory: "reference" },
+          label: "Concepts",
+          autogenerate: { directory: "concepts" },
         },
       ],
     }),
