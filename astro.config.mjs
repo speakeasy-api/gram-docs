@@ -57,7 +57,7 @@ export default defineConfig({
         Pagination: "./src/components/pagination.astro",
       },
       editLink: {
-        baseUrl: "https://github.com/speakeasy-api/gram/edit/main/docs/",
+        baseUrl: "https://github.com/speakeasy-api/gram-docs/edit/main/",
       },
       customCss: ["./src/fonts/font-face.css", "./src/styles/global.css"],
       sidebar: [
