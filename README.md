@@ -1,33 +1,27 @@
-# Starlight Starter Kit: Basics
+# Gram Docs
 
 [![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
 
-```
-pnpm create astro@latest -- --template starlight
-```
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/starlight/tree/main/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/starlight/tree/main/examples/basics)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/withastro/starlight&create_from_path=examples/basics)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwithastro%2Fstarlight%2Ftree%2Fmain%2Fexamples%2Fbasics&project-name=my-starlight-docs&repository-name=my-starlight-docs)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+This repository contains the documentation for the [Gram](https://app.getgram.ai) app.
 
 ## 🚀 Project Structure
 
-Inside of your Astro + Starlight project, you'll see the following folders and files:
+Inside this Astro + Starlight project, you'll see the following folders and files:
 
 ```
 .
-├── public/
+├── public/                # Static assets that will _not_ be processed by Astro
 ├── src/
-│   ├── assets/
-│   ├── content/
-│   │   ├── docs/
-│   └── content.config.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
+│   ├── assets/            # Images that will be optimized by Astro
+│   ├── components/        # Shared components that override Starlight's default components
+│   ├── content/           # All the content for the site
+│   ├── fonts/             # Fonts used throughout the site
+│   ├── styles/global.css  # Tailwind theme configuration and startlight style overrides
+│   ├── content.config.ts  # Configuration for content collections
+│   └── route-data.ts      # Middleware for injecting metadata into site routes
+├── astro.config.mjs       # Astro configuration
+├── package.json           # Dependencies
+└── tsconfig.json          # TypeScript configuration
 ```
 
 Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
@@ -49,6 +43,6 @@ All commands are run from the root of the project, from a terminal:
 | `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `pnpm astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
+## 👀 Built with Starlight
 
 Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
