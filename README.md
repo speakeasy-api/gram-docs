@@ -16,6 +16,7 @@ Inside this Astro + Starlight project, you'll see the following folders and file
 │   ├── components/        # Shared components that override Starlight's default components
 │   ├── content/           # All the content for the site
 │   ├── fonts/             # Fonts used throughout the site
+│   ├── pages/             # Additional pages or special paths to be added to the site
 │   ├── styles/global.css  # Tailwind theme configuration and startlight style overrides
 │   ├── content.config.ts  # Configuration for content collections
 │   └── route-data.ts      # Middleware for injecting metadata into site routes
