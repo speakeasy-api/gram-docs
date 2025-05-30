@@ -3,6 +3,7 @@ import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import tailwindcss from "@tailwindcss/vite";
 import vercel from "@astrojs/vercel";
+import starlightLlmsTxt from "starlight-llms-txt";
 
 // https://astro.build/config
 export default defineConfig({
@@ -74,6 +75,7 @@ export default defineConfig({
           autogenerate: { directory: "concepts" },
         },
       ],
+      plugins: [starlightLlmsTxt()],
     }),
   ],
 });
