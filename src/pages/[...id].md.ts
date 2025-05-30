@@ -11,6 +11,12 @@ export async function getStaticPaths() {
 }
 
 export const GET: APIRoute = async function get({ params }) {
+  if (!params.id?.trim()) {
+    return new Response(null, {
+      status: 404,
+    });
+  }
+
   const entry = (await getCollection("docs")).find((e) => e.id === params.id);
   if (!entry) {
     return new Response(null, {
