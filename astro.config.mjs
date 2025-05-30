@@ -6,6 +6,9 @@ import vercel from "@astrojs/vercel";
 
 // https://astro.build/config
 export default defineConfig({
+  // We don't want trailing slashes in the generated page URLs so it's easy to
+  // tack on '.md' and get the markdown version of a page.
+  trailingSlash: "never",
   adapter: vercel(),
   site: import.meta.env.VITE_SITE,
   vite: {
@@ -52,6 +55,7 @@ export default defineConfig({
         },
       ],
       components: {
+        EditLink: "./src/components/edit-link.astro",
         Header: "./src/components/header.astro",
         Hero: "./src/components/hero.astro",
         Pagination: "./src/components/pagination.astro",
