@@ -1,5 +1,6 @@
 ---
-// Homepage component for custom landing page
+import GatewayDiagram from "./diagrams/GatewayDiagram.tsx";
+import CircuitDiagram from "./diagrams/CircuitDiagram.tsx";
 ---
 
 <div class="homepage">
@@ -17,40 +18,232 @@
     </div>
   </div>
 
-  <div class="features">
-    <h2>Next steps</h2>
-    <div class="feature-grid">
-      <div class="feature-card">
-        <h3>Update content</h3>
-        <p>
-          Edit <code>src/content/docs/index.mdx</code> to see this page change.
-        </p>
-      </div>
-      <div class="feature-card">
-        <h3>Add new content</h3>
-        <p>
-          Add Markdown or MDX files to <code>src/content/docs</code> to create new
-          pages.
-        </p>
-      </div>
-      <div class="feature-card">
-        <h3>Configure your site</h3>
-        <p>
-          Edit your <code>sidebar</code> and other config in <code
-            >astro.config.mjs</code
-          >.
-        </p>
-      </div>
-      <div class="feature-card">
-        <h3>Read the docs</h3>
-        <p>
-          Learn more in the <a href="https://starlight.astro.build/"
-            >Starlight Docs</a
-          >.
-        </p>
+  <section class="hero-section-alt mcp-section">
+    <div class="hero-content">
+      <h2>Easiest way to host MCP at scale</h2>
+      <p class="section-description">
+        Enterprise APIs require an enterprise-level experience
+      </p>
+
+      <GatewayDiagram client:load />
+
+      <div class="feature-cards">
+        <div class="feature-card">
+          <div class="audit-log-animation">
+            <div class="audit-header">
+              <span class="audit-title">🔍 Audit Log</span>
+              <span class="live-indicator">LIVE</span>
+            </div>
+            <div class="audit-entries">
+              <div class="audit-entry" data-entry="1">
+                <span class="timestamp">14:32:15</span>
+                <span class="action">MCP server started</span>
+                <span class="status">✓</span>
+              </div>
+              <div class="audit-entry" data-entry="2">
+                <span class="timestamp">14:32:18</span>
+                <span class="action">Tool request processed</span>
+                <span class="status">→</span>
+              </div>
+              <div class="audit-entry" data-entry="3">
+                <span class="timestamp">14:32:22</span>
+                <span class="action">Rate limit threshold</span>
+                <span class="status">⚠</span>
+              </div>
+              <div class="audit-entry" data-entry="4">
+                <span class="timestamp">14:32:25</span>
+                <span class="action">API response cached</span>
+                <span class="status">✓</span>
+              </div>
+              <div class="audit-entry" data-entry="5">
+                <span class="timestamp">14:32:28</span>
+                <span class="action">Health check passed</span>
+                <span class="status">✓</span>
+              </div>
+              <div class="audit-entry" data-entry="6">
+                <span class="timestamp">14:32:31</span>
+                <span class="action">New connection opened</span>
+                <span class="status">→</span>
+              </div>
+            </div>
+          </div>
+          <h4>Real-time monitoring</h4>
+          <p>
+            Track MCP performance, response times, and system health with live
+            dashboards and alerts
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="analytics-chart">
+            <div class="chart-header">
+              <span class="chart-title">📊 Performance Metrics</span>
+            </div>
+            <div class="chart-container">
+              <div class="chart-bars">
+                <div class="bar bar-1"></div>
+                <div class="bar bar-2"></div>
+                <div class="bar bar-3"></div>
+                <div class="bar bar-4"></div>
+                <div class="bar bar-5"></div>
+                <div class="bar bar-6"></div>
+              </div>
+              <div class="chart-labels">
+                <span>Mon</span>
+                <span>Tue</span>
+                <span>Wed</span>
+                <span>Thu</span>
+                <span>Fri</span>
+                <span>Sat</span>
+              </div>
+            </div>
+          </div>
+          <h4>Performance analytics</h4>
+          <p>
+            Deep insights into tool usage patterns, optimization opportunities,
+            and ROI metrics
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="deployment-animation">
+            <div class="deployment-header">
+              <span class="deployment-title">⚡ Deployment Status</span>
+            </div>
+            <div class="deployment-steps">
+              <div class="step completed">
+                <div class="step-indicator">✓</div>
+                <span class="step-text">Build successful</span>
+              </div>
+              <div class="step completed">
+                <div class="step-indicator">✓</div>
+                <span class="step-text">Tests passed</span>
+              </div>
+              <div class="step deploying">
+                <div class="step-indicator spinner">⟳</div>
+                <span class="step-text">Deploying...</span>
+              </div>
+              <div class="step pending">
+                <div class="step-indicator">○</div>
+                <span class="step-text">Go live</span>
+              </div>
+            </div>
+          </div>
+          <h4>Rapid deployment</h4>
+          <p>
+            One-click deployment with auto-scaling, load balancing, and
+            zero-downtime updates
+          </p>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
+
+  <section class="hero-section-alt llm-section">
+    <div class="hero-content">
+      <h2>Unified access to LLMs at enterprise</h2>
+      
+      <CircuitDiagram client:load />
+      
+      <div class="feature-list">
+        <div class="feature-item">🔀 Multi-provider routing</div>
+        <div class="feature-item">🔒 Enterprise controls</div>
+        <div class="feature-item">📋 Immutable audit trail</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero-section-alt api-section">
+    <div class="hero-content">
+      <h2>Curate higher order tools directly from your API</h2>
+      <p class="section-description">
+        Transform your existing APIs into intelligent tools that AI can use
+        seamlessly
+      </p>
+      <div class="feature-list">
+        <div class="feature-item">🛠️ Auto-generate tool definitions</div>
+        <div class="feature-item">🔗 Direct API integration</div>
+        <div class="feature-item">🎯 Smart parameter mapping</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero-section-alt agent-section">
+    <div class="hero-content">
+      <h2>Agent Portal</h2>
+      <p class="section-description">
+        Bring LLMs into your workflow, wherever you are. Available on Discord,
+        Slack, Teams, and custom integrations
+      </p>
+
+      <div class="slack-demo">
+        <div class="slack-header">
+          <span class="channel-name"># sales-reports</span>
+        </div>
+        <div class="slack-message user-message">
+          <div class="message-header">
+            <span class="user-name">Sarah Chen</span>
+            <span class="timestamp">2:14 PM</span>
+          </div>
+          <div class="message-content">
+            Show me a breakdown of our Q4 pipeline by deal size
+          </div>
+        </div>
+        <div class="slack-message bot-message tool-transition-message">
+          <div class="message-header">
+            <span class="bot-name">Gram</span>
+            <span class="timestamp">2:14 PM</span>
+          </div>
+          <div class="message-content">
+            <div class="tool-invocation">
+              <span class="tool-indicator">🔄</span>
+              <span class="tool-text">Invoking listDeals tool...</span>
+              <div class="tool-progress">
+                <div class="progress-bar"></div>
+              </div>
+            </div>
+            <div class="pipeline-results">
+              📊 <strong>Q4 Pipeline Breakdown</strong><br />
+              Total: $2.4M across 47 opportunities
+              <div class="bar-chart">
+                <div class="chart-header">
+                  <span class="chart-title">Deal Size Distribution</span>
+                </div>
+                <div class="chart-bars">
+                  <div class="bar-group">
+                    <div class="bar" data-value="35">
+                      <div class="bar-fill bar-large"></div>
+                    </div>
+                    <div class="bar-label">$100K+</div>
+                    <div class="bar-value">8 deals</div>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" data-value="45">
+                      <div class="bar-fill bar-medium"></div>
+                    </div>
+                    <div class="bar-label">$50-100K</div>
+                    <div class="bar-value">12 deals</div>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" data-value="60">
+                      <div class="bar-fill bar-small"></div>
+                    </div>
+                    <div class="bar-label">$25-50K</div>
+                    <div class="bar-value">15 deals</div>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" data-value="40">
+                      <div class="bar-fill bar-tiny"></div>
+                    </div>
+                    <div class="bar-label">< $25K</div>
+                    <div class="bar-value">12 deals</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
 
 <style is:global>
@@ -124,37 +317,689 @@
     background: var(--color-blue-50);
   }
 
-  .features {
-    margin-top: 4rem;
-  }
-
-  .features h2 {
-    text-align: center;
+  .hero-section-alt {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    padding: 4rem 0;
     margin-bottom: 2rem;
   }
 
-  .feature-grid {
+  .hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .hero-section-alt h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: inherit;
+  }
+
+  .section-description {
+    font-size: 1.25rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+    color: inherit;
+  }
+
+  .feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+  }
+
+  .feature-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    align-items: stretch;
   }
 
   .feature-card {
-    padding: 1.5rem;
-    border: 1px solid var(--color-neutral-300);
+    margin-top: 0;
+    padding: 2rem;
+    border-radius: 1rem;
+    text-align: center;
+    transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .feature-icon {
+    font-size: 3rem;
+    margin: 0 0 1rem 0;
+    display: block;
+  }
+
+  .feature-card h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 0.75rem 0;
+    color: inherit;
+  }
+
+  .feature-card p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: inherit;
+    opacity: 0.9;
+    margin: 0;
+  }
+
+  /* Audit Log Animation */
+  .audit-log-animation {
+    background: rgba(0, 0, 0, 0.05);
     border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    font-family: monospace;
+    font-size: 0.75rem;
+  }
+
+  .audit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .audit-title {
+    font-weight: 600;
+  }
+
+  .live-indicator {
+    background: #ef4444;
+    color: white;
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-size: 0.625rem;
+    font-weight: 600;
+    animation: pulse 2s infinite;
+  }
+
+  .audit-entries {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    height: 120px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .audit-entry {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.25rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.25rem;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    animation: logTail 12s ease-in-out infinite;
+    transform: translateY(100px);
+  }
+
+  .audit-entry[data-entry="1"] { animation-delay: 0s; }
+  .audit-entry[data-entry="2"] { animation-delay: 2s; }
+  .audit-entry[data-entry="3"] { animation-delay: 4s; }
+  .audit-entry[data-entry="4"] { animation-delay: 6s; }
+  .audit-entry[data-entry="5"] { animation-delay: 8s; }
+  .audit-entry[data-entry="6"] { animation-delay: 10s; }
+
+  .timestamp {
+    color: #6b7280;
+    font-size: 0.625rem;
+  }
+
+  .action {
+    font-size: 0.6875rem;
+  }
+
+  .status {
+    font-weight: 600;
+  }
+
+  /* Analytics Chart Animation */
+  .analytics-chart {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+
+  .chart-header {
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .chart-title {
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  .chart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .chart-bars {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    height: 80px;
+    gap: 0.25rem;
+  }
+
+  .bar {
+    background: linear-gradient(to top, #3b82f6, #60a5fa);
+    border-radius: 0.125rem 0.125rem 0 0;
+    width: 100%;
+    animation: growBar 2s ease-out forwards;
+    transform-origin: bottom;
+    transform: scaleY(0);
+  }
+
+  .bar-1 { animation-delay: 0.2s; height: 40%; }
+  .bar-2 { animation-delay: 0.4s; height: 65%; }
+  .bar-3 { animation-delay: 0.6s; height: 50%; }
+  .bar-4 { animation-delay: 0.8s; height: 80%; }
+  .bar-5 { animation-delay: 1.0s; height: 90%; }
+  .bar-6 { animation-delay: 1.2s; height: 75%; }
+
+  .chart-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.625rem;
+    color: #6b7280;
+  }
+
+  /* Deployment Animation */
+  .deployment-animation {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+
+  .deployment-header {
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .deployment-title {
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  .deployment-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+  }
+
+  .step-indicator {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .step.completed .step-indicator {
+    background: #10b981;
+    color: white;
+  }
+
+  .step.deploying .step-indicator {
+    background: #f59e0b;
+    color: white;
+  }
+
+  .step.pending .step-indicator {
+    background: #d1d5db;
+    color: #6b7280;
+  }
+
+  .spinner {
+    animation: spin 1s linear infinite;
+  }
+
+  .step.deploying {
+    animation: deploymentProgress 4s ease-in-out infinite;
+  }
+
+  /* Keyframe Animations */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  @keyframes logTail {
+    0% {
+      opacity: 0;
+      transform: translateY(100px);
+    }
+    8.33% {
+      opacity: 1;
+      transform: translateY(0);
+      border-color: rgba(34, 197, 94, 0.4);
+      box-shadow: 0 1px 3px rgba(34, 197, 94, 0.2);
+    }
+    16.66% {
+      border-color: rgba(0, 0, 0, 0.1);
+      box-shadow: none;
+    }
+    83.33% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes growBar {
+    from {
+      transform: scaleY(0);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes deploymentProgress {
+    0%, 100% {
+      background: rgba(245, 158, 11, 0.1);
+    }
+    50% {
+      background: rgba(245, 158, 11, 0.2);
+    }
+  }
+
+  @keyframes progressFill {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  @keyframes barGrow {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--target-height, 100%);
+    }
+  }
+
+  @keyframes toolInvocationFlow {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    60% {
+      opacity: 0.5;
+      transform: translateY(-5px);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-10px);
+      height: 0;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  @keyframes pipelineResultsReveal {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Tool Invocation Animation */
+  .tool-invocation {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 0.5rem;
+    margin: 0.5rem 0;
+    opacity: 1;
+    animation: toolInvocationFlow 5s ease-in-out forwards;
+  }
+
+  .tool-indicator {
+    animation: spin 1s linear infinite;
+  }
+
+  .tool-text {
+    font-style: italic;
+    color: #1264a3;
+    font-size: 0.8rem;
+  }
+
+  .tool-progress {
+    flex: 1;
+    height: 4px;
+    background: rgba(59, 130, 246, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: #3b82f6;
+    width: 0;
+    animation: progressFill 2s ease-out forwards;
+    animation-delay: 0.5s;
+  }
+
+  /* Pipeline Results Transition */
+  .pipeline-results {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: pipelineResultsReveal 2s ease-out forwards;
+    animation-delay: 3s;
+  }
+
+  /* Bar Chart Styling */
+  .bar-chart {
+    margin-top: 0.75rem;
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+  }
+
+  .bar-chart .chart-header {
+    margin-bottom: 0.75rem;
+    text-align: center;
+  }
+
+  .bar-chart .chart-title {
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #1d1c1d;
+  }
+
+  .bar-chart .chart-bars {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 0.5rem;
+    height: 120px;
+  }
+
+  .bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    gap: 0.25rem;
+  }
+
+  .bar-group .bar {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #f3f4f6;
+    border-radius: 0.25rem;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    width: 100%;
+    border-radius: 0.25rem;
+    animation: barGrow 1.5s ease-out forwards;
+    height: 0;
+    position: absolute;
+    bottom: 0;
+  }
+
+  .bar-large .bar-fill {
+    height: 35%;
+    background: linear-gradient(to top, #dc2626, #ef4444);
+    animation-delay: 3.5s;
+  }
+
+  .bar-medium .bar-fill {
+    height: 45%;
+    background: linear-gradient(to top, #ea580c, #f97316);
+    animation-delay: 3.7s;
+  }
+
+  .bar-small .bar-fill {
+    height: 60%;
+    background: linear-gradient(to top, #059669, #10b981);
+    animation-delay: 3.9s;
+  }
+
+  .bar-tiny .bar-fill {
+    height: 40%;
+    background: linear-gradient(to top, #2563eb, #3b82f6);
+    animation-delay: 4.1s;
+  }
+
+  .bar-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: #4b5563;
+    text-align: center;
+  }
+
+  .bar-value {
+    font-size: 0.6rem;
+    color: #6b7280;
+    text-align: center;
+  }
+
+
+  .mcp-section .feature-item,
+  .api-section .feature-item {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .llm-section .feature-item,
+  .agent-section .feature-item {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .mcp-section .feature-card,
+  .api-section .feature-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+  }
+
+  .llm-section .feature-card,
+  .agent-section .feature-card {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .mcp-section {
+    background: #000000;
+    color: white;
+  }
+
+  .llm-section {
+    background: #ffffff;
+    color: black;
+  }
+
+  .api-section {
+    background: #000000;
+    color: white;
+  }
+
+  .agent-section {
+    background: #ffffff;
+    color: black;
+  }
+
+  .slack-demo {
+    background: #f8f9fa;
+    border: 1px solid #e1e8ed;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    margin: 2rem auto 0;
+    max-width: 500px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .slack-header {
+    background: #4a154b;
+    color: white;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  .channel-name {
+    color: #e1e8ed;
+  }
+
+  .slack-message {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e1e8ed;
+  }
+
+  .slack-message:last-child {
+    border-bottom: none;
+  }
+
+  .message-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .bot-name {
+    font-weight: 600;
+    color: #1264a3;
+    font-size: 0.875rem;
+  }
+
+  .user-name {
+    font-weight: 600;
+    color: #1d1c1d;
+    font-size: 0.875rem;
+  }
+
+  .timestamp {
+    font-size: 0.75rem;
+    color: #616061;
+  }
+
+  .message-content {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: #1d1c1d;
+  }
+
+  .bot-message {
+    background: #f8f9fa;
+  }
+
+  .user-message {
     background: white;
   }
 
-  .feature-card h3 {
-    margin-bottom: 0.5rem;
+  .pie-chart {
+    position: relative;
+    display: inline-block;
+    margin-top: 0.5rem;
   }
 
-  .feature-card code {
-    background: var(--color-neutral-100);
-    padding: 0.2rem 0.4rem;
-    border-radius: 0.25rem;
-    font-size: 0.875rem;
+  .chart-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: #3b82f6;
   }
 
   :root:where([data-theme="dark"], [data-theme="dark"] *) {
@@ -162,13 +1007,70 @@
       color: var(--color-neutral-400);
     }
 
-    .feature-card {
+    .mcp-section {
+      background: #ffffff;
+      color: black;
+    }
+
+    .llm-section {
+      background: #000000;
+      color: white;
+    }
+
+    .api-section {
+      background: #ffffff;
+      color: black;
+    }
+
+    .agent-section {
+      background: #000000;
+      color: white;
+    }
+
+    .mcp-section .feature-item,
+    .api-section .feature-item {
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .llm-section .feature-item,
+    .agent-section .feature-item {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .mcp-section .feature-card,
+    .api-section .feature-card {
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .llm-section .feature-card,
+    .agent-section .feature-card {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .slack-demo {
       background: var(--color-neutral-800);
       border-color: var(--color-neutral-700);
     }
 
-    .feature-card code {
+    .bot-message {
       background: var(--color-neutral-700);
+    }
+
+    .user-message {
+      background: var(--color-neutral-800);
+    }
+
+    .message-content {
+      color: var(--color-neutral-200);
+    }
+
+    .user-name {
+      color: var(--color-neutral-200);
     }
   }
 </style>
