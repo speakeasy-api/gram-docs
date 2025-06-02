@@ -113,8 +113,8 @@ const paths = {
       opacity="0.8"
     >
       <animate
-        attributeName="strokeDasharray"
-        values={`0,${gateway.x - apps.x - apps.width};${(gateway.x - apps.x - apps.width) / 2},${(gateway.x - apps.x - apps.width) / 2};${gateway.x - apps.x - apps.width},0;0,${gateway.x - apps.x - apps.width}`}
+        attributeName="stroke-dasharray"
+        values="0,200;100,100;200,0;0,200"
         dur="3s"
         repeatCount="indefinite"></animate>
     </path>
@@ -131,19 +131,12 @@ const paths = {
           opacity="0.8"
         >
           <animate
-            attributeName="strokeDasharray"
-            values={(() => {
-              const totalLength =
-                path.mid1.x -
-                path.start.x +
-                Math.abs(path.mid2.y - path.mid1.y) +
-                (path.end.x - path.mid2.x);
-              return `0,${totalLength};${totalLength / 2},${totalLength / 2};${totalLength},0;0,${totalLength}`;
-            })()}
+            attributeName="stroke-dasharray"
+            values="0,300;150,150;300,0;0,300"
             dur="4s"
             begin={`${i * 0.5}s`}
             repeatCount="indefinite"
-          ></animate>
+          />
         </path>
       ))
     }
