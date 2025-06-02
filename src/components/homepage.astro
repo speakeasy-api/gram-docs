@@ -4,6 +4,7 @@ import CircuitDiagram from "./diagrams/CircuitDiagram.astro";
 import ServiceDiscovery from "./diagrams/ServiceDiscovery.astro";
 import EnterpriseControls from "./diagrams/EnterpriseControls.astro";
 import AgentPortal from "./diagrams/AgentPortal.astro";
+import ApiToolsDiagram from "./diagrams/ApiToolsDiagram.astro";
 ---
 
 <div class="homepage">
@@ -140,6 +141,24 @@ import AgentPortal from "./diagrams/AgentPortal.astro";
     </div>
   </section>
 
+  <section class="hero-section-alt api-section">
+    <div class="hero-content">
+      <h2>Curate higher order tools directly from your API</h2>
+      <p class="section-description">
+        Transform your existing APIs into intelligent tools that AI can use
+        seamlessly
+      </p>
+
+      <ApiToolsDiagram />
+
+      <div class="feature-list">
+        <div class="feature-item">🛠️ Auto-generate tool definitions</div>
+        <div class="feature-item">🔗 Direct API integration</div>
+        <div class="feature-item">🎯 Smart parameter mapping</div>
+      </div>
+    </div>
+  </section>
+
   <section class="hero-section-alt llm-section">
     <div class="hero-content">
       <h2>Unified access to LLMs at enterprise</h2>
@@ -200,21 +219,6 @@ import AgentPortal from "./diagrams/AgentPortal.astro";
         <div class="circuit-diagram-container">
           <EnterpriseControls />
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="hero-section-alt api-section">
-    <div class="hero-content">
-      <h2>Curate higher order tools directly from your API</h2>
-      <p class="section-description">
-        Transform your existing APIs into intelligent tools that AI can use
-        seamlessly
-      </p>
-      <div class="feature-list">
-        <div class="feature-item">🛠️ Auto-generate tool definitions</div>
-        <div class="feature-item">🔗 Direct API integration</div>
-        <div class="feature-item">🎯 Smart parameter mapping</div>
       </div>
     </div>
   </section>
@@ -774,29 +778,38 @@ import AgentPortal from "./diagrams/AgentPortal.astro";
     }
   }
 
-  .mcp-section .feature-item,
-  .api-section .feature-item {
+  .mcp-section .feature-item {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
-  .llm-section .feature-item,
+  .api-section .feature-item,
   .agent-section .feature-item {
     background: rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(0, 0, 0, 0.1);
   }
 
-  .mcp-section .feature-card,
-  .api-section .feature-card {
+  .llm-section .feature-item {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .mcp-section .feature-card {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
   }
 
-  .llm-section .feature-card,
+  .api-section .feature-card,
   .agent-section .feature-card {
     background: rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .llm-section .feature-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
   }
 
   .mcp-section {
@@ -805,13 +818,13 @@ import AgentPortal from "./diagrams/AgentPortal.astro";
   }
 
   .llm-section {
-    background: #ffffff;
-    color: black;
+    background: #000000;
+    color: white;
   }
 
   .api-section {
-    background: #000000;
-    color: white;
+    background: #ffffff;
+    color: black;
   }
 
   .agent-section {
@@ -830,13 +843,13 @@ import AgentPortal from "./diagrams/AgentPortal.astro";
     }
 
     .llm-section {
-      background: #000000;
-      color: white;
+      background: #ffffff;
+      color: black;
     }
 
     .api-section {
-      background: #ffffff;
-      color: black;
+      background: #000000;
+      color: white;
     }
 
     .agent-section {
@@ -844,29 +857,37 @@ import AgentPortal from "./diagrams/AgentPortal.astro";
       color: white;
     }
 
-    .mcp-section .feature-item,
-    .api-section .feature-item {
+    .mcp-section .feature-item {
       background: rgba(0, 0, 0, 0.05);
       border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .api-section .feature-item {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .llm-section .feature-item,
     .agent-section .feature-item {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .mcp-section .feature-card,
-    .api-section .feature-card {
       background: rgba(0, 0, 0, 0.05);
       border: 1px solid rgba(0, 0, 0, 0.1);
     }
 
-    .llm-section .feature-card,
-    .agent-section .feature-card {
+    .mcp-section .feature-card {
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .api-section .feature-card {
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(10px);
+    }
+
+    .llm-section .feature-card,
+    .agent-section .feature-card {
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.1);
     }
   }
 </style>

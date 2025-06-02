@@ -1,0 +1,448 @@
+---
+// Layout calculations for shopping workflow
+const canvas = { width: 900, height: 350 };
+
+// User input box
+const user = {
+  x: 50,
+  y: 150,
+  width: 120,
+  height: 50,
+  get centerY() {
+    return this.y + this.height / 2;
+  },
+  get centerX() {
+    return this.x + this.width / 2;
+  },
+};
+
+// AI Agent box
+const agent = {
+  x: 220,
+  y: 140,
+  width: 100,
+  height: 70,
+  get centerY() {
+    return this.y + this.height / 2;
+  },
+  get centerX() {
+    return this.x + this.width / 2;
+  },
+};
+
+// Gateway box
+const gateway = {
+  x: 370,
+  y: 120,
+  width: 160,
+  height: 110,
+  get centerY() {
+    return this.y + this.height / 2;
+  },
+  get centerX() {
+    return this.x + this.width / 2;
+  },
+};
+
+// API boxes - positioned to the right of gateway
+const apis = {
+  x: 600,
+  width: 120,
+  height: 45,
+  gap: 15,
+  count: 4,
+  get totalHeight() {
+    return this.count * this.height + (this.count - 1) * this.gap;
+  },
+  get startY() {
+    return gateway.y + (gateway.height - this.totalHeight) / 2;
+  },
+  positions: [] as Array<{ y: number; centerY: number }>,
+};
+
+// Calculate API positions
+for (let i = 0; i < apis.count; i++) {
+  const y = apis.startY + i * (apis.height + apis.gap);
+  apis.positions.push({
+    y: y,
+    centerY: y + apis.height / 2,
+  });
+}
+
+// Workflow steps inside gateway
+const steps = [
+  { text: "1. Create basket", y: gateway.y + 25 },
+  { text: "2. Add item (loop)", y: gateway.y + 45 },
+  { text: "3. Check inventory", y: gateway.y + 65 },
+  { text: "4. Place order", y: gateway.y + 85 },
+];
+
+// Path coordinates
+const paths = {
+  userToAgent: {
+    start: { x: user.x + user.width, y: user.centerY },
+    end: { x: agent.x, y: agent.centerY },
+  },
+  agentToGateway: {
+    start: { x: agent.x + agent.width, y: agent.centerY },
+    end: { x: gateway.x, y: gateway.centerY },
+  },
+  gatewayToApis: apis.positions.map((pos, i) => {
+    // Spread start points across gateway height for different API calls
+    const startY = gateway.y + (gateway.height / (apis.count + 1)) * (i + 1);
+    return {
+      start: { x: gateway.x + gateway.width, y: startY },
+      end: { x: apis.x, y: pos.centerY },
+    };
+  }),
+};
+---
+
+<div
+  class="api-tools-diagram"
+  style="max-width: 900px; margin: 3rem auto; padding: 2rem;"
+>
+  <style>
+    @keyframes userInput {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.05); opacity: 1; }
+    }
+
+    @keyframes agentProcessing {
+      0% { opacity: 0.6; }
+      25% { opacity: 1; }
+      75% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+
+    @keyframes workflowStep {
+      0% { opacity: 0.3; }
+      25% { opacity: 1; }
+      75% { opacity: 1; }
+      100% { opacity: 0.3; }
+    }
+
+    @keyframes apiCallFlow {
+      0% { stroke-dasharray: 0, 200; opacity: 0.4; }
+      50% { stroke-dasharray: 100, 100; opacity: 1; }
+      100% { stroke-dasharray: 200, 0; opacity: 0.4; }
+    }
+
+    .user-input {
+      animation: userInput 3s infinite;
+    }
+
+    .agent-processing {
+      animation: agentProcessing 4s infinite;
+      animation-delay: 0.5s;
+    }
+
+    .workflow-step-1 {
+      animation: workflowStep 6s infinite;
+      animation-delay: 1s;
+    }
+
+    .workflow-step-2 {
+      animation: workflowStep 6s infinite;
+      animation-delay: 2s;
+    }
+
+    .workflow-step-3 {
+      animation: workflowStep 6s infinite;
+      animation-delay: 3s;
+    }
+
+    .workflow-step-4 {
+      animation: workflowStep 6s infinite;
+      animation-delay: 4s;
+    }
+
+    .api-call-1 {
+      animation: apiCallFlow 2s infinite;
+      animation-delay: 1.5s;
+    }
+
+    .api-call-2 {
+      animation: apiCallFlow 2s infinite;
+      animation-delay: 2.5s;
+    }
+
+    .api-call-3 {
+      animation: apiCallFlow 2s infinite;
+      animation-delay: 3.5s;
+    }
+
+    .api-call-4 {
+      animation: apiCallFlow 2s infinite;
+      animation-delay: 4.5s;
+    }
+  </style>
+  
+  <svg
+    viewBox={`0 0 ${canvas.width} ${canvas.height}`}
+    xmlns="http://www.w3.org/2000/svg"
+    style="width: 100%; height: auto;"
+  >
+    {/* Background grid pattern */}
+    <defs>
+      <pattern
+        id="shoppingGrid"
+        x="0"
+        y="0"
+        width="20"
+        height="20"
+        patternUnits="userSpaceOnUse"
+      >
+        <path
+          d="M 20 0 L 0 0 0 20"
+          fill="none"
+          stroke="rgba(0,0,0,0.03)"
+          stroke-width="0.5"></path>
+      </pattern>
+    </defs>
+
+    <rect width="100%" height="100%" fill="url(#shoppingGrid)"></rect>
+
+    {/* Main flow paths */}
+    <path
+      d={`M ${paths.userToAgent.start.x} ${paths.userToAgent.start.y} L ${paths.userToAgent.end.x} ${paths.userToAgent.end.y}`}
+      stroke="#3b82f6"
+      stroke-width="3"
+      fill="none"
+      stroke-linecap="round"
+    />
+
+    <path
+      d={`M ${paths.agentToGateway.start.x} ${paths.agentToGateway.start.y} L ${paths.agentToGateway.end.x} ${paths.agentToGateway.end.y}`}
+      stroke="#3b82f6"
+      stroke-width="3"
+      fill="none"
+      stroke-linecap="round"
+    />
+
+    {/* API call paths */}
+    {
+      paths.gatewayToApis.map((path, i) => (
+        <path
+          d={`M ${path.start.x} ${path.start.y} L ${path.end.x} ${path.end.y}`}
+          stroke="#10b981"
+          stroke-width="2"
+          fill="none"
+          stroke-linecap="round"
+          class={`api-call-${i + 1}`}
+        />
+      ))
+    }
+
+    {/* User Input */}
+    <rect
+      x={user.x}
+      y={user.y}
+      width={user.width}
+      height={user.height}
+      rx="8"
+      fill="#f1f5f9"
+      stroke="#cbd5e1"
+      stroke-width="2"
+      class="user-input"
+    />
+    <text
+      x={user.centerX}
+      y={user.y + 20}
+      text-anchor="middle"
+      fill="#1e293b"
+      font-size="12"
+      font-weight="600"
+    >
+      User copies
+    </text>
+    <text
+      x={user.centerX}
+      y={user.y + 35}
+      text-anchor="middle"
+      fill="#64748b"
+      font-size="11"
+    >
+      shopping list into
+    </text>
+    <text
+      x={user.centerX}
+      y={user.y + 47}
+      text-anchor="middle"
+      fill="#64748b"
+      font-size="11"
+    >
+      chat window
+    </text>
+
+    {/* AI Agent */}
+    <rect
+      x={agent.x}
+      y={agent.y}
+      width={agent.width}
+      height={agent.height}
+      rx="10"
+      fill="#3b82f6"
+      stroke="#1d4ed8"
+      stroke-width="2"
+      class="agent-processing"
+    />
+    <text
+      x={agent.centerX}
+      y={agent.y + 25}
+      text-anchor="middle"
+      fill="white"
+      font-size="16"
+    >
+      🤖
+    </text>
+    <text
+      x={agent.centerX}
+      y={agent.y + 45}
+      text-anchor="middle"
+      fill="white"
+      font-size="12"
+      font-weight="600"
+    >
+      AI Agent
+    </text>
+    <text
+      x={agent.centerX}
+      y={agent.y + 60}
+      text-anchor="middle"
+      fill="rgba(255,255,255,0.8)"
+      font-size="9"
+    >
+      Processes request
+    </text>
+
+    {/* LLM Gateway */}
+    <rect
+      x={gateway.x}
+      y={gateway.y}
+      width={gateway.width}
+      height={gateway.height}
+      rx="12"
+      fill="#1f2937"
+      stroke="#10b981"
+      stroke-width="2"
+    />
+    <text
+      x={gateway.centerX}
+      y={gateway.y + 15}
+      text-anchor="middle"
+      fill="#10b981"
+      font-size="14"
+      font-weight="600"
+    >
+      LLM Gateway
+    </text>
+
+    {/* Workflow steps inside gateway */}
+    {
+      steps.map((step, i) => (
+        <text
+          x={gateway.x + 15}
+          y={step.y}
+          fill="#9ca3af"
+          font-size="10"
+          font-weight="500"
+          class={`workflow-step-${i + 1}`}
+        >
+          {step.text}
+        </text>
+      ))
+    }
+
+    {/* API Boxes */}
+    {
+      [
+        { name: "Basket API", endpoint: "/basket/create", color: "#f59e0b", border: "#d97706" },
+        { name: "Products API", endpoint: "/products/add", color: "#8b5cf6", border: "#7c3aed" },
+        { name: "Inventory API", endpoint: "/inventory/check", color: "#ef4444", border: "#dc2626" },
+        { name: "Orders API", endpoint: "/orders/place", color: "#10b981", border: "#059669" },
+      ].map((api, i) => (
+        <g>
+          <rect
+            x={apis.x}
+            y={apis.positions[i].y}
+            width={apis.width}
+            height={apis.height}
+            rx="8"
+            fill={api.color}
+            stroke={api.border}
+            stroke-width="2"
+          />
+          <text
+            x={apis.x + apis.width / 2}
+            y={apis.positions[i].y + 18}
+            text-anchor="middle"
+            fill="white"
+            font-size="11"
+            font-weight="600"
+          >
+            {api.name}
+          </text>
+          <text
+            x={apis.x + apis.width / 2}
+            y={apis.positions[i].y + 32}
+            text-anchor="middle"
+            fill="rgba(255,255,255,0.8)"
+            font-size="8"
+          >
+            {api.endpoint}
+          </text>
+        </g>
+      ))
+    }
+
+    {/* Flow arrows */}
+    <path
+      d={`M ${paths.userToAgent.end.x - 10} ${paths.userToAgent.end.y - 3} L ${paths.userToAgent.end.x} ${paths.userToAgent.end.y} L ${paths.userToAgent.end.x - 10} ${paths.userToAgent.end.y + 3}`}
+      stroke="#3b82f6"
+      stroke-width="2"
+      fill="none"
+    />
+
+    <path
+      d={`M ${paths.agentToGateway.end.x - 10} ${paths.agentToGateway.end.y - 3} L ${paths.agentToGateway.end.x} ${paths.agentToGateway.end.y} L ${paths.agentToGateway.end.x - 10} ${paths.agentToGateway.end.y + 3}`}
+      stroke="#3b82f6"
+      stroke-width="2"
+      fill="none"
+    />
+
+    {/* Labels */}
+    <text
+      x={user.centerX}
+      y={user.y - 15}
+      text-anchor="middle"
+      fill="#6b7280"
+      font-size="12"
+      font-weight="500"
+    >
+      Human Input
+    </text>
+
+    <text
+      x={gateway.centerX}
+      y={gateway.y - 15}
+      text-anchor="middle"
+      fill="#6b7280"
+      font-size="12"
+      font-weight="500"
+    >
+      Orchestrates Multiple APIs
+    </text>
+
+    <text
+      x={apis.x + apis.width / 2}
+      y={apis.startY - 20}
+      text-anchor="middle"
+      fill="#6b7280"
+      font-size="12"
+      font-weight="500"
+    >
+      Your APIs
+    </text>
+  </svg>
+</div>

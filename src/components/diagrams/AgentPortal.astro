@@ -182,7 +182,7 @@ const chart = {
       stroke-width="1"
       opacity="1"
     >
-      <animate attributeName="opacity" values="1;1;1;1;1;1;1;1;1;1;0;0;0;0;0;0;0;0;0;0" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;1;1;1;1;1;1;1;1;1;0;0;0;0;0;0;0;0;0;0" dur="12s" repeatCount="indefinite"/>
     </rect>
 
     <text
@@ -194,7 +194,7 @@ const chart = {
       opacity="1"
     >
       🔄 Invoking listDeals tool...
-      <animate attributeName="opacity" values="1;1;1;1;1;1;1;1;1;1;0;0;0;0;0;0;0;0;0;0" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;1;1;1;1;1;1;1;1;1;0;0;0;0;0;0;0;0;0;0" dur="12s" repeatCount="indefinite"/>
     </text>
 
     {/* Progress bar */}
@@ -207,7 +207,7 @@ const chart = {
       fill="rgba(59, 130, 246, 0.2)"
       opacity="1"
     >
-      <animate attributeName="opacity" values="1;1;1;1;1;1;1;1;1;1;0;0;0;0;0;0;0;0;0;0" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;1;1;1;1;1;1;1;1;1;0;0;0;0;0;0;0;0;0;0" dur="12s" repeatCount="indefinite"/>
     </rect>
     <rect
       x={slackDemo.x + 200}
@@ -218,8 +218,8 @@ const chart = {
       fill="#3b82f6"
       opacity="1"
     >
-      <animate attributeName="width" values="0;12;24;36;48;60;72;84;96;120;120;120;120;120;120;120;120;120;120;120" dur="4s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="1;1;1;1;1;1;1;1;1;1;0;0;0;0;0;0;0;0;0;0" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="width" values="0;12;24;36;48;60;72;84;96;120;120;120;120;120;120;120;120;120;120;120" dur="12s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;1;1;1;1;1;1;1;1;1;0;0;0;0;0;0;0;0;0;0" dur="12s" repeatCount="indefinite"/>
     </rect>
 
     {/* Results text */}
@@ -232,7 +232,7 @@ const chart = {
       opacity="0"
     >
       📊 Q4 Pipeline Breakdown
-      <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0;0;1;1;1;1;1;1;1;1;1;1" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0;0;1;1;1;1;1;1;1;1;1;1" dur="12s" repeatCount="indefinite"/>
     </text>
     <text
       x={slackDemo.x + 20}
@@ -242,7 +242,7 @@ const chart = {
       opacity="0"
     >
       Total: $2.4M across 47 opportunities
-      <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0;0;1;1;1;1;1;1;1;1;1;1" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0;0;1;1;1;1;1;1;1;1;1;1" dur="12s" repeatCount="indefinite"/>
     </text>
 
     {/* Chart title */}
@@ -256,7 +256,7 @@ const chart = {
       opacity="0"
     >
       Deal Size Distribution
-      <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0;0;1;1;1;1;1;1;1;1;1;1" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0;0;1;1;1;1;1;1;1;1;1;1" dur="12s" repeatCount="indefinite"/>
     </text>
 
     {/* Animated bar chart */}
@@ -267,7 +267,7 @@ const chart = {
       
       return (
         <g opacity="0">
-          <animate attributeName="opacity" values="0;0;1;1" dur="4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0;1;1" dur="12s" repeatCount="indefinite"/>
           
           {/* Bar background */}
           <rect
@@ -291,14 +291,14 @@ const chart = {
             <animate
               attributeName="height"
               values={`0;0;${barHeight};${barHeight}`}
-              dur="4s"
+              dur="12s"
               begin={`${i * 0.1}s`}
               repeatCount="indefinite"
             />
             <animate
               attributeName="y"
               values={`${chart.y + chart.maxHeight};${chart.y + chart.maxHeight};${barY};${barY}`}
-              dur="4s"
+              dur="12s"
               begin={`${i * 0.1}s`}
               repeatCount="indefinite"
             />
