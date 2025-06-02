@@ -1,0 +1,118 @@
+export default function CircuitDiagram() {
+  return (
+    <div
+      className="circuit-diagram"
+      style={{
+        maxWidth: "800px",
+        margin: "3rem auto",
+        padding: "2rem",
+      }}
+    >
+      <svg
+        viewBox="0 0 800 600"
+        xmlns="http://www.w3.org/2000/svg"
+        style={{
+          width: "100%",
+          height: "auto",
+        }}
+      >
+        {/* Define gradients */}
+        <defs>
+          <pattern id="circuitGrid" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(0,0,0,0.05)" strokeWidth="0.5"/>
+          </pattern>
+        </defs>
+        
+        <rect width="100%" height="100%" fill="url(#circuitGrid)"/>
+        
+        {/* Circuit paths with proper animations */}
+        {/* API Requests to Gateway */}
+        <path d="M 120 80 L 300 80" stroke="#fbe332" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.8">
+          <animate attributeName="strokeDasharray" values="0,180;90,90;180,0;0,180" dur="3s" repeatCount="indefinite"/>
+        </path>
+        
+        {/* Gateway to OpenAI */}
+        <path d="M 320 150 L 320 200 L 120 200 L 120 500" stroke="#fbe332" strokeWidth="3" fill="none" strokeLinecap="round" opacity="0.8">
+          <animate attributeName="strokeDasharray" values="0,630;315,315;630,0;0,630" dur="4s" repeatCount="indefinite"/>
+        </path>
+        
+        {/* Gateway to Anthropic */}
+        <path d="M 360 150 L 360 220 L 280 220 L 280 500" stroke="#fbe332" strokeWidth="3" fill="none" strokeLinecap="round" opacity="0.8">
+          <animate attributeName="strokeDasharray" values="0,560;280,280;560,0;0,560" dur="4s" begin="0.5s" repeatCount="indefinite"/>
+        </path>
+        
+        {/* Gateway to DeepSeek */}
+        <path d="M 440 150 L 440 220 L 520 220 L 520 500" stroke="#fbe332" strokeWidth="3" fill="none" strokeLinecap="round" opacity="0.8">
+          <animate attributeName="strokeDasharray" values="0,560;280,280;560,0;0,560" dur="4s" begin="1s" repeatCount="indefinite"/>
+        </path>
+        
+        {/* Gateway to Llama */}
+        <path d="M 480 150 L 480 200 L 680 200 L 680 500" stroke="#fbe332" strokeWidth="3" fill="none" strokeLinecap="round" opacity="0.8">
+          <animate attributeName="strokeDasharray" values="0,630;315,315;630,0;0,630" dur="4s" begin="1.5s" repeatCount="indefinite"/>
+        </path>
+        
+        {/* API Requests Input */}
+        <rect x="20" y="60" width="100" height="40" rx="8" fill="#2563eb" stroke="#1d4ed8" strokeWidth="2"/>
+        <text x="70" y="85" textAnchor="middle" fill="white" fontSize="12" fontWeight="500">
+          API Requests
+        </text>
+        
+        {/* LLM Gateway (Top Center) */}
+        <rect x="300" y="50" width="200" height="100" rx="12" fill="#1f2937" stroke="#10b981" strokeWidth="2"/>
+        <text x="400" y="85" textAnchor="middle" fill="#10b981" fontSize="20">🌐</text>
+        <text x="400" y="110" textAnchor="middle" fill="#10b981" fontSize="16" fontWeight="600">
+          LLM Gateway
+        </text>
+        <text x="400" y="130" textAnchor="middle" fill="#6b7280" fontSize="12">
+          Intelligent Routing
+        </text>
+        
+        {/* Provider Boxes (Bottom row - properly spaced) */}
+        {/* OpenAI */}
+        <rect x="50" y="500" width="140" height="80" rx="12" fill="#00a67e" stroke="#008f6b" strokeWidth="3"/>
+        <text x="120" y="530" textAnchor="middle" fontSize="20">🤖</text>
+        <text x="120" y="555" textAnchor="middle" fontSize="14" fontWeight="600" fill="white">
+          OpenAI
+        </text>
+        
+        {/* Anthropic */}
+        <rect x="210" y="500" width="140" height="80" rx="12" fill="#ff6b35" stroke="#e55a2b" strokeWidth="3"/>
+        <text x="280" y="530" textAnchor="middle" fontSize="20">🧠</text>
+        <text x="280" y="555" textAnchor="middle" fontSize="14" fontWeight="600" fill="white">
+          Anthropic
+        </text>
+        
+        {/* DeepSeek */}
+        <rect x="450" y="500" width="140" height="80" rx="12" fill="#8b5cf6" stroke="#7c3aed" strokeWidth="3"/>
+        <text x="520" y="530" textAnchor="middle" fontSize="20">💻</text>
+        <text x="520" y="555" textAnchor="middle" fontSize="14" fontWeight="600" fill="white">
+          DeepSeek
+        </text>
+        
+        {/* Llama */}
+        <rect x="610" y="500" width="140" height="80" rx="12" fill="#f59e0b" stroke="#d97706" strokeWidth="3"/>
+        <text x="680" y="530" textAnchor="middle" fontSize="20">🦙</text>
+        <text x="680" y="555" textAnchor="middle" fontSize="14" fontWeight="600" fill="white">
+          Llama
+        </text>
+        
+        {/* Connection nodes */}
+        <circle cx="300" cy="80" r="3" fill="#10b981" opacity="0.8"/>
+        <circle cx="320" cy="150" r="3" fill="#10b981" opacity="0.8"/>
+        <circle cx="360" cy="150" r="3" fill="#10b981" opacity="0.8"/>
+        <circle cx="440" cy="150" r="3" fill="#10b981" opacity="0.8"/>
+        <circle cx="480" cy="150" r="3" fill="#10b981" opacity="0.8"/>
+        
+        <circle cx="320" cy="200" r="2" fill="#6b7280" opacity="0.6"/>
+        <circle cx="360" cy="220" r="2" fill="#6b7280" opacity="0.6"/>
+        <circle cx="440" cy="220" r="2" fill="#6b7280" opacity="0.6"/>
+        <circle cx="480" cy="200" r="2" fill="#6b7280" opacity="0.6"/>
+        
+        <circle cx="120" cy="200" r="2" fill="#6b7280" opacity="0.6"/>
+        <circle cx="280" cy="220" r="2" fill="#6b7280" opacity="0.6"/>
+        <circle cx="520" cy="220" r="2" fill="#6b7280" opacity="0.6"/>
+        <circle cx="680" cy="200" r="2" fill="#6b7280" opacity="0.6"/>
+      </svg>
+    </div>
+  );
+}
