@@ -1,9 +1,84 @@
+---
+// Layout calculations
+const canvas = { width: 800, height: 600 };
+
+// Applications box
+const apps = {
+  x: 50,
+  y: 300,
+  width: 100,
+  height: 40,
+  get centerY() {
+    return this.y + this.height / 2;
+  },
+};
+
+// Gateway box
+const gateway = {
+  x: 300,
+  width: 200,
+  height: 100,
+  get y() {
+    return apps.centerY - this.height / 2;
+  },
+  get centerY() {
+    return apps.centerY;
+  },
+};
+
+// Provider boxes - centered against LLM Gateway
+const providers = {
+  x: 600,
+  width: 140,
+  height: 80,
+  gap: 20,
+  count: 4,
+  get totalHeight() {
+    return this.count * this.height + (this.count - 1) * this.gap;
+  },
+  get startY() {
+    return gateway.y + (gateway.height - this.totalHeight) / 2;
+  },
+  positions: [],
+};
+
+// Calculate provider positions
+for (let i = 0; i < providers.count; i++) {
+  providers.positions.push({
+    y: providers.startY + i * (providers.height + providers.gap),
+    get centerY() {
+      return this.y + providers.height / 2;
+    },
+  });
+}
+
+// Path coordinates with multiple mid-points
+const paths = {
+  appToGateway: {
+    start: { x: apps.x + apps.width, y: apps.centerY },
+    end: { x: gateway.x, y: gateway.centerY },
+  },
+  gatewayToProviders: providers.positions.map((pos, i) => {
+    // Spread start points evenly across gateway height
+    const startY =
+      gateway.y + (gateway.height / (providers.count + 1)) * (i + 1);
+    const K = Math.abs((pos.centerY - startY) / 2);
+    return {
+      start: { x: gateway.x + gateway.width, y: startY },
+      mid1: { x: providers.x - K, y: startY },
+      mid2: { x: providers.x - K, y: pos.centerY },
+      end: { x: providers.x, y: pos.centerY },
+    };
+  }),
+};
+---
+
 <div
   class="circuit-diagram"
   style="max-width: 800px; margin: 3rem auto; padding: 2rem;"
 >
   <svg
-    viewBox="0 0 800 600"
+    viewBox={`0 0 ${canvas.width} ${canvas.height}`}
     xmlns="http://www.w3.org/2000/svg"
     style="width: 100%; height: auto;"
   >
@@ -28,9 +103,9 @@
     <rect width="100%" height="100%" fill="url(#circuitGrid)"></rect>
 
     {/* Circuit paths with proper animations */}
-    {/* API Requests to Gateway */}
+    {/* Your AI Applications to Gateway */}
     <path
-      d="M 120 80 L 300 80"
+      d={`M ${paths.appToGateway.start.x} ${paths.appToGateway.start.y} L ${paths.appToGateway.end.x} ${paths.appToGateway.end.y}`}
       stroke="#fbe332"
       stroke-width="4"
       fill="none"
@@ -39,115 +114,91 @@
     >
       <animate
         attributeName="strokeDasharray"
-        values="0,180;90,90;180,0;0,180"
+        values={`0,${gateway.x - apps.x - apps.width};${(gateway.x - apps.x - apps.width) / 2},${(gateway.x - apps.x - apps.width) / 2};${gateway.x - apps.x - apps.width},0;0,${gateway.x - apps.x - apps.width}`}
         dur="3s"
         repeatCount="indefinite"></animate>
     </path>
 
-    {/* Gateway to OpenAI */}
-    <path
-      d="M 320 150 L 320 200 L 120 200 L 120 500"
-      stroke="#fbe332"
-      stroke-width="3"
-      fill="none"
-      stroke-linecap="round"
-      opacity="0.8"
-    >
-      <animate
-        attributeName="strokeDasharray"
-        values="0,630;315,315;630,0;0,630"
-        dur="4s"
-        repeatCount="indefinite"></animate>
-    </path>
+    {/* Gateway to Providers */}
+    {
+      paths.gatewayToProviders.map((path, i) => (
+        <path
+          d={`M ${path.start.x} ${path.start.y} L ${path.mid1.x} ${path.mid1.y} L ${path.mid2.x} ${path.mid2.y} L ${path.end.x} ${path.end.y}`}
+          stroke="#fbe332"
+          stroke-width="3"
+          fill="none"
+          stroke-linecap="round"
+          opacity="0.8"
+        >
+          <animate
+            attributeName="strokeDasharray"
+            values={(() => {
+              const totalLength =
+                path.mid1.x -
+                path.start.x +
+                Math.abs(path.mid2.y - path.mid1.y) +
+                (path.end.x - path.mid2.x);
+              return `0,${totalLength};${totalLength / 2},${totalLength / 2};${totalLength},0;0,${totalLength}`;
+            })()}
+            dur="4s"
+            begin={`${i * 0.5}s`}
+            repeatCount="indefinite"
+          ></animate>
+        </path>
+      ))
+    }
 
-    {/* Gateway to Anthropic */}
-    <path
-      d="M 360 150 L 360 220 L 280 220 L 280 500"
-      stroke="#fbe332"
-      stroke-width="3"
-      fill="none"
-      stroke-linecap="round"
-      opacity="0.8"
-    >
-      <animate
-        attributeName="strokeDasharray"
-        values="0,560;280,280;560,0;0,560"
-        dur="4s"
-        begin="0.5s"
-        repeatCount="indefinite"></animate>
-    </path>
-
-    {/* Gateway to DeepSeek */}
-    <path
-      d="M 440 150 L 440 220 L 520 220 L 520 500"
-      stroke="#fbe332"
-      stroke-width="3"
-      fill="none"
-      stroke-linecap="round"
-      opacity="0.8"
-    >
-      <animate
-        attributeName="strokeDasharray"
-        values="0,560;280,280;560,0;0,560"
-        dur="4s"
-        begin="1s"
-        repeatCount="indefinite"></animate>
-    </path>
-
-    {/* Gateway to Llama */}
-    <path
-      d="M 480 150 L 480 200 L 680 200 L 680 500"
-      stroke="#fbe332"
-      stroke-width="3"
-      fill="none"
-      stroke-linecap="round"
-      opacity="0.8"
-    >
-      <animate
-        attributeName="strokeDasharray"
-        values="0,630;315,315;630,0;0,630"
-        dur="4s"
-        begin="1.5s"
-        repeatCount="indefinite"></animate>
-    </path>
-
-    {/* API Requests Input */}
+    {/* Your AI Applications Input */}
     <rect
-      x="20"
-      y="60"
-      width="100"
-      height="40"
+      x={apps.x}
+      y={apps.y}
+      width={apps.width}
+      height={apps.height}
       rx="8"
       fill="#2563eb"
       stroke="#1d4ed8"
       stroke-width="2"></rect>
     <text
-      x="70"
-      y="85"
+      x={apps.x + apps.width / 2}
+      y={apps.y + 15}
       text-anchor="middle"
       fill="white"
-      font-size="12"
+      font-size="11"
       font-weight="500"
     >
-      API Requests
+      Your AI
+    </text>
+    <text
+      x={apps.x + apps.width / 2}
+      y={apps.y + 30}
+      text-anchor="middle"
+      fill="white"
+      font-size="11"
+      font-weight="500"
+    >
+      Applications
     </text>
 
-    {/* LLM Gateway (Top Center) */}
+    {/* LLM Gateway (Center) */}
     <rect
-      x="300"
-      y="50"
-      width="200"
-      height="100"
+      x={gateway.x}
+      y={gateway.y}
+      width={gateway.width}
+      height={gateway.height}
       rx="12"
       fill="#1f2937"
       stroke="#10b981"
       stroke-width="2"></rect>
-    <text x="400" y="85" text-anchor="middle" fill="#10b981" font-size="20"
-      >🌐</text
+    <text
+      x={gateway.x + gateway.width / 2}
+      y={gateway.y + 35}
+      text-anchor="middle"
+      fill="#10b981"
+      font-size="20">🌐</text
     >
     <text
-      x="400"
-      y="110"
+      x={gateway.x + gateway.width / 2}
+      y={gateway.y + 60}
       text-anchor="middle"
       fill="#10b981"
       font-size="16"
@@ -155,114 +206,107 @@
     >
       LLM Gateway
     </text>
-    <text x="400" y="130" text-anchor="middle" fill="#6b7280" font-size="12">
+    <text
+      x={gateway.x + gateway.width / 2}
+      y={gateway.y + 80}
+      text-anchor="middle"
+      fill="#6b7280"
+      font-size="12"
+    >
       Intelligent Routing
     </text>
 
-    {/* Provider Boxes (Bottom row - properly spaced) */}
-    {/* OpenAI */}
-    <rect
-      x="50"
-      y="500"
-      width="140"
-      height="80"
-      rx="12"
-      fill="#00a67e"
-      stroke="#008f6b"
-      stroke-width="3"></rect>
-    <text x="120" y="530" text-anchor="middle" font-size="20">🤖</text>
-    <text
-      x="120"
-      y="555"
-      text-anchor="middle"
-      font-size="14"
-      font-weight="600"
-      fill="white"
-    >
-      OpenAI
-    </text>
+    {
+      /* Provider Boxes (Right column - evenly spaced using calculated positions) */
+    }
+    {
+      [
+        { name: "OpenAI", emoji: "🤖", fill: "#00a67e", stroke: "#008f6b" },
+        { name: "Anthropic", emoji: "🧠", fill: "#ff6b35", stroke: "#e55a2b" },
+        { name: "DeepSeek", emoji: "💻", fill: "#8b5cf6", stroke: "#7c3aed" },
+        { name: "Llama", emoji: "🦙", fill: "#f59e0b", stroke: "#d97706" },
+      ].map((provider, i) => (
+        <g key={provider.name}>
+          <rect
+            x={providers.x}
+            y={providers.positions[i].y}
+            width={providers.width}
+            height={providers.height}
+            rx="12"
+            fill={provider.fill}
+            stroke={provider.stroke}
+            stroke-width="3"
+          />
+          <text
+            x={providers.x + providers.width / 2}
+            y={providers.positions[i].y + 30}
+            text-anchor="middle"
+            font-size="20"
+          >
+            {provider.emoji}
+          </text>
+          <text
+            x={providers.x + providers.width / 2}
+            y={providers.positions[i].y + 55}
+            text-anchor="middle"
+            font-size="14"
+            font-weight="600"
+            fill="white"
+          >
+            {provider.name}
+          </text>
+        </g>
+      ))
+    }
 
-    {/* Anthropic */}
-    <rect
-      x="210"
-      y="500"
-      width="140"
-      height="80"
-      rx="12"
-      fill="#ff6b35"
-      stroke="#e55a2b"
-      stroke-width="3"></rect>
-    <text x="280" y="530" text-anchor="middle" font-size="20">🧠</text>
-    <text
-      x="280"
-      y="555"
-      text-anchor="middle"
-      font-size="14"
-      font-weight="600"
-      fill="white"
-    >
-      Anthropic
-    </text>
+    {/* Connection nodes - using calculated positions */}
+    <circle
+      cx={paths.appToGateway.end.x}
+      cy={paths.appToGateway.end.y}
+      r="3"
+      fill="#10b981"
+      opacity="0.8"></circle>
 
-    {/* DeepSeek */}
-    <rect
-      x="450"
-      y="500"
-      width="140"
-      height="80"
-      rx="12"
-      fill="#8b5cf6"
-      stroke="#7c3aed"
-      stroke-width="3"></rect>
-    <text x="520" y="530" text-anchor="middle" font-size="20">💻</text>
-    <text
-      x="520"
-      y="555"
-      text-anchor="middle"
-      font-size="14"
-      font-weight="600"
-      fill="white"
-    >
-      DeepSeek
-    </text>
+    {/* Gateway start points */}
+    {
+      paths.gatewayToProviders.map((path) => (
+        <circle
+          cx={path.start.x}
+          cy={path.start.y}
+          r="3"
+          fill="#10b981"
+          opacity="0.8"
+        />
+      ))
+    }
 
-    {/* Llama */}
-    <rect
-      x="610"
-      y="500"
-      width="140"
-      height="80"
-      rx="12"
-      fill="#f59e0b"
-      stroke="#d97706"
-      stroke-width="3"></rect>
-    <text x="680" y="530" text-anchor="middle" font-size="20">🦙</text>
-    <text
-      x="680"
-      y="555"
-      text-anchor="middle"
-      font-size="14"
-      font-weight="600"
-      fill="white"
-    >
-      Llama
-    </text>
-
-    {/* Connection nodes */}
-    <circle cx="300" cy="80" r="3" fill="#10b981" opacity="0.8"></circle>
-    <circle cx="320" cy="150" r="3" fill="#10b981" opacity="0.8"></circle>
-    <circle cx="360" cy="150" r="3" fill="#10b981" opacity="0.8"></circle>
-    <circle cx="440" cy="150" r="3" fill="#10b981" opacity="0.8"></circle>
-    <circle cx="480" cy="150" r="3" fill="#10b981" opacity="0.8"></circle>
-
-    <circle cx="320" cy="200" r="2" fill="#6b7280" opacity="0.6"></circle>
-    <circle cx="360" cy="220" r="2" fill="#6b7280" opacity="0.6"></circle>
-    <circle cx="440" cy="220" r="2" fill="#6b7280" opacity="0.6"></circle>
-    <circle cx="480" cy="200" r="2" fill="#6b7280" opacity="0.6"></circle>
-
-    <circle cx="120" cy="200" r="2" fill="#6b7280" opacity="0.6"></circle>
-    <circle cx="280" cy="220" r="2" fill="#6b7280" opacity="0.6"></circle>
-    <circle cx="520" cy="220" r="2" fill="#6b7280" opacity="0.6"></circle>
-    <circle cx="680" cy="200" r="2" fill="#6b7280" opacity="0.6"></circle>
+    {/* Mid-point connection nodes */}
+    {
+      paths.gatewayToProviders.map((path) => (
+        <g>
+          <circle
+            cx={path.mid1.x}
+            cy={path.mid1.y}
+            r="2"
+            fill="#6b7280"
+            opacity="0.6"
+          />
+          <circle
+            cx={path.mid2.x}
+            cy={path.mid2.y}
+            r="2"
+            fill="#6b7280"
+            opacity="0.6"
+          />
+          <circle
+            cx={path.end.x}
+            cy={path.end.y}
+            r="2"
+            fill="#6b7280"
+            opacity="0.6"
+          />
+        </g>
+      ))
+    }
   </svg>
 </div>
