@@ -20,6 +20,21 @@ import ApiToolsDiagram from "./diagrams/ApiToolsDiagram.astro";
         >Join the waitlist</a
       >
     </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-value">SOC 2</div>
+        <div class="stat-label">Type I Certified</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">50ms</div>
+        <div class="stat-label">Avg Response Time</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">99.9%</div>
+        <div class="stat-label">Uptime SLA</div>
+      </div>
+    </div>
   </div>
 
   <section class="hero-section-alt mcp-section">
@@ -301,6 +316,43 @@ import ApiToolsDiagram from "./diagrams/ApiToolsDiagram.astro";
 
   .btn-secondary:hover {
     background: var(--color-blue-50);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-neutral-900);
+    margin-bottom: 0.25rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.875rem;
+    color: var(--color-neutral-600);
+    font-weight: 500;
+    height: 1.25rem;
+    display: flex;
+    align-items: center;
+    line-height: 1;
   }
 
   .hero-section-alt {
@@ -828,6 +880,14 @@ import ApiToolsDiagram from "./diagrams/ApiToolsDiagram.astro";
 
   :root:where([data-theme="dark"], [data-theme="dark"] *) {
     .hero-description {
+      color: var(--color-neutral-400);
+    }
+
+    .stat-value {
+      color: var(--color-neutral-100);
+    }
+
+    .stat-label {
       color: var(--color-neutral-400);
     }
 
