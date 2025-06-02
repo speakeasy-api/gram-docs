@@ -14,15 +14,15 @@ export default function GatewayDiagram() {
       <style>
         {`
           @keyframes flowAnimation {
-            0% { transform: translateX(0px); opacity: 0; }
+            0% { transform: translateX(0px); opacity: 0.1; }
             50% { opacity: 1; }
-            100% { transform: translateX(500px); opacity: 0; }
+            100% { transform: translateX(500px); opacity: 0.1; }
           }
           
           @keyframes returnAnimation {
-            0% { transform: translateX(500px); opacity: 0; }
+            0% { transform: translateX(0px); opacity: 0.1; }
             50% { opacity: 1; }
-            100% { transform: translateX(0px); opacity: 0; }
+            100% { transform: translateX(-500px); opacity: 0.1; }
           }
           
           .flow-line-1 {
@@ -67,16 +67,16 @@ export default function GatewayDiagram() {
         <line
           x1="140"
           y1="95"
-          x2="180"
+          x2="240"
           y2="95"
           stroke="#fbe332"
           strokeWidth="3"
           className="flow-line-1"
         />
         <line
-          x1="140"
+          x1="640"
           y1="105"
-          x2="180"
+          x2="540"
           y2="105"
           stroke="#fbe332"
           strokeWidth="3"
@@ -117,11 +117,11 @@ export default function GatewayDiagram() {
           Customer
         </text>
 
-        {/* LLM Gateway */}
+        {/* LLM Gateway - Expanded to contain MCP Servers */}
         <rect
-          x="200"
+          x="270"
           y="50"
-          width="140"
+          width="220"
           height="100"
           rx="12"
           fill="#222222"
@@ -130,57 +130,37 @@ export default function GatewayDiagram() {
           className="gateway-center box-element"
         />
         <text
-          x="270"
-          y="90"
+          x="380"
+          y="75"
           textAnchor="middle"
           fill="white"
           fontSize="14"
           fontWeight="600"
         >
-          LLM
-        </text>
-        <text
-          x="270"
-          y="110"
-          textAnchor="middle"
-          fill="white"
-          fontSize="14"
-          fontWeight="600"
-        >
-          Gateway
+          LLM Gateway
         </text>
 
-        {/* MCP Servers */}
+        {/* MCP Servers - Inside LLM Gateway */}
         <rect
-          x="420"
-          y="70"
-          width="120"
-          height="60"
-          rx="8"
-          fill="#1A1A1A"
-          stroke="rgba(255,255,255,0.3)"
-          strokeWidth="2"
+          x="300"
+          y="90"
+          width="160"
+          height="40"
+          rx="6"
+          fill="#333333"
+          stroke="rgba(255,255,255,0.2)"
+          strokeWidth="1"
           className="box-element"
         />
         <text
-          x="480"
-          y="95"
+          x="380"
+          y="115"
           textAnchor="middle"
           fill="white"
-          fontSize="12"
+          fontSize="11"
           fontWeight="500"
         >
-          MCP
-        </text>
-        <text
-          x="480"
-          y="110"
-          textAnchor="middle"
-          fill="white"
-          fontSize="12"
-          fontWeight="500"
-        >
-          Servers
+          MCP Servers
         </text>
 
         {/* Your API */}
