@@ -4,7 +4,7 @@ import starlight from "@astrojs/starlight";
 import tailwindcss from "@tailwindcss/vite";
 import vercel from "@astrojs/vercel";
 import starlightLlmsTxt from "starlight-llms-txt";
-import react from "@astrojs/react";
+
 // https://astro.build/config
 export default defineConfig({
   // We don't want trailing slashes in the generated page URLs so it's easy to
@@ -20,7 +20,6 @@ export default defineConfig({
   },
 
   integrations: [
-    react(),
     starlight({
       routeMiddleware: ["./src/route-data.ts"],
 
