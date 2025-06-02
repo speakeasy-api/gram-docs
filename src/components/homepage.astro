@@ -3,6 +3,7 @@ import GatewayDiagram from "./diagrams/GatewayDiagram.astro";
 import CircuitDiagram from "./diagrams/CircuitDiagram.astro";
 import ServiceDiscovery from "./diagrams/ServiceDiscovery.astro";
 import EnterpriseControls from "./diagrams/EnterpriseControls.astro";
+import AgentPortal from "./diagrams/AgentPortal.astro";
 ---
 
 <div class="homepage">
@@ -142,15 +143,19 @@ import EnterpriseControls from "./diagrams/EnterpriseControls.astro";
   <section class="hero-section-alt llm-section">
     <div class="hero-content">
       <h2>Unified access to LLMs at enterprise</h2>
-      
+
       <div class="circuit-section">
         <div class="circuit-description">
           <h3>One API to rule them all</h3>
           <p>
-            Access all major models through a single, unified interface. OpenAI SDK works out of the box—no code changes required to switch between OpenAI, Anthropic, DeepSeek, Llama, and more.
+            Access all major models through a single, unified interface. OpenAI
+            SDK works out of the box—no code changes required to switch between
+            OpenAI, Anthropic, DeepSeek, Llama, and more.
           </p>
           <p>
-            The gateway automatically handles failover, load balancing, and cost optimization across providers, ensuring your applications always get the best performance and reliability.
+            The gateway automatically handles failover, load balancing, and cost
+            optimization across providers, ensuring your applications always get
+            the best performance and reliability.
           </p>
         </div>
         <div class="circuit-diagram-container">
@@ -162,10 +167,15 @@ import EnterpriseControls from "./diagrams/EnterpriseControls.astro";
         <div class="circuit-description">
           <h3>🔀 One API to find them</h3>
           <p>
-            Automatic Service Discovery and Evolution through Speakeasy OpenAPI Platform. The gateway dynamically discovers and integrates new LLM providers, automatically updating your available models without code changes.
+            Automatic Service Discovery and Evolution through Speakeasy OpenAPI
+            Platform. The gateway dynamically discovers and integrates new LLM
+            providers, automatically updating your available models without code
+            changes.
           </p>
           <p>
-            When new providers emerge or existing ones add capabilities, the platform automatically detects and incorporates them into your unified interface—no manual configuration required.
+            When new providers emerge or existing ones add capabilities, the
+            platform automatically detects and incorporates them into your
+            unified interface—no manual configuration required.
           </p>
         </div>
         <div class="circuit-diagram-container">
@@ -177,10 +187,14 @@ import EnterpriseControls from "./diagrams/EnterpriseControls.astro";
         <div class="circuit-description">
           <h3>🔒 One API to bring them all and in the darkness bind them</h3>
           <p>
-            Enterprise controls with comprehensive audit trails. Monitor every request, enforce usage policies, and maintain complete observability across all your LLM interactions.
+            Enterprise controls with comprehensive audit trails. Monitor every
+            request, enforce usage policies, and maintain complete observability
+            across all your LLM interactions.
           </p>
           <p>
-            Set rate limits, content filters, and access controls while capturing detailed logs of every interaction for compliance, debugging, and optimization.
+            Set rate limits, content filters, and access controls while
+            capturing detailed logs of every interaction for compliance,
+            debugging, and optimization.
           </p>
         </div>
         <div class="circuit-diagram-container">
@@ -209,78 +223,10 @@ import EnterpriseControls from "./diagrams/EnterpriseControls.astro";
     <div class="hero-content">
       <h2>Agent Portal</h2>
       <p class="section-description">
-        Bring LLMs into your workflow, wherever you are. Available on Discord,
-        Slack, Teams, and custom integrations
+        Bring LLMs into your workflow, wherever you are.
       </p>
 
-      <div class="slack-demo">
-        <div class="slack-header">
-          <span class="channel-name"># sales-reports</span>
-        </div>
-        <div class="slack-message user-message">
-          <div class="message-header">
-            <span class="user-name">Sarah Chen</span>
-            <span class="timestamp">2:14 PM</span>
-          </div>
-          <div class="message-content">
-            Show me a breakdown of our Q4 pipeline by deal size
-          </div>
-        </div>
-        <div class="slack-message bot-message tool-transition-message">
-          <div class="message-header">
-            <span class="bot-name">Gram</span>
-            <span class="timestamp">2:14 PM</span>
-          </div>
-          <div class="message-content">
-            <div class="tool-invocation">
-              <span class="tool-indicator">🔄</span>
-              <span class="tool-text">Invoking listDeals tool...</span>
-              <div class="tool-progress">
-                <div class="progress-bar"></div>
-              </div>
-            </div>
-            <div class="pipeline-results">
-              📊 <strong>Q4 Pipeline Breakdown</strong><br />
-              Total: $2.4M across 47 opportunities
-              <div class="bar-chart">
-                <div class="chart-header">
-                  <span class="chart-title">Deal Size Distribution</span>
-                </div>
-                <div class="chart-bars">
-                  <div class="bar-group">
-                    <div class="bar" data-value="35">
-                      <div class="bar-fill bar-large"></div>
-                    </div>
-                    <div class="bar-label">$100K+</div>
-                    <div class="bar-value">8 deals</div>
-                  </div>
-                  <div class="bar-group">
-                    <div class="bar" data-value="45">
-                      <div class="bar-fill bar-medium"></div>
-                    </div>
-                    <div class="bar-label">$50-100K</div>
-                    <div class="bar-value">12 deals</div>
-                  </div>
-                  <div class="bar-group">
-                    <div class="bar" data-value="60">
-                      <div class="bar-fill bar-small"></div>
-                    </div>
-                    <div class="bar-label">$25-50K</div>
-                    <div class="bar-value">15 deals</div>
-                  </div>
-                  <div class="bar-group">
-                    <div class="bar" data-value="40">
-                      <div class="bar-fill bar-tiny"></div>
-                    </div>
-                    <div class="bar-label">< $25K</div>
-                    <div class="bar-value">12 deals</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <AgentPortal />
     </div>
   </section>
 </div>
@@ -292,6 +238,9 @@ import EnterpriseControls from "./diagrams/EnterpriseControls.astro";
 
   main > div {
     border-top: none !important;
+  }
+  footer {
+    display: none !important;
   }
 </style>
 
@@ -518,12 +467,24 @@ import EnterpriseControls from "./diagrams/EnterpriseControls.astro";
     transform: translateY(100px);
   }
 
-  .audit-entry[data-entry="1"] { animation-delay: 0s; }
-  .audit-entry[data-entry="2"] { animation-delay: 2s; }
-  .audit-entry[data-entry="3"] { animation-delay: 4s; }
-  .audit-entry[data-entry="4"] { animation-delay: 6s; }
-  .audit-entry[data-entry="5"] { animation-delay: 8s; }
-  .audit-entry[data-entry="6"] { animation-delay: 10s; }
+  .audit-entry[data-entry="1"] {
+    animation-delay: 0s;
+  }
+  .audit-entry[data-entry="2"] {
+    animation-delay: 2s;
+  }
+  .audit-entry[data-entry="3"] {
+    animation-delay: 4s;
+  }
+  .audit-entry[data-entry="4"] {
+    animation-delay: 6s;
+  }
+  .audit-entry[data-entry="5"] {
+    animation-delay: 8s;
+  }
+  .audit-entry[data-entry="6"] {
+    animation-delay: 10s;
+  }
 
   .timestamp {
     color: #6b7280;
@@ -580,12 +541,30 @@ import EnterpriseControls from "./diagrams/EnterpriseControls.astro";
     transform: scaleY(0);
   }
 
-  .bar-1 { animation-delay: 0.2s; height: 40%; }
-  .bar-2 { animation-delay: 0.4s; height: 65%; }
-  .bar-3 { animation-delay: 0.6s; height: 50%; }
-  .bar-4 { animation-delay: 0.8s; height: 80%; }
-  .bar-5 { animation-delay: 1.0s; height: 90%; }
-  .bar-6 { animation-delay: 1.2s; height: 75%; }
+  .bar-1 {
+    animation-delay: 0.2s;
+    height: 40%;
+  }
+  .bar-2 {
+    animation-delay: 0.4s;
+    height: 65%;
+  }
+  .bar-3 {
+    animation-delay: 0.6s;
+    height: 50%;
+  }
+  .bar-4 {
+    animation-delay: 0.8s;
+    height: 80%;
+  }
+  .bar-5 {
+    animation-delay: 1s;
+    height: 90%;
+  }
+  .bar-6 {
+    animation-delay: 1.2s;
+    height: 75%;
+  }
 
   .chart-labels {
     display: flex;
@@ -664,8 +643,13 @@ import EnterpriseControls from "./diagrams/EnterpriseControls.astro";
 
   /* Keyframe Animations */
   @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
   }
 
   @keyframes logTail {
@@ -723,201 +707,13 @@ import EnterpriseControls from "./diagrams/EnterpriseControls.astro";
   }
 
   @keyframes deploymentProgress {
-    0%, 100% {
+    0%,
+    100% {
       background: rgba(245, 158, 11, 0.1);
     }
     50% {
       background: rgba(245, 158, 11, 0.2);
     }
-  }
-
-  @keyframes progressFill {
-    from {
-      width: 0;
-    }
-    to {
-      width: 100%;
-    }
-  }
-
-  @keyframes barGrow {
-    from {
-      height: 0;
-    }
-    to {
-      height: var(--target-height, 100%);
-    }
-  }
-
-  @keyframes toolInvocationFlow {
-    0% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    50% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    60% {
-      opacity: 0.5;
-      transform: translateY(-5px);
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(-10px);
-      height: 0;
-      margin: 0;
-      padding: 0;
-    }
-  }
-
-  @keyframes pipelineResultsReveal {
-    0% {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Tool Invocation Animation */
-  .tool-invocation {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem;
-    background: rgba(59, 130, 246, 0.1);
-    border: 1px solid rgba(59, 130, 246, 0.2);
-    border-radius: 0.5rem;
-    margin: 0.5rem 0;
-    opacity: 1;
-    animation: toolInvocationFlow 5s ease-in-out forwards;
-  }
-
-  .tool-indicator {
-    animation: spin 1s linear infinite;
-  }
-
-  .tool-text {
-    font-style: italic;
-    color: #1264a3;
-    font-size: 0.8rem;
-  }
-
-  .tool-progress {
-    flex: 1;
-    height: 4px;
-    background: rgba(59, 130, 246, 0.2);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-
-  .progress-bar {
-    height: 100%;
-    background: #3b82f6;
-    width: 0;
-    animation: progressFill 2s ease-out forwards;
-    animation-delay: 0.5s;
-  }
-
-  /* Pipeline Results Transition */
-  .pipeline-results {
-    opacity: 0;
-    transform: translateY(10px);
-    animation: pipelineResultsReveal 2s ease-out forwards;
-    animation-delay: 3s;
-  }
-
-  /* Bar Chart Styling */
-  .bar-chart {
-    margin-top: 0.75rem;
-    background: rgba(0, 0, 0, 0.02);
-    border-radius: 0.5rem;
-    padding: 0.75rem;
-  }
-
-  .bar-chart .chart-header {
-    margin-bottom: 0.75rem;
-    text-align: center;
-  }
-
-  .bar-chart .chart-title {
-    font-weight: 600;
-    font-size: 0.8rem;
-    color: #1d1c1d;
-  }
-
-  .bar-chart .chart-bars {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    gap: 0.5rem;
-    height: 120px;
-  }
-
-  .bar-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-    gap: 0.25rem;
-  }
-
-  .bar-group .bar {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    background: #f3f4f6;
-    border-radius: 0.25rem;
-    overflow: hidden;
-  }
-
-  .bar-fill {
-    width: 100%;
-    border-radius: 0.25rem;
-    animation: barGrow 1.5s ease-out forwards;
-    height: 0;
-    position: absolute;
-    bottom: 0;
-  }
-
-  .bar-large .bar-fill {
-    height: 35%;
-    background: linear-gradient(to top, #dc2626, #ef4444);
-    animation-delay: 3.5s;
-  }
-
-  .bar-medium .bar-fill {
-    height: 45%;
-    background: linear-gradient(to top, #ea580c, #f97316);
-    animation-delay: 3.7s;
-  }
-
-  .bar-small .bar-fill {
-    height: 60%;
-    background: linear-gradient(to top, #059669, #10b981);
-    animation-delay: 3.9s;
-  }
-
-  .bar-tiny .bar-fill {
-    height: 40%;
-    background: linear-gradient(to top, #2563eb, #3b82f6);
-    animation-delay: 4.1s;
-  }
-
-  .bar-label {
-    font-size: 0.65rem;
-    font-weight: 500;
-    color: #4b5563;
-    text-align: center;
-  }
-
-  .bar-value {
-    font-size: 0.6rem;
-    color: #6b7280;
-    text-align: center;
   }
 
   /* Circuit Section Layout */
@@ -961,7 +757,7 @@ import EnterpriseControls from "./diagrams/EnterpriseControls.astro";
     justify-content: center;
     width: 100%;
   }
-  
+
   .circuit-diagram-container .circuit-diagram {
     width: 100%;
     max-width: none;
@@ -972,12 +768,11 @@ import EnterpriseControls from "./diagrams/EnterpriseControls.astro";
       grid-template-columns: 1fr;
       gap: 2rem;
     }
-    
+
     .circuit-description {
       text-align: center;
     }
   }
-
 
   .mcp-section .feature-item,
   .api-section .feature-item {
@@ -1022,91 +817,6 @@ import EnterpriseControls from "./diagrams/EnterpriseControls.astro";
   .agent-section {
     background: #ffffff;
     color: black;
-  }
-
-  .slack-demo {
-    background: #f8f9fa;
-    border: 1px solid #e1e8ed;
-    border-radius: 0.75rem;
-    overflow: hidden;
-    margin: 2rem auto 0;
-    max-width: 500px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  }
-
-  .slack-header {
-    background: #4a154b;
-    color: white;
-    padding: 0.5rem 1rem;
-    font-weight: 600;
-    font-size: 0.875rem;
-  }
-
-  .channel-name {
-    color: #e1e8ed;
-  }
-
-  .slack-message {
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid #e1e8ed;
-  }
-
-  .slack-message:last-child {
-    border-bottom: none;
-  }
-
-  .message-header {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .bot-name {
-    font-weight: 600;
-    color: #1264a3;
-    font-size: 0.875rem;
-  }
-
-  .user-name {
-    font-weight: 600;
-    color: #1d1c1d;
-    font-size: 0.875rem;
-  }
-
-  .timestamp {
-    font-size: 0.75rem;
-    color: #616061;
-  }
-
-  .message-content {
-    font-size: 0.875rem;
-    line-height: 1.4;
-    color: #1d1c1d;
-  }
-
-  .bot-message {
-    background: #f8f9fa;
-  }
-
-  .user-message {
-    background: white;
-  }
-
-  .pie-chart {
-    position: relative;
-    display: inline-block;
-    margin-top: 0.5rem;
-  }
-
-  .chart-label {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-weight: 600;
-    font-size: 0.75rem;
-    color: #3b82f6;
   }
 
   :root:where([data-theme="dark"], [data-theme="dark"] *) {
@@ -1157,27 +867,6 @@ import EnterpriseControls from "./diagrams/EnterpriseControls.astro";
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
       backdrop-filter: blur(10px);
-    }
-
-    .slack-demo {
-      background: var(--color-neutral-800);
-      border-color: var(--color-neutral-700);
-    }
-
-    .bot-message {
-      background: var(--color-neutral-700);
-    }
-
-    .user-message {
-      background: var(--color-neutral-800);
-    }
-
-    .message-content {
-      color: var(--color-neutral-200);
-    }
-
-    .user-name {
-      color: var(--color-neutral-200);
     }
   }
 </style>
