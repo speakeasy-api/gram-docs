@@ -4,6 +4,7 @@ import starlight from "@astrojs/starlight";
 import tailwindcss from "@tailwindcss/vite";
 import vercel from "@astrojs/vercel";
 import starlightLlmsTxt from "starlight-llms-txt";
+import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
@@ -20,6 +21,7 @@ export default defineConfig({
   },
 
   integrations: [
+    react(),
     starlight({
       routeMiddleware: ["./src/route-data.ts"],
 

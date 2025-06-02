@@ -1,6 +1,6 @@
 ---
-import GatewayDiagram from "./diagrams/GatewayDiagram.tsx";
-import CircuitDiagram from "./diagrams/CircuitDiagram.tsx";
+import GatewayDiagram from "./diagrams/GatewayDiagram.astro";
+import CircuitDiagram from "./diagrams/CircuitDiagram.astro";
 ---
 
 <div class="homepage">
@@ -25,7 +25,7 @@ import CircuitDiagram from "./diagrams/CircuitDiagram.tsx";
         Enterprise APIs require an enterprise-level experience
       </p>
 
-      <GatewayDiagram client:load />
+      <GatewayDiagram />
 
       <div class="feature-cards">
         <div class="feature-card">
@@ -141,7 +141,7 @@ import CircuitDiagram from "./diagrams/CircuitDiagram.tsx";
     <div class="hero-content">
       <h2>Unified access to LLMs at enterprise</h2>
       
-      <CircuitDiagram client:load />
+      <CircuitDiagram />
       
       <div class="feature-list">
         <div class="feature-item">🔀 Multi-provider routing</div>

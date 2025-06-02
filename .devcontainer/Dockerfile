@@ -21,7 +21,8 @@ RUN apt update && apt install -y less \
   aggregate \
   jq \
   curl \
-  build-essential
+  build-essential \
+  lsof
 
 # Ensure default node user has access to /usr/local/share
 RUN mkdir -p /usr/local/share/npm-global && \
