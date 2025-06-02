@@ -1,0 +1,236 @@
+---
+// Layout calculations
+const canvas = { width: 800, height: 500 };
+
+// Version flow stages
+const stages = {
+  detection: {
+    x: 50,
+    y: 150,
+    width: 140,
+    height: 60,
+    title: "API Detection",
+    subtitle: "New providers"
+  },
+  analysis: {
+    x: 250,
+    y: 150,
+    width: 140,
+    height: 60,
+    title: "Schema Analysis",
+    subtitle: "OpenAPI spec"
+  },
+  approval: {
+    x: 450,
+    y: 150,
+    width: 140,
+    height: 60,
+    title: "Gateway Ready",
+    subtitle: "For approval"
+  },
+  live: {
+    x: 650,
+    y: 150,
+    width: 100,
+    height: 60,
+    title: "Live",
+    subtitle: "In production"
+  }
+};
+
+// Version notification area
+const notification = {
+  x: 50,
+  y: 50,
+  width: 700,
+  height: 80,
+  get centerX() { return this.x + this.width / 2; },
+  get centerY() { return this.y + this.height / 2; }
+};
+
+// Flow arrows between stages
+const arrows = [
+  {
+    start: { x: stages.detection.x + stages.detection.width, y: stages.detection.y + stages.detection.height / 2 },
+    end: { x: stages.analysis.x, y: stages.analysis.y + stages.analysis.height / 2 }
+  },
+  {
+    start: { x: stages.analysis.x + stages.analysis.width, y: stages.analysis.y + stages.analysis.height / 2 },
+    end: { x: stages.approval.x, y: stages.approval.y + stages.approval.height / 2 }
+  },
+  {
+    start: { x: stages.approval.x + stages.approval.width, y: stages.approval.y + stages.approval.height / 2 },
+    end: { x: stages.live.x, y: stages.live.y + stages.live.height / 2 }
+  }
+];
+
+// Progress indicator positions
+const progressSteps = Object.values(stages).map(stage => ({
+  x: stage.x + stage.width / 2,
+  y: stage.y + stage.height + 40
+}));
+---
+
+<div
+  class="service-discovery-diagram"
+  style="width: 100%; margin: 0; padding: 1rem;"
+>
+  <svg
+    viewBox={`0 0 ${canvas.width} ${canvas.height}`}
+    xmlns="http://www.w3.org/2000/svg"
+    style="width: 100%; height: auto;"
+  >
+    {/* Background grid */}
+    <defs>
+      <pattern id="discoveryGrid" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+        <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(0,0,0,0.03)" stroke-width="0.5"/>
+      </pattern>
+    </defs>
+    
+    <rect width="100%" height="100%" fill="url(#discoveryGrid)"/>
+
+    {/* Version notification banner with animation */}
+    <rect
+      x={notification.x}
+      y={notification.y}
+      width={notification.width}
+      height={notification.height}
+      rx="8"
+      fill="#f3f4f6"
+      stroke="#e5e7eb"
+      stroke-width="2"
+      opacity="0"
+    >
+      <animate attributeName="opacity" values="0;1;1;0" dur="8s" repeatCount="indefinite"/>
+    </rect>
+
+    {/* Animated version text */}
+    <text
+      x={notification.centerX}
+      y={notification.centerY - 15}
+      text-anchor="middle"
+      font-size="16"
+      font-weight="600"
+      fill="#374151"
+      opacity="0"
+    >
+      New API Version: v1.2.3
+      <animate attributeName="opacity" values="0;1;1;0;0;0;0;0" dur="8s" repeatCount="indefinite"/>
+    </text>
+    
+    <text
+      x={notification.centerX}
+      y={notification.centerY}
+      text-anchor="middle"
+      font-size="14"
+      font-weight="500"
+      fill="#6b7280"
+      opacity="0"
+    >
+      v1.2.3 LLM Gateway Ready for Approval
+      <animate attributeName="opacity" values="0;0;0;1;1;0;0;0" dur="8s" repeatCount="indefinite"/>
+    </text>
+    
+    <text
+      x={notification.centerX}
+      y={notification.centerY + 15}
+      text-anchor="middle"
+      font-size="16"
+      font-weight="600"
+      fill="#059669"
+      opacity="0"
+    >
+      v1.2.3 Live
+      <animate attributeName="opacity" values="0;0;0;0;0;0;1;0" dur="8s" repeatCount="indefinite"/>
+    </text>
+
+    {/* Flow arrows with animated progression */}
+    {arrows.map((arrow, i) => (
+      <g>
+        <line
+          x1={arrow.start.x}
+          y1={arrow.start.y}
+          x2={arrow.end.x}
+          y2={arrow.end.y}
+          stroke="#d1d5db"
+          stroke-width="2"
+          marker-end="url(#arrowhead)"
+        />
+        {/* Animated flow indicator */}
+        <circle r="4" fill="#3b82f6" opacity="0">
+          <animate attributeName="opacity" values="0;1;0" dur="2s" begin={`${i * 0.5}s`} repeatCount="indefinite"/>
+          <animateMotion dur="2s" begin={`${i * 0.5}s`} repeatCount="indefinite">
+            <mpath href={`#path${i}`}/>
+          </animateMotion>
+        </circle>
+        <path id={`path${i}`} d={`M ${arrow.start.x} ${arrow.start.y} L ${arrow.end.x} ${arrow.end.y}`} fill="none" opacity="0"/>
+      </g>
+    ))}
+
+    {/* Arrow marker definition */}
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="#d1d5db"/>
+      </marker>
+    </defs>
+
+    {/* Stage boxes */}
+    {Object.values(stages).map((stage, i) => (
+      <g>
+        <rect
+          x={stage.x}
+          y={stage.y}
+          width={stage.width}
+          height={stage.height}
+          rx="8"
+          fill={i === 3 ? "#10b981" : "#3b82f6"}
+          stroke={i === 3 ? "#059669" : "#2563eb"}
+          stroke-width="2"
+          opacity="0.9"
+        />
+        <text
+          x={stage.x + stage.width / 2}
+          y={stage.y + stage.height / 2 - 5}
+          text-anchor="middle"
+          font-size="14"
+          font-weight="600"
+          fill="white"
+        >
+          {stage.title}
+        </text>
+        <text
+          x={stage.x + stage.width / 2}
+          y={stage.y + stage.height / 2 + 12}
+          text-anchor="middle"
+          font-size="11"
+          font-weight="400"
+          fill="white"
+          opacity="0.9"
+        >
+          {stage.subtitle}
+        </text>
+      </g>
+    ))}
+
+    {/* Progress indicators */}
+    {progressSteps.map((step, i) => (
+      <circle
+        cx={step.x}
+        cy={step.y}
+        r="6"
+        fill="#e5e7eb"
+        stroke="#9ca3af"
+        stroke-width="2"
+      >
+        <animate
+          attributeName="fill"
+          values="#e5e7eb;#3b82f6;#3b82f6;#e5e7eb"
+          dur="8s"
+          begin={`${i * 1.5}s`}
+          repeatCount="indefinite"
+        />
+      </circle>
+    ))}
+
+  </svg>
+</div>

@@ -1,6 +1,8 @@
 ---
 import GatewayDiagram from "./diagrams/GatewayDiagram.astro";
 import CircuitDiagram from "./diagrams/CircuitDiagram.astro";
+import ServiceDiscovery from "./diagrams/ServiceDiscovery.astro";
+import EnterpriseControls from "./diagrams/EnterpriseControls.astro";
 ---
 
 <div class="homepage">
@@ -141,12 +143,49 @@ import CircuitDiagram from "./diagrams/CircuitDiagram.astro";
     <div class="hero-content">
       <h2>Unified access to LLMs at enterprise</h2>
       
-      <CircuitDiagram />
-      
-      <div class="feature-list">
-        <div class="feature-item">🔀 Multi-provider routing</div>
-        <div class="feature-item">🔒 Enterprise controls</div>
-        <div class="feature-item">📋 Immutable audit trail</div>
+      <div class="circuit-section">
+        <div class="circuit-description">
+          <h3>One API to rule them all</h3>
+          <p>
+            Access all major models through a single, unified interface. OpenAI SDK works out of the box—no code changes required to switch between OpenAI, Anthropic, DeepSeek, Llama, and more.
+          </p>
+          <p>
+            The gateway automatically handles failover, load balancing, and cost optimization across providers, ensuring your applications always get the best performance and reliability.
+          </p>
+        </div>
+        <div class="circuit-diagram-container">
+          <CircuitDiagram />
+        </div>
+      </div>
+
+      <div class="circuit-section">
+        <div class="circuit-description">
+          <h3>🔀 One API to find them</h3>
+          <p>
+            Automatic Service Discovery and Evolution through Speakeasy OpenAPI Platform. The gateway dynamically discovers and integrates new LLM providers, automatically updating your available models without code changes.
+          </p>
+          <p>
+            When new providers emerge or existing ones add capabilities, the platform automatically detects and incorporates them into your unified interface—no manual configuration required.
+          </p>
+        </div>
+        <div class="circuit-diagram-container">
+          <ServiceDiscovery />
+        </div>
+      </div>
+
+      <div class="circuit-section">
+        <div class="circuit-description">
+          <h3>🔒 One API to bring them all and in the darkness bind them</h3>
+          <p>
+            Enterprise controls with comprehensive audit trails. Monitor every request, enforce usage policies, and maintain complete observability across all your LLM interactions.
+          </p>
+          <p>
+            Set rate limits, content filters, and access controls while capturing detailed logs of every interaction for compliance, debugging, and optimization.
+          </p>
+        </div>
+        <div class="circuit-diagram-container">
+          <EnterpriseControls />
+        </div>
       </div>
     </div>
   </section>
@@ -363,6 +402,16 @@ import CircuitDiagram from "./diagrams/CircuitDiagram.astro";
     font-size: 1.1rem;
     padding: 0.75rem;
     border-radius: 0.5rem;
+    line-height: 1.4;
+  }
+
+  .feature-subtitle {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    font-weight: 400;
+    margin-top: 0.25rem;
+    display: block;
+    line-height: 1.3;
   }
 
   .feature-cards {
@@ -869,6 +918,64 @@ import CircuitDiagram from "./diagrams/CircuitDiagram.astro";
     font-size: 0.6rem;
     color: #6b7280;
     text-align: center;
+  }
+
+  /* Circuit Section Layout */
+  .circuit-section {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 2rem;
+    align-items: center;
+    margin: 2rem 0;
+  }
+
+  .circuit-description h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: inherit;
+  }
+
+  .circuit-description h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.5rem 0;
+    color: inherit;
+    line-height: 1.3;
+  }
+
+  .circuit-description p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+    color: inherit;
+    opacity: 0.9;
+  }
+
+  .circuit-description p:last-child {
+    margin-bottom: 0;
+  }
+
+  .circuit-diagram-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .circuit-diagram-container .circuit-diagram {
+    width: 100%;
+    max-width: none;
+  }
+
+  @media (max-width: 768px) {
+    .circuit-section {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    
+    .circuit-description {
+      text-align: center;
+    }
   }
 
 

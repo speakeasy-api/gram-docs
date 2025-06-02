@@ -1,0 +1,310 @@
+---
+// Layout calculations
+const canvas = { width: 800, height: 500 };
+
+// Central monitoring hub
+const hub = {
+  x: 300,
+  y: 200,
+  width: 200,
+  height: 100,
+  get centerX() { return this.x + this.width / 2; },
+  get centerY() { return this.y + this.height / 2; }
+};
+
+// Control panels positioned around the hub
+const controls = [
+  {
+    x: 30,
+    y: 30,
+    width: 180,
+    height: 100,
+    title: "Rate Limiting",
+    icon: "⚡",
+    metrics: ["1000 req/min", "Burst: 100"],
+    color: "#f59e0b"
+  },
+  {
+    x: 590,
+    y: 30,
+    width: 180,
+    height: 100,
+    title: "Content Filtering",
+    icon: "🛡️",
+    metrics: ["PII Detection", "Toxicity Filter"],
+    color: "#ef4444"
+  },
+  {
+    x: 30,
+    y: 370,
+    width: 180,
+    height: 100,
+    title: "Access Control",
+    icon: "🔐",
+    metrics: ["RBAC", "API Keys"],
+    color: "#8b5cf6"
+  },
+  {
+    x: 590,
+    y: 370,
+    width: 180,
+    height: 100,
+    title: "Audit Logging",
+    icon: "📋",
+    metrics: ["100% Coverage", "Immutable"],
+    color: "#059669"
+  }
+];
+
+// Data flow paths from controls to hub
+const flowPaths = controls.map((control, i) => {
+  const controlCenter = {
+    x: control.x + control.width / 2,
+    y: control.y + control.height / 2
+  };
+  
+  // Calculate connection point on hub edge
+  const angle = Math.atan2(hub.centerY - controlCenter.y, hub.centerX - controlCenter.x);
+  const hubRadius = Math.min(hub.width, hub.height) / 2;
+  const hubConnection = {
+    x: hub.centerX - Math.cos(angle) * hubRadius * 0.8,
+    y: hub.centerY - Math.sin(angle) * hubRadius * 0.8
+  };
+  
+  return {
+    start: controlCenter,
+    end: hubConnection,
+    pathLength: Math.sqrt(Math.pow(hubConnection.x - controlCenter.x, 2) + Math.pow(hubConnection.y - controlCenter.y, 2))
+  };
+});
+
+// Security alerts area
+const alertArea = {
+  x: 250,
+  y: 20,
+  width: 300,
+  height: 40
+};
+---
+
+<div
+  class="enterprise-controls-diagram"
+  style="width: 100%; margin: 0; padding: 1rem;"
+>
+  <svg
+    viewBox={`0 0 ${canvas.width} ${canvas.height}`}
+    xmlns="http://www.w3.org/2000/svg"
+    style="width: 100%; height: auto;"
+  >
+    {/* Background pattern */}
+    <defs>
+      <pattern id="securityGrid" x="0" y="0" width="25" height="25" patternUnits="userSpaceOnUse">
+        <circle cx="12.5" cy="12.5" r="1" fill="rgba(0,0,0,0.02)"/>
+        <path d="M 25 0 L 0 0 0 25" fill="none" stroke="rgba(0,0,0,0.02)" stroke-width="0.5"/>
+      </pattern>
+      
+      {/* Glow effect for hub */}
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+        <feMerge>
+          <feMergeNode in="coloredBlur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+    
+    <rect width="100%" height="100%" fill="url(#securityGrid)"/>
+
+    {/* Security alert banner */}
+    <rect
+      x={alertArea.x}
+      y={alertArea.y}
+      width={alertArea.width}
+      height={alertArea.height}
+      rx="20"
+      fill="#fef3c7"
+      stroke="#f59e0b"
+      stroke-width="1"
+      opacity="0"
+    >
+      <animate attributeName="opacity" values="0;1;1;0" dur="6s" begin="2s" repeatCount="indefinite"/>
+    </rect>
+    
+    <text
+      x={alertArea.x + alertArea.width / 2}
+      y={alertArea.y + alertArea.height / 2 + 4}
+      text-anchor="middle"
+      font-size="12"
+      font-weight="500"
+      fill="#92400e"
+      opacity="0"
+    >
+      🚨 Rate limit exceeded - Request throttled
+      <animate attributeName="opacity" values="0;1;1;0" dur="6s" begin="2s" repeatCount="indefinite"/>
+    </text>
+
+    {/* Data flow lines with animated pulses */}
+    {flowPaths.map((path, i) => (
+      <g>
+        <line
+          x1={path.start.x}
+          y1={path.start.y}
+          x2={path.end.x}
+          y2={path.end.y}
+          stroke="#e5e7eb"
+          stroke-width="2"
+          opacity="0.5"
+        />
+        {/* Animated data pulse */}
+        <line
+          x1={path.start.x}
+          y1={path.start.y}
+          x2={path.end.x}
+          y2={path.end.y}
+          stroke={controls[i].color}
+          stroke-width="3"
+          stroke-linecap="round"
+          opacity="0.8"
+        >
+          <animate
+            attributeName="stroke-dasharray"
+            values={`0,${path.pathLength};${path.pathLength/3},${path.pathLength*2/3};${path.pathLength},0`}
+            dur="3s"
+            begin={`${i * 0.5}s`}
+            repeatCount="indefinite"
+          />
+        </line>
+      </g>
+    ))}
+
+    {/* Central monitoring hub */}
+    <rect
+      x={hub.x}
+      y={hub.y}
+      width={hub.width}
+      height={hub.height}
+      rx="12"
+      fill="#1f2937"
+      stroke="#10b981"
+      stroke-width="3"
+      filter="url(#glow)"
+    />
+    
+    <text
+      x={hub.centerX}
+      y={hub.centerY - 20}
+      text-anchor="middle"
+      font-size="20"
+      fill="#10b981"
+    >
+      🔍
+    </text>
+    
+    <text
+      x={hub.centerX}
+      y={hub.centerY}
+      text-anchor="middle"
+      font-size="16"
+      font-weight="600"
+      fill="#10b981"
+    >
+      Enterprise Hub
+    </text>
+    
+    <text
+      x={hub.centerX}
+      y={hub.centerY + 18}
+      text-anchor="middle"
+      font-size="12"
+      font-weight="400"
+      fill="#6b7280"
+    >
+      Real-time Monitoring
+    </text>
+
+    {/* Control panels */}
+    {controls.map((control, i) => (
+      <g>
+        <rect
+          x={control.x}
+          y={control.y}
+          width={control.width}
+          height={control.height}
+          rx="8"
+          fill="white"
+          stroke={control.color}
+          stroke-width="2"
+          opacity="0.95"
+        >
+          {/* Subtle animation for active monitoring */}
+          <animate
+            attributeName="stroke-width"
+            values="2;3;2"
+            dur="4s"
+            begin={`${i * 1}s`}
+            repeatCount="indefinite"
+          />
+        </rect>
+        
+        <text
+          x={control.x + 20}
+          y={control.y + 25}
+          font-size="18"
+        >
+          {control.icon}
+        </text>
+        
+        <text
+          x={control.x + 45}
+          y={control.y + 22}
+          font-size="14"
+          font-weight="600"
+          fill="#374151"
+        >
+          {control.title}
+        </text>
+        
+        {control.metrics.map((metric, j) => (
+          <text
+            x={control.x + 45}
+            y={control.y + 40 + (j * 14)}
+            font-size="11"
+            font-weight="400"
+            fill="#6b7280"
+          >
+            {metric}
+          </text>
+        ))}
+        
+        {/* Status indicator */}
+        <circle
+          cx={control.x + control.width - 15}
+          cy={control.y + 15}
+          r="4"
+          fill={control.color}
+          opacity="0.8"
+        >
+          <animate
+            attributeName="opacity"
+            values="0.3;1;0.3"
+            dur="2s"
+            repeatCount="indefinite"
+          />
+        </circle>
+      </g>
+    ))}
+
+    {/* Security shield overlay */}
+    <text
+      x="400"
+      y="480"
+      text-anchor="middle"
+      font-size="12"
+      font-weight="500"
+      fill="#6b7280"
+      opacity="0.7"
+    >
+      🛡️ Enterprise-grade security and compliance
+    </text>
+  </svg>
+</div>
