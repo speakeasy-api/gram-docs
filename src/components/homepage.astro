@@ -1,0 +1,174 @@
+---
+// Homepage component for custom landing page
+---
+
+<div class="homepage">
+  <div class="hero-section">
+    <h1 class="hero-title">LLM Gateway, Enterprise Ready</h1>
+    <p class="hero-description">
+      Speakeasy's next-generation API gateway, built for accelerating your AI
+      transition at enterprise
+    </p>
+    <div class="hero-actions">
+      <a href="/overview/introduction" class="btn btn-primary">Get started</a>
+      <a href="https://app.getgram.ai" class="btn btn-secondary"
+        >Join the waitlist</a
+      >
+    </div>
+  </div>
+
+  <div class="features">
+    <h2>Next steps</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>Update content</h3>
+        <p>
+          Edit <code>src/content/docs/index.mdx</code> to see this page change.
+        </p>
+      </div>
+      <div class="feature-card">
+        <h3>Add new content</h3>
+        <p>
+          Add Markdown or MDX files to <code>src/content/docs</code> to create new
+          pages.
+        </p>
+      </div>
+      <div class="feature-card">
+        <h3>Configure your site</h3>
+        <p>
+          Edit your <code>sidebar</code> and other config in <code
+            >astro.config.mjs</code
+          >.
+        </p>
+      </div>
+      <div class="feature-card">
+        <h3>Read the docs</h3>
+        <p>
+          Learn more in the <a href="https://starlight.astro.build/"
+            >Starlight Docs</a
+          >.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  main > div:first-child {
+    display: none !important;
+  }
+
+  main > div {
+    border-top: none !important;
+  }
+</style>
+
+<style>
+  .homepage {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .hero-section {
+    text-align: center;
+    padding: 4rem 0;
+  }
+
+  .hero-title {
+    font-size: 3rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+
+  .hero-description {
+    font-size: 1.25rem;
+    color: var(--color-neutral-600);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .btn-primary {
+    background: var(--color-blue-500);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: var(--color-blue-600);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-blue-500);
+    border: 2px solid var(--color-blue-500);
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-blue-50);
+  }
+
+  .features {
+    margin-top: 4rem;
+  }
+
+  .features h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+
+  .feature-card {
+    padding: 1.5rem;
+    border: 1px solid var(--color-neutral-300);
+    border-radius: 0.5rem;
+    background: white;
+  }
+
+  .feature-card h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-card code {
+    background: var(--color-neutral-100);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+  }
+
+  :root:where([data-theme="dark"], [data-theme="dark"] *) {
+    .hero-description {
+      color: var(--color-neutral-400);
+    }
+
+    .feature-card {
+      background: var(--color-neutral-800);
+      border-color: var(--color-neutral-700);
+    }
+
+    .feature-card code {
+      background: var(--color-neutral-700);
+    }
+  }
+</style>

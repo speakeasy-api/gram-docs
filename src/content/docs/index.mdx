@@ -1,37 +1,9 @@
 ---
-title: Welcome to Gram Docs
-description: Guides, tutorials and more to help you make the most of Gram, the platform for building powerful integrations for agents and LLMs.
+title: "LLM Gateway, Enterprise Ready"
+description: "Speakeasy's next-generation API gateway, built for deploying AI at enterprise scale"
 template: splash
-hero:
-  tagline: Everything you need to build powerful integrations for agents and LLMs
-  image:
-    file: ../../assets/shader-book-light.png
-  actions:
-    - text: Get started
-      link: /overview/introduction
-      icon: right-arrow
-      variant: secondary
-    - text: Join the waitlist
-      link: https://app.getgram.ai
-      icon: external
-      variant: minimal
 ---
 
-import { Card, CardGrid } from "@astrojs/starlight/components";
+import Homepage from "../../components/homepage.astro";
 
-## Next steps
-
-<CardGrid stagger>
-  <Card title="Update content" icon="pencil">
-    Edit `src/content/docs/index.mdx` to see this page change.
-  </Card>
-  <Card title="Add new content" icon="add-document">
-    Add Markdown or MDX files to `src/content/docs` to create new pages.
-  </Card>
-  <Card title="Configure your site" icon="setting">
-    Edit your `sidebar` and other config in `astro.config.mjs`.
-  </Card>
-  <Card title="Read the docs" icon="open-book">
-    Learn more in [the Starlight Docs](https://starlight.astro.build/).
-  </Card>
-</CardGrid>
+<Homepage />
