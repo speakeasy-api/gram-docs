@@ -4,6 +4,16 @@
 
 This repository contains the documentation for the [Gram](https://app.getgram.ai) app.
 
+To run
+
+```
+cp .env-example .env
+npm i
+npm run dev
+```
+
+Now you can visit the project locally at http://localhost:4321.
+
 ## 🚀 Project Structure
 
 Inside this Astro + Starlight project, you'll see the following folders and files:

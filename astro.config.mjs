@@ -74,6 +74,10 @@ export default defineConfig({
           label: "Concepts",
           autogenerate: { directory: "concepts" },
         },
+        {
+          label: "Blog",
+          autogenerate: { directory: "blog" },
+        },
       ],
       plugins: [starlightLlmsTxt()],
     }),
