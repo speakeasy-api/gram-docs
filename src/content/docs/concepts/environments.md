@@ -93,3 +93,10 @@ gram = GramOpenAIAgents(
     }
 )
 ```
+
+<div class="flex justify-center">
+  <video controls>
+    <source src="/videos/environments.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>

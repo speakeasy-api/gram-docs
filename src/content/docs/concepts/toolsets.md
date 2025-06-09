@@ -17,6 +17,22 @@ It's a good idea to think of the task you want an agent to solve using your API 
 
 Toolsets can also be used to experiment and find the right combination of tools to solve agentic tasks. You can create multiple toolsets and split test your agents to find the right combination of tools or compose multiple agents that each use distinct toolsets.
 
+<div class="flex justify-center">
+  <video controls>
+    <source src="/videos/creating_toolsets.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+
 ## Toolsets as MCP servers
 
 In addition to building powerful agents with well-scoped toolsets, every toolset is exposed by Gram as an MCP server using the streamable HTTP transpot. On a toolset's page, you'll find instructions on how to connect MCP clients like Claude and Cursor to a toolset's MCP server.
+
+<div class="flex justify-center">
+  <video controls>
+    <source src="/videos/mcp_servers.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+

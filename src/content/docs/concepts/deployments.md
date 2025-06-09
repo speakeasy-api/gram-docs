@@ -9,3 +9,10 @@ could not be processed.
 :::tip[Fun fact]
 Every Gram integration is backed by its own project and every time we release a new version of anintegration, what we are doing is tagging a particular deployment with a semantic version.
 :::
+
+<div class="flex justify-center">
+  <video controls>
+    <source src="/videos/getting_started.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
