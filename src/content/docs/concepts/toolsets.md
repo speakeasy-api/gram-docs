@@ -36,3 +36,16 @@ In addition to building powerful agents with well-scoped toolsets, every toolset
   </video>
 </div>
 
+## Custom Domains
+
+MCP servers can be hosted through a custom subdomain - such as `{your_sub_domain}/mcp`.
+
+Contact gram support to get access to a custom subdomain on your account. To complete setup visit the `/settings` page of the gram dashboard. 
+
+At a high level two DNS entries will need to be created:
+
+1. A new CNAME record pointing to `cname.getgram.ai.`
+2. A new TXT record `_gram.{your_sub_domain}` with a value of `gram-domain-verify={your_sub_domain},{gram_organization_id}`.
+3. Then reach out to gram to complete your domain linking process.
+
+
