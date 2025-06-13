@@ -1,63 +1,68 @@
 ---
-title: "The Art of Tool Curation"
+title: "The art of tool curation"
 description: "Learn how to curate tools into effective toolsets."
 sidebar:
   order: 3
 ---
 
-Good API design doesn't automatically make for a good MCP server. When you upload an OpenAPI document with hundreds of endpoints to Gram, you don't want to dump all those tools into a single toolset and call it a day. That's a recipe for disaster.
+Good API design doesn't automatically make for a good MCP server. When you upload an OpenAPI document with hundreds of endpoints to Gram, you don't want to dump all those tools into a single toolset and call it a day. That's how agents get overwhelmed and become slower and less effective.
 
-The art of tool curation is about thinking like an agent UX designer. It's about understanding how AI agents navigate complex workflows, make decisions, and discover what they need to accomplish their goals. Traditional APIs are flat—they expose every endpoint equally. But effective MCP servers are multilayered, using progressive disclosure to surface the right tools at the right time.
+The art of tool curation lies in thinking like an agent-UX designer. It's about understanding how AI agents navigate complex workflows, make decisions, and discover what they need to accomplish their goals. Traditional APIs are flat — they expose every endpoint equally. But effective MCP servers are multilayered, using progressive disclosure to surface the right tools at the right time.
 
 In this post, we'll explore the principles and practices of tool curation.
 
-## Tools and Toolsets
+## Tools and toolsets
 
-Before diving in, let's clarify the building blocks we're working with:
+Let's begin by clarifying the building blocks we're working with:
 
-**[Tools](../concepts/tool-defintions)** are individual callable API actions. When you upload an OpenAPI document to Gram, each operation becomes a tool definition—a single endpoint that an agent can invoke. For example, a CRM API might generate tools like `search_users`, `create_deal`, `list_pipelines`, and dozens of others.
+**[Tools](../concepts/tool-defintions)** are individual callable API actions. When you upload an OpenAPI document to Gram, each operation becomes a tool definition — a single endpoint that an agent can invoke. For example, a CRM API might generate tools like `search_users`, `create_deal`, `list_pipelines`, and dozens of others.
 
-**[Toolsets](../concepts/toolsets)** are curated bundles of tools organized around specific use cases or workflows. Rather than giving an agent access to every available tool, you select only the ones needed to accomplish particular tasks. Think of toolsets as specialized toolkits—you wouldn't bring a full workshop to hang a picture, just a hammer and nail.
+**[Toolsets](../concepts/toolsets)** are curated bundles of tools organized around specific use cases or workflows. Rather than giving an agent access to every available tool, you select only the ones needed to accomplish particular tasks. Think of toolsets as specialized toolkits — you wouldn't bring a full workshop to hang a picture, just a hammer and nail.
 
 
-## The challenge with Tool Curation
+## The challenge of tool curation
 
-When you connect a large API like Slack's to Gram, you'll end up with 150+ tools covering everything from sending messages to managing workspace settings. Here's the problem: if you include all of them in a single toolset, you create choice paralysis for the agent.
+When you connect a large API like Slack's to Gram, you'll end up with over 150 tools supporting operations from sending messages to managing workspace settings. Here's the problem: If you include all of them in a single toolset, you risk choice paralysis for the agent.
 
-Consider a simple task: "Send a summary of today's GitHub pull requests to the #engineering channel." An agent facing 200 Slack tools might waste time considering irrelevant options like `admin.conversations.setTeams` or `admin.usergroups.addChannels` instead of focusing on the core workflow:
+Consider a simple task: "Send a summary of today's GitHub pull requests to the #engineering channel." An agent facing 200 Slack tools might waste time considering irrelevant options, like `admin.conversations.setTeams` or `admin.usergroups.addChannels` instead of focusing on the core workflow:
 
-1. **Discover** → Find the #engineering channel
-2. **Compose** → Format the message with PR data  
-3. **Send** → Post to the channel
+1. **Discover** → Find the #engineering channel.
+2. **Compose** → Format the message with PR data.  
+3. **Send** → Post to the channel.
 
 The curation challenge is identifying these workflows and building toolsets that make it easier for agents to use them.
 
-## How an Agent Thinks
+## How an agent thinks
 
-Let's examine a real example from a CRM integration that demonstrates excellent tool curation. Watch how an agent handles the seemingly simple request: "Create a new deal for Georges Test Deal worth $25,000."
+Let's examine a real example from a CRM integration that demonstrates excellent tool curation. Watch how an agent handles the seemingly simple request: "Create a new deal for George's Test Deal worth $25,000."
 
 The agent doesn't just call a `create_deal` tool immediately. Instead, it follows a progressive discovery pattern:
 
-### Step 1: Discover Prerequisites
+### Step 1: Discover prerequisites
+
 The agent realizes it needs specific IDs and calls `search_users` to find "Katrina" (the SDR) and "Kyle" (the Solution Engineer). It can't create a deal without knowing who's responsible for it.
 
-### Step 2: Understand Structure  
-Next, it calls `list_pipelines` to understand the available sales pipelines and find the "Discovery" stage. The deal needs to be placed in the correct workflow stage.
+### Step 2: Understand structure  
 
-### Step 3: Execute Action
+Next, the agent calls `list_pipelines` to understand the available sales pipelines and find the "Discovery" stage. The deal needs to be placed in the correct workflow stage.
+
+### Step 3: Execute action
+
 Only now, with all prerequisites gathered, does the agent call `create_deal` with the complete, validated information.
+
+### What this workflow shows
 
 This workflow showcases three key curation principles:
 
-**Discovery tools come first** → The agent can find what it needs
-**Validation tools provide context** → The agent understands the system structure  
-**Action tools complete workflows** → The agent can accomplish its goal
+**Discovery tools come first** → The agent can find what it needs.
+**Validation tools provide context** → The agent understands the system structure.  
+**Action tools complete workflows** → The agent can accomplish its goal.
 
-## Workflow-Based Thinking
+## Workflow-based thinking
 
-The best toolsets are designed around agent workflows, not API structure. Here's how to shift your thinking:
+The best toolsets are designed around agent workflows, not API structures. Here's how to shift your thinking:
 
-### Traditional API Approach (Don't Do This)
+### Traditional API approach (don't do this)
 
 ```
 ✗ Include every endpoint:
@@ -70,7 +75,7 @@ The best toolsets are designed around agent workflows, not API structure. Here's
   - ... 50+ more tools
 ```
 
-### Workflow-style Approach (Do This)
+### Workflow-style approach (do this)
 
 ```
 ✓ "Deal Creation" toolset:
@@ -88,13 +93,13 @@ The best toolsets are designed around agent workflows, not API structure. Here's
 
 Notice how each toolset supports a complete workflow with just the essential tools. An agent working on deal creation doesn't need deal deletion tools cluttering its context.
 
-## Curation Strategies
+## Curation strategies
 
-There are a few ways to curate your tools into effective toolsets.
+Here are some practical ways to curate your tools into effective toolsets.
 
-### 1. Dependency Mapping
+### Map tool dependencies
 
-Start by identifying tool dependencies. Some tools require information from other tools to function properly. Map these relationships:
+Start by identifying tool dependencies. Some tools rely on information from other tools to function properly. Map these relationships:
 
 ```
 create_deal depends on:
@@ -107,30 +112,36 @@ update_deal_stage depends on:
 └── Valid stage ID (from list_pipelines)
 ```
 
-Include the dependency tools in your toolset, or agents will get stuck with incomplete information.
+Include the dependency tools in your toolset, or agents will be blocked by incomplete information.
 
-### 2. Use Case Specificity
+### Group tools for specific use cases
 
-Create different toolsets for different personas and goals:
+Create different toolsets for different personas and goals.
 
-**Sales Rep Toolset** (focused on deal progression):
-- search_deals, update_deal_stage, add_deal_note
-- search_contacts, log_call_activity  
-- list_pipelines, get_pipeline_metrics
+**Sales rep toolset:**
+*Focus: deal progression*
 
-**Sales Manager Toolset** (focused on oversight):
-- list_team_deals, get_pipeline_report
-- search_deals_by_rep, get_deal_forecast
-- list_pipeline_stages, update_deal_owner
+- `search_deals`, `update_deal_stage`, `add_deal_note`
+- `search_contacts`, `log_call_activity`  
+- `list_pipelines`, `get_pipeline_metrics`
 
-**Support Toolset** (focused on customer issues):
-- search_contacts, get_contact_deals
-- create_support_ticket, update_ticket_status
-- search_companies, get_account_health
+**Sales manager toolset:** 
+*Focus: oversight*
 
-### 3. Context Enrichment
+- `list_team_deals`, `get_pipeline_report`
+- `search_deals_by_rep`, `get_deal_forecast`
+- `list_pipeline_stages`, `update_deal_owner`
 
-Use Gram's `x-gram` extension to provide agents with workflow context directly in your OpenAPI document:
+**Support toolset:** 
+*Focus: customer issues*
+
+- `search_contacts`, `get_contact_deals`
+- `create_support_ticket`, `update_ticket_status`
+- `search_companies`, `get_account_health`
+
+### Provide rich context 
+
+Use Gram's `x-gram` extension directly in your OpenAPI document to provide agents with workflow context:
 
 ```yaml
 x-gram:
@@ -147,36 +158,39 @@ x-gram:
     </prerequisites>
 ```
 
-This helps agents understand not just what a tool does, but when and how to use it effectively.
+Embedding context and prerequisites helps agents understand not just what a tool does, but when and how to use it effectively.
 
-## Anti-Patterns to Avoid
+## Anti-patterns to avoid
 
-### The "Everything Toolset"
+Avoid these anti-patterns to keep your toolsets efficient, focused, and agent-friendly.
+
+### The everything toolset
 
 **Don't** create a single toolset with every available tool. This overwhelms agents and defeats the purpose of curation.
 
-### The "Mirror API" Approach  
+### The mirror-API approach  
 
-**Don't** just copy your API structure into toolsets. APIs are organized for developers; toolsets should be organized for agent workflows.
+**Don't** simply copy your API structure into toolsets. APIs are organized for developers; toolsets should be organized for agent workflows.
 
-### The "Missing Dependencies" Trap
+### The missing-dependencies trap
 
-**Don't** include action tools without their prerequisite discovery tools. An agent that can `create_deal` but can't `search_users` will struggle to complete workflows.
+**Don't** include action tools without their required discovery tools. An agent that can `create_deal` but can't `search_users` will struggle to complete workflows.
 
-### The "Inconsistent Naming" Problem
+### The inconsistent-naming problem
+
 **Don't** mix naming conventions within a toolset. If you use `search_users`, stick with `search_*` patterns rather than mixing in `list_contacts` or `find_companies`.
 
-## Testing Your Curation
+## Test your curation
 
-The Gram playground is perfect for validating your curation decisions. For example if you have a CRM toolset, test it with various agent prompts:
+The Gram playground is perfect for validating your curation decisions. For example, if you have a CRM toolset, test it with various agent prompts:
 
-- **End-to-end workflows**: "Create a new deal for Acme Corp worth $50k in the Enterprise pipeline"
-- **Discovery scenarios**: "Find all deals assigned to Sarah in the Discovery stage"  
-- **Error recovery**: "Update the deal amount to $75k" (without providing a deal ID)
+- **End-to-end workflows:** "Create a new deal for Acme Corp worth $50k in the Enterprise pipeline."
+- **Discovery scenarios:** "Find all deals assigned to Sarah in the Discovery stage."  
+- **Error recovery:** "Update the deal amount to $75k" (without providing a deal ID).
 
 Watch how the agent navigates your toolset. Does it get stuck? Does it waste time with irrelevant tools? Does it complete workflows smoothly? Use these insights to refine your toolset.
 
-## In Summary
+## Putting it all together
 
 Tool curation is both an art and a science. It requires understanding your agents' workflows, mapping tool dependencies, and designing progressive disclosure experiences that feel natural and efficient.
 
