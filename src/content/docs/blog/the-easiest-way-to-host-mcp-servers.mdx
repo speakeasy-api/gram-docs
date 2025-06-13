@@ -5,35 +5,45 @@ sidebar:
   order: 0
 ---
 
-Tools like Speakeasy make it easy to build MCP servers, allowing developers to quickly integrate APIs and run MCP servers locally using clients like Claude or Cursor.
+If you offer an API, you've probably been focused on trying to make it as good as possible for humans. Now you also need to make it easy to use for AI Agents. 
 
-But hosting an MCP server is a little more complicated. You need to choose the right transport to expose your server, manage certificates to ensure secure communication, and handle authentication, distribution, scaling, and all the other challenges that come with deploying a server.
+At [Speakeasy](https://speakeasy.com), we've generated over 50 production-ready MCP servers for our customers, and we've seen first-hand the complexity of creating, deploying, and hosting an MCP server for your API. We built [Gram](https://getgram.ai) as a solution to this. Gram is a platform that lets you create, curate, and host MCP servers for your API.
 
-Because MCP is a new and evolving protocol with no established security guidelines and best practices, making a poor hosting decision can lead to security issues (like unwanted access) and increased technical debt, especially if you maintain the API the MCP server depends on.
+## A quick recap of MCP Servers and how people use them
 
-The article explores the complexities of MCP server hosting and shows you how Gram can help you simplify, secure, and scale your deployment.
+The main way that agents use API is through [MCP](http://speakeasy.com/mcp). MCP has seen an unprecedented rate of adoption. It was announced by Anthropic in November 2024, and within a few months it had been adopted as the defacto standard. Companies like Microsoft, Google, OpenAI, Cloudflare and many others embraced it, and offered MCP servers as a new way to interact with their existing APIs.
 
-## Comparing local and hosted MCP servers
+But creating, deploying, hosting, and managing MCP servers remains confusing and challenging. Although MCP follows a familiar client-server model, it creates confusion about who should build, own, manage, and maintain the server. With APIs, it's always been clear. The producer (like Stripe) hosts the API and the consumer (for example an online shop) uses that API. Now with MCP there are many options, with developers often 'hosting' MCP servers on their own machines, or a company hosting the MCP server for a third-party integration internally for all of its developers to use.
 
-MCP makes it easy to run servers in other local environments. Using the MCP [Python](https://github.com/modelcontextprotocol/python-sdk), [TypeScript](https://github.com/modelcontextprotocol/typescript-sdk), or [Java](https://github.com/modelcontextprotocol/java-sdk) SDKs, you can package your application in a way that allows others to download the source code or executable and run the application locally using tools like Cursor or Claude.
+We think that companies will naturally gravitate to hosting and managing their own MCP servers, and we built Gram to make that easy.
 
-Here's what a local setup looks like with a running MCP server and client.
+## Local, remote, or managed: comparing models for interacting with MCP
 
-![Running MCP server locally](/img/blog/the-easiest-way-to-host-mcp-servers/local-hosting.png)
+![MCP Server models](/img/blog/the-easiest-way-to-host-mcp-servers/managed-mcp.png)
 
-Running an MCP server locally has several advantages:
+People use MCP in different ways. We can broadly categorize these into the following three categories:
 
-- **Security:** Locally running MCP servers have no risk of external access or network exposure, especially if the MCP client (like Claude) is running on the same machine.
-- **Easy setup:** There's no need to manage remote infrastructure, deploy to cloud environments, or configure complex networking.
-- **Speed:** Like other local servers, MCP servers are naturally fast, with minimal latency and smooth iteration.
+* **Local** - a developer downloads an MCP server to their developer machine, and configures and MCP client, like Claude Desktop or Cursor, to be able to use the tools provided in that server
+* **Remote** - a system administrator downloads an MCP server to a company-accessible server. Anyone at the company can configure their MCP client to interact with a company-accessible tool, via this server.
+* **Managed** - the API **producer** hosts and manages the MCP server, allowing any of its customers to configure their MCP clients to connect to the server, and use the API.
 
-As MCP adoption grows, companies are increasingly hosting their own MCP servers to make them accessible to teammates, customers, and external agents. While local setups are great for quick iteration and personal use, they don't scale well. As your project grows, you'll need to make your MCP server publicly accessible, which means hosting it yourself.
+At the moment, unintuitively, MCP Servers are usually **local** -- hosted or managed on the **API consumer** side. If you're a developer and you want to interact with your payments platform or project management application through an MCP client, you first download the MCP server, run it locally, and hook it up to your MCP client (for example, Claude Desktop, or Cursor) Then you can chat with your API and say things like "show me all my tasks due tomorrow" or "please send reminders to everyone with invoices due this week". This is often the lowest-friction way to play with MCP, but it come with many downsides like replicated work (everyone at the company needs to run the same local Docker container or similar) and lack of control (there's no centralized place to monitor and control MCP-related requests).
 
-Here's what the architecture looks like when the MCP server is hosted remotely and the client connects over the internet.
+We think the world will move quickly through **Remote** MCP (everyone at a company sharing one hosted server, but with the API consumer still installing and managing this) and end up on **Managed** MCP servers, where its the **API Producer** that is responsible for not only hosting and managing the MCP Server, but also for enterprise security features like access control, audit logs, and billing.
 
-![Running MCP server remotely](/img/blog/the-easiest-way-to-host-mcp-servers/remote-hosting.png)
+## Introducing Gram - a platform to create, curate, and distribute tools for AI
 
-Hosting your MCP server remotely opens up new possibilities:
+We built Gram anticipating this world. 
+
+Specifically, Gram lets you:
+
+- Upload the OpenAPI Document for your API and **generate** a full MCP server
+- **Curate** and customize the dozens or hundreds of tools you get into **Toolsets** - a specific set of tools that are likely to be useful to an agent
+- Instantly **host** that MCP server to let your customers connect their MCP clients to it
+
+We'll explain this in more detail below, but if you're a "show don't tell" person then head over to [getgram.ai](https://getgram.ai) and try it out.
+
+Still here? Let's look at some of what Gram offers:
 
 - **Instant access:** Users can connect to your MCP server without any local setup, removing friction and allowing tools like Claude or Cursor to work out of the box.
 - **Distribution:** You can share your MCP server internally or externally without needing others to run it locally, speeding up onboarding and enabling broader adoption.
@@ -41,43 +51,9 @@ Hosting your MCP server remotely opens up new possibilities:
 - **Reliability and uptime:** Unlike a local setup that stops when your machine sleeps, a hosted server can stay online 24/7. You have a stable endpoint for your MCP server, ensuring consistent availability for users or agents.
 - **Accessibility and team collaboration:** A hosted MCP server can be shared across teams or departments, making it easier to centralize tools and support cross-functional collaboration.
 - **Scalability:** Like any production system, a hosted MCP server can be monitored, scaled, and secured, allowing you to handle growing traffic and multiple concurrent users.
+- **Scoping**: Maybe your customers want their marketing, sales, and product teams to have access to different tools. Maybe some teams should only have read access to some resources. You can easily create different toolsets customized to specific use cases.
 
-MCP makes local hosting easy: Publish your server code and run it with a simple command. This portability drove the rapid adoption of MCP servers, especially as they're easy to configure with tools like Claude.
-
-As companies begin building MCP servers for both internal teams and external users, they face a new challenge: How to scope and manage internal and public MCP servers?
-
-## Comparing internal and public MCP servers
-
-Internal and public MCP servers have different needs for access control, distribution, and maintainability.
-
-### Scoping MCP tools by team or department
-
-Different teams within an organization often use internal MCP servers for specific purposes:
-
-- Marketing might query sales summaries.
-- Design and engineering could fetch Figma specs, read code metadata, or autogenerate PRDs.
-
-If multiple teams are using a single MCP server, scope creep becomes a risk. When one server has access to everything – every internal tool and every team's API – it creates a centralized dependency that's hard to maintain and potentially insecure. When one part breaks or leaks data, the whole system is compromised.
-
-This kind of broad access makes scoping tools by team or use case essential. Platforms like FastMCP let you ignore certain endpoints from your OpenAPI document, but this often means spinning up multiple tailored MCP server instances, which can become tedious to manage with time.
-
-### Client distribution models
-
-Once your server is scoped for internal or public use, you need to consider how clients will access it.
-
-**Internal distribution** typically involves setting up access controls and sharing the server with team-specific clients. This may include sharing Claude configuration templates, API keys, or secure endpoints.
-
-**Public distribution** removes friction by exposing your MCP server over HTTPS, allowing any Claude user or agent to connect with no installation or configuration necessary. This approach works well for public APIs or low-risk services, and creates opportunities for monetization.
-
-However, hosting an MCP server still comes with its own set of challenges:
-
-- **Transport selection:** Unlike standard HTTP servers, MCP supports several transport options, including SSE, `stdio`, HTTP, and (with custom setup) WebSocket. While this range of options offers flexibility, it also requires careful consideration when it comes to choosing the right transport for your environment and deployment needs.
-- **Security:** As a relatively new protocol, MCP lacks the mature security models of more established protocols. You'll need to manage SSL/TLS certificates, handle authentication, and implement scope control – all of which add complexity and contribute to long-term technical debt.
-- **Maintenance and reliability:** Like any deployed service, an MCP server requires monitoring, updates, and infrastructure maintenance to ensure it stays available. You also need to ensure consistency across environments (like Claude, Cursor, and other agents), which adds to deployment overhead.
-
-This is where Gram comes in, providing a streamlined solution for hosting, distributing, and managing MCP servers.
-
-## Introducing Gram: Hosted MCP server in three simple steps
+## Creating and hosting an MCP server in three simple steps
 
 Gram takes your OpenAPI document and, in just three steps, generates a fully functional, scoped MCP server, ready to use across environments, teams, and agents.
 
@@ -124,9 +100,9 @@ Now you can interact with your MCP server in real time in the Gram Playground.
 
 ### Public and authenticated servers
 
-To configure your MCP server as public or authenticated, go to **MCP** in the Playground sidebar and select **MCP Config** for your hosted server.
+To configure your MCP server as public or authenticated, go to **MCP** in the sidebar and select **MCP Config** for your hosted server.
 
-- A **public server** can be accessed from any machine and is well-suited for exposing non-sensitive use cases like public APIs or services that don't require authentication.
+- A **public server** can be instantly used by any of your customers, simply by copying the configuration provided into an MCP client.
 
 ![Gram Public Server](/img/blog/the-easiest-way-to-host-mcp-servers/gram-public-server.png)
 
@@ -136,7 +112,7 @@ To configure your MCP server as public or authenticated, go to **MCP** in the Pl
 
 ### Connect your MCP server to AI agents
 
-In addition to Claude, you can use your MCP server with AI agents. The Gram Python and TypeScript SDKs support OpenAI Agents, LangChain, and other function-based tooling.
+In addition to MCP Clients like Claude, your customers can automate interactions with your MCP server using AI agents. The Gram Python and TypeScript SDKs support OpenAI Agents, LangChain, and other function-based tooling, and in Gram you'll find sample code to easily create agents within your existing framework.
 
 Here is an example Python snippet that shows how to integrate your MCP server with LangChain:
 
