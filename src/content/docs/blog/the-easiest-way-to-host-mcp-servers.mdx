@@ -13,7 +13,7 @@ At [Speakeasy](https://speakeasy.com), we've generated over 50 production-ready 
 
 The main way that agents use API is through [MCP](http://speakeasy.com/mcp). MCP has seen an unprecedented rate of adoption. It was announced by Anthropic in November 2024, and within a few months it had been adopted as the defacto standard. Companies like Microsoft, Google, OpenAI, Cloudflare and many others embraced it, and offered MCP servers as a new way to interact with their existing APIs.
 
-But creating, deploying, hosting, and managing MCP servers remains confusing and challenging. Although MCP follows a familiar client-server model, it creates confusion about who should build, own, manage, and maintain the server. With APIs, it's always been clear. The producer (like Stripe) hosts the API and the consumer (for example an online shop) uses that API. Now with MCP there are many options, with developers often 'hosting' MCP servers on their own machines, or a company hosting the MCP server for a third-party integration internally for all of its developers to use.
+But creating, deploying, hosting, and managing MCP servers remains confusing and challenging. Although MCP follows a familiar client-server model, it creates confusion about who should build, own, manage, and maintain the server. With APIs, it's always been clear. The producer (like Stripe) hosts the API and the consumer (for example an online shop) uses that API. When it comes to MCP, there are many options, with developers often 'hosting' MCP servers on their own machines, or a company hosting the MCP server for a third-party integration internally for all of its developers to use.
 
 We think that companies will naturally gravitate to hosting and managing their own MCP servers, and we built Gram to make that easy.
 
@@ -23,11 +23,11 @@ We think that companies will naturally gravitate to hosting and managing their o
 
 People use MCP in different ways. We can broadly categorize these into the following three categories:
 
-* **Local** - a developer downloads an MCP server to their developer machine, and configures and MCP client, like Claude Desktop or Cursor, to be able to use the tools provided in that server
+* **Local** - a developer downloads an MCP server to their developer machine, and configures an MCP client, like Claude Desktop or Cursor, to be able to use the tools provided in that server
 * **Remote** - a system administrator downloads an MCP server to a company-accessible server. Anyone at the company can configure their MCP client to interact with a company-accessible tool, via this server.
 * **Managed** - the API **producer** hosts and manages the MCP server, allowing any of its customers to configure their MCP clients to connect to the server, and use the API.
 
-At the moment, unintuitively, MCP Servers are usually **local** -- hosted or managed on the **API consumer** side. If you're a developer and you want to interact with your payments platform or project management application through an MCP client, you first download the MCP server, run it locally, and hook it up to your MCP client (for example, Claude Desktop, or Cursor) Then you can chat with your API and say things like "show me all my tasks due tomorrow" or "please send reminders to everyone with invoices due this week". This is often the lowest-friction way to play with MCP, but it come with many downsides like replicated work (everyone at the company needs to run the same local Docker container or similar) and lack of control (there's no centralized place to monitor and control MCP-related requests).
+At the moment, unintuitively, MCP Servers are usually **local**. This means they are hosted or managed on the **API consumer** side. If you're a developer and you want to interact with your payments platform or project management application through an MCP client, you first download the MCP server, run it locally, and hook it up to your MCP client (for example, Claude Desktop, or Cursor) Then you can chat with your API and say things like "show me all my tasks due tomorrow" or "please send reminders to everyone with invoices due this week". This is often the lowest-friction way to play with MCP, but it comes with many downsides like replicated work (everyone at the company needs to run the same local Docker container or similar) and lack of control (there's no centralized place to monitor and control MCP-related requests).
 
 We think the world will move quickly through **Remote** MCP (everyone at a company sharing one hosted server, but with the API consumer still installing and managing this) and end up on **Managed** MCP servers, where its the **API Producer** that is responsible for not only hosting and managing the MCP Server, but also for enterprise security features like access control, audit logs, and billing.
 
@@ -37,9 +37,9 @@ We built Gram anticipating this world.
 
 Specifically, Gram lets you:
 
-- Upload the OpenAPI Document for your API and **generate** a full MCP server
-- **Curate** and customize the dozens or hundreds of tools you get into **Toolsets** - a specific set of tools that are likely to be useful to an agent
-- Instantly **host** that MCP server to let your customers connect their MCP clients to it
+- Upload the OpenAPI Document for your API and **generate** a full MCP server.
+- **Curate** and customize the dozens or hundreds of tools you get into **Toolsets** - a specific set of tools that are likely to be useful to an agent.
+- Instantly **host** that MCP server to let your customers connect their MCP clients to it.
 
 We'll explain this in more detail below, but if you're a "show don't tell" person then head over to [getgram.ai](https://getgram.ai) and try it out.
 
