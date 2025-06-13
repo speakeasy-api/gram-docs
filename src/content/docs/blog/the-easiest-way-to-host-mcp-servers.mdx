@@ -5,43 +5,43 @@ sidebar:
   order: 0
 ---
 
-If you offer an API, you've probably been focused on trying to make it as good as possible for humans. Now you also need to make it easy to use for AI Agents. 
+If you offer an API, you've probably been focused on making it as good as possible for humans. Now you also need to make it easy to use for AI agents. 
 
 At [Speakeasy](https://speakeasy.com), we've generated over 50 production-ready MCP servers for our customers, and we've seen first-hand the complexity of creating, deploying, and hosting an MCP server for your API. We built [Gram](https://getgram.ai) as a solution to this. Gram is a platform that lets you create, curate, and host MCP servers for your API.
 
-## A quick recap of MCP Servers and how people use them
+## A quick recap of MCP servers and how people use them
 
-The main way that agents use API is through [MCP](http://speakeasy.com/mcp). MCP has seen an unprecedented rate of adoption. It was announced by Anthropic in November 2024, and within a few months it had been adopted as the defacto standard. Companies like Microsoft, Google, OpenAI, Cloudflare and many others embraced it, and offered MCP servers as a new way to interact with their existing APIs.
+Agents mainly interact with APIs through the [Model Context Protocol (MCP)](http://speakeasy.com/mcp). Since it was announced by Anthropic in November 2024, MCP has seen an unprecedented rate of adoption, quickly becoming the de facto standard. Companies like Microsoft, Google, OpenAI, and Cloudflare (among many others) have embraced it and offer MCP servers as a new way to interact with their existing APIs.
 
-But creating, deploying, hosting, and managing MCP servers remains confusing and challenging. Although MCP follows a familiar client-server model, it creates confusion about who should build, own, manage, and maintain the server. With APIs, it's always been clear. The producer (like Stripe) hosts the API and the consumer (for example an online shop) uses that API. When it comes to MCP, there are many options, with developers often 'hosting' MCP servers on their own machines, or a company hosting the MCP server for a third-party integration internally for all of its developers to use.
+But creating, deploying, hosting, and managing MCP servers remains confusing and challenging. Although MCP follows a familiar client-server model, it creates confusion about who should build, own, manage, and maintain the server. With APIs, it's always been clear. The producer (like Stripe) hosts the API, and the consumer (for example, an online shop) uses that API. With MCP, hosting models vary: Developers often "host" MCP servers on their own machines, or companies host them internally for team-wide access to third-party integrations.
 
 We think that companies will naturally gravitate to hosting and managing their own MCP servers, and we built Gram to make that easy.
 
-## Local, remote, or managed: comparing models for interacting with MCP
+## Local, remote, or managed: Comparing models for interacting with MCP
 
-![MCP Server models](/img/blog/the-easiest-way-to-host-mcp-servers/managed-mcp.png)
+![MCP server models](/img/blog/the-easiest-way-to-host-mcp-servers/managed-mcp.png)
 
-People use MCP in different ways. We can broadly categorize these into the following three categories:
+People use MCP in various ways, broadly categorized as follows:
 
-* **Local** - a developer downloads an MCP server to their developer machine, and configures an MCP client, like Claude Desktop or Cursor, to be able to use the tools provided in that server
-* **Remote** - a system administrator downloads an MCP server to a company-accessible server. Anyone at the company can configure their MCP client to interact with a company-accessible tool, via this server.
-* **Managed** - the API **producer** hosts and manages the MCP server, allowing any of its customers to configure their MCP clients to connect to the server, and use the API.
+* **Local:** A developer downloads an MCP server to their developer machine, and configures an MCP client, like Claude or Cursor, to use the tools provided in that server.
+* **Remote:** A system administrator downloads an MCP server to a company-accessible server. Anyone at the company can configure their MCP client to interact with a company-accessible tool via this server.
+* **Managed:** The API **producer** hosts and manages the MCP server, allowing any of its customers to configure their MCP clients to connect to the server and use the API.
 
-At the moment, unintuitively, MCP Servers are usually **local**. This means they are hosted or managed on the **API consumer** side. If you're a developer and you want to interact with your payments platform or project management application through an MCP client, you first download the MCP server, run it locally, and hook it up to your MCP client (for example, Claude Desktop, or Cursor) Then you can chat with your API and say things like "show me all my tasks due tomorrow" or "please send reminders to everyone with invoices due this week". This is often the lowest-friction way to play with MCP, but it comes with many downsides like replicated work (everyone at the company needs to run the same local Docker container or similar) and lack of control (there's no centralized place to monitor and control MCP-related requests).
+Currently (unintuitively), MCP servers are usually **local**, meaning they are hosted or managed on the **API consumer** side. If you're a developer and you want to interact with your payments platform or project management application through an MCP client, you first download the MCP server, run it locally, and hook it up to your MCP client (for example, Claude or Cursor). You can then chat with your API, saying things like, "Show me all my tasks due tomorrow" or "Please send reminders to everyone with invoices due this week." This is often the lowest-friction way to play with MCP, but it comes with many downsides, like replicated work (everyone at the company needs to run the same local Docker container or similar) and lack of control (there's no centralized place to monitor and control MCP-related requests).
 
-We think the world will move quickly through **Remote** MCP (everyone at a company sharing one hosted server, but with the API consumer still installing and managing this) and end up on **Managed** MCP servers, where its the **API Producer** that is responsible for not only hosting and managing the MCP Server, but also for enterprise security features like access control, audit logs, and billing.
+We think the world will move quickly through **Remote** MCP servers (everyone at a company sharing one hosted server, but with the API consumer still installing and managing this) and end up on **Managed** MCP servers, where the **API Producer** is responsible for not only hosting and managing the MCP server, but also for enterprise security features like access control, audit logs, and billing.
 
-## Introducing Gram - a platform to create, curate, and distribute tools for AI
+## Introducing Gram: A platform to create, curate, and distribute tools for AI
 
 We built Gram anticipating this world. 
 
 Specifically, Gram lets you:
 
 - Upload the OpenAPI Document for your API and **generate** a full MCP server.
-- **Curate** and customize the dozens or hundreds of tools you get into **Toolsets** - a specific set of tools that are likely to be useful to an agent.
-- Instantly **host** that MCP server to let your customers connect their MCP clients to it.
+- **Curate** and customize the dozens or even hundreds of generated tools into **Toolsets**, which are bundles of tools that are likely to be useful to an agent.
+- Instantly **host** the MCP server so that your customers can connect their MCP clients to it.
 
-We'll explain this in more detail below, but if you're a "show don't tell" person then head over to [getgram.ai](https://getgram.ai) and try it out.
+We'll explain this in more detail below, but if you're a "show don't tell" person, head over to [getgram.ai](https://getgram.ai) and try it out.
 
 Still here? Let's look at some of what Gram offers:
 
@@ -96,7 +96,7 @@ Click **Environments** in the sidebar, and then **+ New Environment**.
 
 Now you can interact with your MCP server in real time in the Gram Playground.
 
-![MCP playground](/img/blog/the-easiest-way-to-host-mcp-servers/gram-playground.png)
+![MCP Playground](/img/blog/the-easiest-way-to-host-mcp-servers/gram-playground.png)
 
 ### Public and authenticated servers
 
@@ -112,7 +112,7 @@ To configure your MCP server as public or authenticated, go to **MCP** in the si
 
 ### Connect your MCP server to AI agents
 
-In addition to MCP Clients like Claude, your customers can automate interactions with your MCP server using AI agents. The Gram Python and TypeScript SDKs support OpenAI Agents, LangChain, and other function-based tooling, and in Gram you'll find sample code to easily create agents within your existing framework.
+In addition to MCP Clients like Claude, your customers can automate interactions with your MCP server using AI agents. The Gram Python and TypeScript SDKs support OpenAI Agents, LangChain, and other function-based tooling, and Gram provides sample code to help you create agents within your existing framework.
 
 Here is an example Python snippet that shows how to integrate your MCP server with LangChain:
 
