@@ -1,45 +1,53 @@
 ---
-title: "Gram Concepts: Tools, Toolsets, and Environments and why you should care"
+title: "Tools, toolsets, and environments: Gram concepts and why you should care"
 description: "Learn how Gram organizes tools, toolsets, and environments to build agent-ready capabilities that are organized, secure, and ready to use."
 sidebar:
   order: 1
 ---
 
-In the previous post, we saw how Gram turns any OpenAPI document into a fully scoped MCP server with a few clicks, then serves it from a stable endpoint. We explored how this approach simplifies both internal and public-facing MCP servers, lets you create multiple servers per team or feature, and keeps things organized across clients like Cursor and Claude.
+In the previous post, we saw how Gram turns any OpenAPI document into a fully scoped MCP server and serves it from a stable endpoint – all in just a few clicks. This approach simplifies internal and public-facing MCP servers, lets you create multiple servers per team or feature, and keeps things organized across clients like Cursor and Claude.
 
-Now we need to understand how Gram works in practice. Individual tools are useful but scattered. Gram organizes them through three core concepts: **Tools**, **Toolsets**, and **Environments**. Together, they let us build agent-ready capabilities that stay organized, secure, and ready to use.
+This post introduces the core concepts that make Gram's agent-ready capabilities organized, secure, and ready to use: **tools**, **toolsets**, and **environments**.
 
-We'll walk through these concepts by showing a complete example workflow, which can be summarized as:
+Individual tools are useful on their own, but without structure, they're scattered and hard to manage. Gram solves this by organizing tools into toolsets and linking them to environments for configuration and control. 
 
-1. **Create** – generate tools from OpenAPI documents or use pre-built integrations
-2. **Bundle** – bundle tools into curated toolsets and configure environments for authentication
-3. **Publish** – test in the playground, then use as an MCP server or with the SDK within your agentic applications
+We'll walk through these concepts using a complete example workflow:
 
-Let's get started.
+1. **Create** – Generate tools from OpenAPI documents or pre-built integrations.
+2. **Bundle** – Bundle tools into curated toolsets and configure environments for authentication.
+3. **Publish** – Test the setup in the playground, then deploy it as an MCP server or connect using the SDK.
 
-## Concept overview
+## How the core concepts fit together
 
-First, let's take a wider look at some key concepts in Gram. The diagram below shows how tools, toolsets, and environments fit together within Gram.
+Let's take a big-picture view of how Gram's core concepts work together. The diagram below shows how tools, toolsets, and environments combine in a hosted MCP server you can test and use.
 
-![Gram Concepts](/img/blog/concepts/gram-concepts.png)
+![Gram concepts](/img/blog/concepts/gram-concepts.png)
 
-Here's a quick overview of how each concept fits together:
+Here's a quick summary of each stage:
 
-- **Generate tools** – Start with an OpenAPI document or choose from Gram's third-party integrations (GitHub, Slack, etc.). Each source creates a set of tools
-- **Toolset** – You can then bundle those tools for a specific use case or team
-- **Environment** – You can then define environments with specific environment variables (API keys, OAuth tokens, base URLs) that the toolset needs at runtime.
-- **MCP server** – Gram creates a hosted MCP server from your toolset and environment, which you can immediately use in Claude Desktop, Cursor or any MCP-compatible client
-- **Publish and test** – You can test your MCP server in the playground, or use it with your own client. You can also use the MCP server as an SDK in your own applications. Gram hosts the MCP server for you, so you and your team can immediately start using it without any configuration or local setup.
+- **Generate tools:** Use an OpenAPI document or a pre-built integration (like GitHub or Slack) to create callable tools.
+- **Bundle into toolsets:** Group related tools for a specific team or use case.
+- **Configure environments:** Define the variables (like API keys, OAuth tokens, or base URLs) the toolset needs at runtime.
+- **Create an MCP server:** Combine a toolset and environment to generate a hosted MCP server.
+- **Test and publish:** Use the playground to validate your server, then connect to it using an MCP client or the Gram SDK. 
 
-## Concepts in Practice
+Gram hosts the MCP server for you, so you can start using it right away without any configuration or local setup.
 
-Let's see how these concepts work together in practice. We'll explain each concept as we go along.
+## Introducing the Push Advisor example
 
-Let's say we want to build an MCP Server that can help an agent decide whether it's safe to push code to production based on the day of the week, while also checking the status of our GitHub pull requests and issues.
+To see how Gram's core concepts work together in practice, we'll build an MCP server to help an agent decide whether it's safe to push code to production and check the status of our GitHub pull requests and issues. 
 
-We'll create an example that combines GitHub's integration with a custom "Push Advisor" API, which is a basic Cloudflare Worker that tells you whether it's safe to push to production based on the day of the week. (Spoiler: it's never safe on Fridays!)
+Our example combines the GitHub integration with a custom "Push Advisor" API, a basic Cloudflare Worker that makes deployment decisions based on the day of the week. (Spoiler: It's never safe on Fridays!)
 
-We'll create a toolset using the GitHub integration and the Cloudflare Worker's OpenAPI document, combine it with an environment that holds our GitHub token as well as the base URL of the Cloudflare Worker API, test everything in the playground, and publish it as a hosted MCP server.
+Here are the steps we'll follow:
+
+- Creating tools using the Cloudflare Worker's OpenAPI document and the GitHub integration.
+- Bundling tools in a toolset.
+- Configuring an environment with a GitHub token and the Push Advisor API's base URL.
+- Testing the toolset in the playground.
+- Publishing it as a hosted MCP server.
+
+We'll explain each concept as we go along.
 
 The Push Advisor API is live at `canpushtoprod.abdulbaaridavids04.workers.dev` and has two endpoints:
 
@@ -50,25 +58,27 @@ The Push Advisor API is live at `canpushtoprod.abdulbaaridavids04.workers.dev` a
 
 ## Creating tools
 
-A **Tool** in Gram represents one callable API action. We can create them by uploading an OpenAPI document or selecting a ready-made integration. Both approaches give us well-described MCP tools that the agent can invoke.
+In Gram, a **tool** represents a single callable API action. 
 
-### From OpenAPI documents
+You can create tools by uploading an OpenAPI document or selecting a ready-made integration. Both methods generate well-described MCP tools that agents can invoke.
 
-Gram allows you to **create tools from OpenAPI documents.** This is useful when you have an existing API that you want to use in your agentic applications.
+### Creating tools from OpenAPI documents
 
-Upload your OpenAPI document, and Gram parses each operation into a callable tool. For our example, we'll use our Push Advisor OpenAPI document, which creates tools like `can_i_push_to_prod` and `vibe_check`.
+With Gram, you can create tools directly from OpenAPI documents – ideal for using existing APIs in your agentic applications.
 
-We'll use the generated OpenAPI document from the API to create our tools. You can find the [OpenAPI document here](https://canpushtoprod.abdulbaaridavids04.workers.dev/openapi.json). We've also added a few `x-gram` tags to the OpenAPI document to help Gram understand the API. You can learn more about the `x-gram` [tags here](https://docs.getgram.ai/concepts/openapi#using-the-x-gram-extension).
+When you upload an OpenAPI document, Gram parses each operation into a callable tool. In our example, we'll use the [Push Advisor OpenAPI document](https://canpushtoprod.abdulbaaridavids04.workers.dev/openapi.json), which generates tools like `can_i_push_to_prod` and `vibe_check`.
+
+To help Gram interpret the API, we've added a few `x-gram` tags. Learn more about these tags on the [guide to optimizing OpenAPI documents for Gram](https://docs.getgram.ai/concepts/openapi#using-the-x-gram-extension).
 
 :::tip[NOTE]
-You can find our optimized document as well as the example code on the [Gram examples repository](https://github.com/ritza-co/gram-examples/tree/main/push-advisor-api).
+You can find our optimized OpenAPI document and the example code in the [Gram examples repository](https://github.com/ritza-co/gram-examples/tree/main/push-advisor-api).
 :::
 
 ```yaml openapi.yaml
 openapi: 3.1.0
 info:
   title: Push Decision API
-  description: A simple API to help decide when its appropriate to push code
+  description: A simple API to help decide when it's appropriate to push code
   version: 1.0.0
 servers:
 - url: https://canpushtoprod.<username>.workers.dev
@@ -81,7 +91,7 @@ tags:
 paths:
   "/can-i-push-to-prod":
     get:
-      summary: Check if its safe to push to production
+      summary: Check if it's safe to push to production
       description: Returns yes for Monday-Thursday, no for Friday-Sunday
       operationId: check_push_safety
       tags:
@@ -120,11 +130,11 @@ Let's create some tools from our OpenAPI document.
 </video>
 
 
-To create new tools from your OpenAPI document, go to the **Home** tab and click **New OpenAPI Source**. Upload your OpenAPI document and Gram will parse it and create tools for each operation.
+To create new tools from your OpenAPI document, go to the **Home** tab and click **New OpenAPI Source**. Upload your OpenAPI document, and Gram will parse it and create tools for each operation.
 
-### Pre-built integrations
+### Creating tools from pre-built integrations
 
-Gram offers **pre-built integrations** that you can use to create tools. These integrations come pre-configured for Gram, so you can start using them immediately.
+Gram offers **pre-built integrations** that are fully configured and ready to use, so you can start creating tools right away.
 
 We'll use the GitHub integration to access the GitHub API. Here's how to enable it:
 
@@ -134,21 +144,21 @@ We'll use the GitHub integration to access the GitHub API. Here's how to enable 
 </video>
 
 
-Gram will automatically add the tools, and they will be available when creating a new toolset.
+Gram automatically adds the tools, and they will be available when you create a new toolset.
 
-## Toolsets
+## Curating tools in toolsets
 
-A **toolset** is a curated bundle of tools for a specific use case or team. Toolsets solve a critical problem: dumping too many tools into an LLM's context window can exhaust the available space or cause the agent to make poor choices about which tools to call. Some language models even place hard caps on the total number of tools they can handle.
+A **toolset** is a curated bundle of tools for a specific use case or team. Toolsets solve a critical problem: Dumping too many tools into an LLM's context window can exhaust the available space or cause the agent to make poor choices about which tools to call. Some language models even place hard caps on the total number of tools they can handle.
 
-### The right tools for the job
+### Choosing the right tools for the job
 
-When creating a toolset, think about the specific task you want an agent to accomplish. Then select only the tools that directly help with that task. A cohesive set of tools gives your agent a much higher chance of success.
+When creating a toolset, focus on the specific task you want an agent to perform, and include only those tools that directly help with that task. A focused toolset gives your agent a much better chance of success.
 
-For example, the GitHub integration provides tools for managing issues, pull requests, and repositories. Rather than including everything, we can create a focused toolset with only issue-related tools. This ensures the agent has exactly what it needs—nothing more, nothing less.
+For example, the GitHub integration provides tools for managing issues, pull requests, and repositories. Rather than including everything, you might create a toolset with only issue-related tools. This ensures the agent gets exactly what it needs — nothing more, nothing less.
 
 ### Experimenting with toolsets
 
-Toolsets are also perfect for experimentation. You can create multiple toolsets to split-test different tool combinations, or compose multiple agents that each use distinct toolsets for specialized tasks.
+Toolsets are perfect for experimentation. You can create multiple toolsets to split-test different tool combinations, or compose multiple agents that each use distinct toolsets for specialized tasks.
 
 Let's create our toolset by adding both the GitHub tools and our custom Push Decision API tools.
 
@@ -160,24 +170,25 @@ Let's create our toolset by adding both the GitHub tools and our custom Push Dec
 
 Go to the **Toolsets** tab and click **New Toolset**. Give it a name and add the tools you want to include. Click **Save** to create the toolset.
 
-## Environments: authentication and configuration
+## Configuring environments
 
-An **environment** stores API keys, tokens, server URLs, and other runtime settings, keeping secrets separate from logic. This separation is crucial for managing different deployment contexts (production vs. staging), multi-tenant APIs, or team-specific credentials.
+An **environment** stores API keys, tokens, server URLs, and other runtime settings, keeping secrets separate from logic. This separation is crucial for managing different deployment contexts (for example, production and staging), multi-tenant APIs, or team-specific credentials.
 
 ### Why environments matter
 
 APIs typically require authentication and a server URL before an AI agent can access them. You might also need different configurations for:
-- **Production vs. staging** environments with different API endpoints
-- **Multi-tenant APIs** where each customer has their own subdomain
-- **Team-specific credentials** where different groups use different API keys
+
+- **Production and staging environments** with different API endpoints.
+- **Multi-tenant APIs**, where each customer has their own subdomain.
+- **Team-specific credentials**, where different groups use different API keys.
 
 When you attach an environment to a toolset, every API call automatically includes the correct authentication details and server configuration.
 
 For example, if we have a toolset that includes GitHub tools for managing issues, you might create different environments with varying permission levels:
 
-- **`support-readonly`** environment: Uses a GitHub token with read-only access, allowing agents to view issues and pull requests but not modify them
-- **`support-manager`** environment: Uses a token with write permissions, enabling senior support staff's agents to close issues, add labels, and update milestones
-- **`development`** environment: Uses a token with full repository access for development team agents
+- A **`support-readonly` environment** that uses a GitHub token with read-only access, allowing agents to view issues and pull requests but not modify them.
+- A **`support-manager` environment** that uses a token with write permissions, enabling senior support staff's agents to close issues, add labels, and update milestones.
+- A **`development` environment** that uses a token with full repository access for development team agents.
 
 This ensures that each agent operates within its intended scope, preventing accidental modifications or unauthorized access.
 
@@ -189,19 +200,21 @@ This ensures that each agent operates within its intended scope, preventing acci
 </video>
 
 
-To set up an environment, switch to the **Environments** tab and click **New Environment**. Give it a name (e.g. `demo-environment`). Gram can automatically populate environment variables based on your selected toolsets. When you click **Fill for toolset**, Gram analyzes the chosen toolset, identifies all required environment variables, and creates empty placeholders for each one. You can then set values for the relevant variables and remove any that aren't needed.
+To set up an environment, switch to the **Environments** tab and click **New Environment**. Give the environment a name (for example, `demo-environment`). 
+
+Gram can automatically populate environment variables based on your selected toolsets. When you click **Fill for toolset**, Gram analyzes the chosen toolset, identifies all required environment variables, and creates empty placeholders for each one. You can then set values for the relevant variables and remove any that aren't needed.
 
 Click **Save** to create the environment.
 
-## Connecting and testing
+## Testing, publishing, and integrating your toolset
 
-Now we'll test everything. Gram offers multiple ways to interact with your toolset: the playground for quick experiments, hosted MCP endpoints for MCP clients, and an SDK for use in your own applications.
+Gram offers several ways to interact with your toolset: The Playground for quick experiments, hosted MCP endpoints to use in MCP clients, and an SDK to integrate toolsets into your own applications.
 
-### Playground testing
+### Testing in the Playground 
 
-**The Playground** allows you to test your toolsets and see how they perform with different LLMs. You can also use the Playground to test your toolsets with different environments in order to see how they behave under different authorization scopes.
+In the **Playground**, you can test your toolsets with different LLMs and environments to see how they behave under various authorization scopes.
 
-To test your toolset, go to the **Playground** tab. Select your toolset and environment, then click **Run**. You can then interact with your toolset using natural language prompts.
+To test your toolset, go to the **Playground** tab, select your toolset and environment, then click **Run**. Now you can interact with your toolset using natural language prompts.
 
 <video width="600" controls>
   <source src="/img/blog/concepts/testing-with-playground.mp4" type="video/mp4" />
@@ -209,25 +222,26 @@ To test your toolset, go to the **Playground** tab. Select your toolset and envi
 </video>
 
 
-### Connect using MCP
+### Connecting using MCP
 
-Gram hosts your toolset as a remote MCP server, so you can immediately use it in Claude Desktop, Cursor or any MCP-compatible client. Simply click **MCP Config** and copy the MCP configuration. You can then paste it into your client.
+Gram hosts your toolset as a remote MCP server, so you can use it immediately in Claude, Cursor, or any MCP-compatible client. Click **MCP Config**, copy the MCP configuration, and paste it into your client.
 
-
-![Publishing an MCP Server](/img/blog/concepts/publish-mcp.png)
+![Publishing an MCP server](/img/blog/concepts/publish-mcp.png)
 
 You can also **Publish** your toolset for public use. Fill in the endpoint name, and whether you want to make it public or private.
 
-![Publishing an MCP Server Publicly](/img/blog/concepts/mcp-public-publish.png)
+![Publishing an MCP server publicly](/img/blog/concepts/mcp-public-publish.png)
 
-You can now share the MCP Config publicly or privately with your team. The MCP server will be hosted by Gram, so you don't need to worry about hosting it yourself.
+You can now share the MCP config privately with your team or make it public. Since Gram hosts the MCP server for you, there's no need to manage infrastructure yourself.
 
-![MCP Config](/img/blog/concepts/mcp-config.png)
+![MCP config](/img/blog/concepts/mcp-config.png)
 
-### SDK integration
+### Using the Gram SDK to access toolsets
 
-Gram also has an SDK you can use to provide agents with access to toolsets in your Gram account. Go to the **SDK** tab. You can choose the language you want to use as well as the LLM provider SDK you want to use.
+Use the Gram SDK to give agents access to toolsets in your account. 
+
+In the **SDK** tab, select the language and LLM provider you're working with.
 
 ![Code snippet](/img/blog/concepts/sdk-code-snippet.png)
 
-Gram will generate a code snippet that you can immediately paste in your application.
+Gram will generate a code snippet for you to paste into your application.
