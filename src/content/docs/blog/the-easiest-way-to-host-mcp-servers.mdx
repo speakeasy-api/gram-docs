@@ -71,7 +71,7 @@ Once your server is scoped for internal or public use, you need to consider how 
 
 However, hosting an MCP server still comes with its own set of challenges:
 
-- **Transport selection:** Unlike standard HTTP servers, MCP supports several transport options, including SSE, stdio, HTTP, and (with custom setup) WebSocket. While this range of options offers flexibility, it also requires careful consideration when it comes to choosing the right transport for your environment and deployment needs.
+- **Transport selection:** Unlike standard HTTP servers, MCP supports several transport options, including SSE, `stdio`, HTTP, and (with custom setup) WebSocket. While this range of options offers flexibility, it also requires careful consideration when it comes to choosing the right transport for your environment and deployment needs.
 - **Security:** As a relatively new protocol, MCP lacks the mature security models of more established protocols. You'll need to manage SSL/TLS certificates, handle authentication, and implement scope control – all of which add complexity and contribute to long-term technical debt.
 - **Maintenance and reliability:** Like any deployed service, an MCP server requires monitoring, updates, and infrastructure maintenance to ensure it stays available. You also need to ensure consistency across environments (like Claude, Cursor, and other agents), which adds to deployment overhead.
 
