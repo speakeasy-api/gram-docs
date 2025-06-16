@@ -1,8 +1,14 @@
 ---
 title: Tool definitions
 description: Mapping your HTTP API to tools that agents can use
+sidebar:
+  order: 0
 ---
 
-Every time you upload an OpenAPI document for your API to Gram or enable an integration, a deployment is created and then processed. During the processing stage, every operation in the OpenAPI document is turned into a tool definition. Tool definitions contain the necessary information to describe an LLM tool as well as information for Gram to build the corresponding HTTP request to your API or a third-party integration's API.
+Each time you upload an [OpenAPI document](/concepts/openapi) to Gram or enable an integration, a deployment is created and enters a processing phase. During this stage, every operation defined in the OpenAPI document is automatically converted into a corresponding tool definition.
 
-When creating toolsets, you pick the relevant tool definitions to add and then use the Gram playground, SDK or MCP server to invoke them. Under the hood, Gram will build HTTP requests using the details in the tool definition and selected environment and proxy the call to the relevant HTTP endpoint.
+![Generating tools](/img/concepts/tool-definitions/tools-generation.png)
+
+Tool definitions contain both the metadata needed to describe a tool to an LLM and the configuration required by Gram to construct the corresponding HTTP request to your API or a third-party integration.
+
+When creating toolsets, you select the relevant tool definitions and can invoke them using the Gram Playground, SDK, or MCP server. Under the hood, Gram uses the information in the tool definition—along with the selected [environment](/concepts/environments) (defaulting to `Default Env`), to build and proxy the HTTP request to the appropriate endpoint.

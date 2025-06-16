@@ -19,23 +19,19 @@ where they are hosted (the server URL). In Gram, these concepts are combined int
 
 ## Step 4: Test your toolsets out
 
-Use the playground on the Gram dashboard to test your toolsets out. You'll have access to popular language models. With your chosen toolset, chat with the LLM and evaluate how well it can use the tools you just created for a given task.
+Use the Playground on the Gram dashboard to test your toolsets out. You'll have access to popular language models. With your chosen toolset, chat with the LLM and evaluate how well it can use the tools you just created for a given task.
 
 ## Step 5: Integrate!
 
 ### Hosted MCP server
 
-Every Gram toolset you create is exposed as a hosted MCP server. [Model Context Protocol (MCP)][mcp] has become a de-facto standard for packaging tools
+Every Gram toolset you create is exposed as a hosted MCP server. [Model Context Protocol (MCP)](https://modelcontextprotocol.io) has become a de-facto standard for packaging tools
 and making them available to various language models and LLM clients. On the Gram dashboard, navigate to a toolset and you'll find a section guiding you on how to add the MCP server to your favorite LLM client.
-
-[mcp]: https://modelcontextprotocol.io
 
 ### Agentic frameworks and SDKs
 
-You've got everything in place to start integrating with popular agentic frameworks such as Langchain, OpenAI Agents SDK and Vercel AI SDK. We've built a Gram [Python SDK][gram-py] and [TypeScript SDK][gram-ts] that help you integrate with all of these frameworks in your Python or TypeScript codebase.
+You've got everything in place to start integrating with popular agentic frameworks such as Langchain, OpenAI Agents SDK and Vercel AI SDK. We've built a Gram [Python SDK](https://github.com/speakeasy-api/gram-python) and [TypeScript SDK](https://github.com/speakeasy-api/gram-typescript) that help you integrate with all of these frameworks in your Python or TypeScript codebase.
 
-[gram-py]: https://github.com/speakeasy-api/gram-python
-[gram-ts]: https://github.com/speakeasy-api/gram-typescript
 
 ## Step 6: Iterate
 
