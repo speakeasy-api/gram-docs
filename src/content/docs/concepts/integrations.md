@@ -1,6 +1,6 @@
 ---
 title: Integrations
-description: Access tools for popular third-party services all managed by Gram
+description: Access tools for popular third-party services through managed Gram integrations
 sidebar:
   order: 6
 ---
