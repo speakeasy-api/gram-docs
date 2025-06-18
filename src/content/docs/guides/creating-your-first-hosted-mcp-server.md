@@ -1,54 +1,59 @@
 ---
-title: Creating your first hosted MCP server
-description: A step-by-step guide to creating and deploying your first MCP server using Gram
+title: Creating a hosted MCP server
+description: A step-by-step guide to creating and deploying a hosted MCP server using Gram
 sidebar:
   order: 0
 ---
 
-This guide walks you through creating your first hosted MCP (Model Context Protocol) server using Gram. By the end of this guide, you'll have a working MCP server that you can connect to MCP clients, such as Claude Desktop and Cursor AI.
+This guide provides instructions for creating a hosted MCP server that you can connect to MCP clients like Claude and Cursor.
 
-By the end of this guide, you'll understand how to:
+The steps covered include:
 
-- Upload an OpenAPI document to Gram.
-- Create [Toolsets](/concepts/toolsets) and define environment variables.
-- Test and deploy your toolset as a hosted MCP server.
+- Uploading an OpenAPI document to Gram.
+- Creating a [toolset](/concepts/toolsets).
+- Testing the toolset.
+- Deploying the toolset as a hosted MCP server.
 
 ## Prerequisites
 
-- An OpenAPI document (OpenAPI 3.0+ specification) for your API. You can use the OpenAPI document we are using in this guide [here](https://github.com/ritza-co/gram-examples/blob/main/push-advisor-api/openapi.yaml).
-- A Gram account (sign up at [Gram](https://app.getgram.ai)).
+To follow along, you'll need:
 
-## Step 1: Upload your OpenAPI document
+- A [Gram account](https://app.getgram.ai).
+- An OpenAPI 3.0+ document for an API. This guide uses [this example OpenAPI document](https://github.com/ritza-co/gram-examples/blob/main/push-advisor-api/openapi.yaml) for a Push Advisor API.
 
-The OpenAPI document describes your API endpoints, which will be converted into tool definitions that MCP clients can understand and utilize. Start by uploading your OpenAPI document to Gram.
+## Step 1: Upload an OpenAPI document
 
-1. Navigate to your Gram dashboard and make sure you are on the **Your APIs** page, under the **CREATE** section of the sidebar.
-2. Click the **+ New OpenAPI Source** button.
+Gram converts OpenAPI endpoints into tool definitions that MCP clients can understand and use.
+
+To upload an OpenAPI document:
+
+- In the Gram dashboard, click **Your APIs** in the sidebar (under **Create**).
+- Click **+ New OpenAPI Source**.
 
 ![Upload OpenAPI document](/img/guides/uploading-openapi-document.png)
 
-3. Select your OpenAPI document file and then a name for the API you are adding.
-
-Gram will parse your OpenAPI document and automatically generate tool definitions for each endpoint.
+- Select the OpenAPI document to upload and add the API name.
 
 ![Validating tool definitions](/img/guides/01-upload-openapi-document-done.png)
 
+Gram will parse the uploaded OpenAPI document and generate tool definitions for each endpoint.
+
 ## Step 2: Create a toolset
 
-Gram allows you to organize your MCP server tools into focused, purpose-specific toolsets rather than exposing your entire API surface. Overloading the tool context can overwhelm LLMs, leading to ambiguity, incorrect tool selection, or hallucinations due to context bloat.
+Gram allows you to organize your MCP server tools into focused, purpose-specific toolsets for better performance and accuracy. 
 
 To create a toolset:
 
-1. Navigate to your Gram dashboard and make sure you are on the **Toolsets** page, under the **CURATE** section of the sidebar.  
-2. Click the **+ New Toolset** button.
+- In the Gram dashboard, click **Toolsets** in the sidebar (under **Curate**).  
+- Click **+ New Toolset**.
 
 ![Creating a toolset](/img/guides/02-adding-toolsets.png)
 
-2. Give your toolset a descriptive name.
+- Give the toolset a descriptive name.
 
 ![Naming a toolset](/img/guides/02-naming-toolset.png)
 
-3. You'll be redirected to the toolset configuration page, where you can group tools that work together to perform a specific task. Click the **+ Add Tool** button to add individual tools, or use the **Enable All** button to include all available tools in the set.
+- When you click **Submit**, you'll be redirected to the toolset configuration page. Click **+ Add Tool** to add individual tools, or use the **Enable All** button to include all available tools in the set.
 
 ![Selecting tools](/img/guides/02-selecting-tools.png)
 
@@ -56,35 +61,48 @@ To create a toolset:
 Include only the tools necessary for a specific workflow to reduce ambiguity and avoid tool selection errors.  
 :::
 
-## Step 3: Test your toolset
+## Step 3: Test the toolset
 
-Now that you have created a toolset, you can test it in the Gram playground.
+Now you can test the toolset in the Gram playground.
 
-1. On the **Toolsets** page, click on the **Playground** button on the newly toolset created.
+On the **Toolsets** page, click the **Playground** button on the newly created toolset.
 
 ![Opening the playground](/img/guides/03-clicking-playground.png)
 
-2. You'll be redirected to the Playground page, where you can chat with your agent, deploy an MCP Server, or access agent configuration details.  
+In the Playground, you can chat with the agent, deploy an MCP server, or access agent configuration details.  
 
 ![Playground page](/img/guides/03-playground-presentation.png)
 
-You can test the MCP Server first with the chat feature.
+Here we test the MCP server using the chat feature:
 
 ![Chatting with the MCP server](/img/guides/03-testing-mcp-server.png)
 
-## Step 4: Deploy as MCP server
+## Step 4: Deploy the toolset as an MCP server
 
-Every Gram toolset is automatically exposed as a hosted MCP server. No additional deployment steps required!
+Gram automatically exposes each toolset as a hosted MCP server.
 
-1. To access the MCP server configuration, you can click on the **MCP** tab on the Playground page.
+To connect the MCP client to the MCP server, you'll need to configure it with a [Gram API key](/concepts/api-keys).
+
+### Generate a Gram API key
+
+- In **Settings**, click **Create API Key**.
+- Give the API key a name, and click **Create**.
+
+![Creating an API key](/img/guides/04-adding-api-key.png)
+
+### Get the MCP server configuration
+
+- In the Playground, click the **MCP** tab.
 
 ![MCP server configuration](/img/guides/04-mcp-server-configuration.png)
 
-2. Then, by clicking the **MCP Config** button, you can copy the MCP server configuration and integrate it into your MCP client, such as Claude Desktop or Cursor AI.  
+- Click **MCP Config** to view the server configuration. 
 
 ![MCP server configuration](/img/guides/04-mcp-config-gram.png)
 
-Here is what the configuration looks like for an Authenticated server.
+### Configure the MCP client
+
+- Copy the MCP server configuration from Gram. Here's an example of what it looks like:
 
 ```json
 {
@@ -105,31 +123,28 @@ Here is what the configuration looks like for an Authenticated server.
 }
 ```
 
-The configuration requires a `GRAM_KEY`, which is basically a [Gram API key](/concepts/api-keys).
-
-3. Generate a Gram API key by navigating to the **Settings** page and clicking on the **Create API Key** button.
-
-![Creating an API key](/img/guides/04-adding-api-key.png)
-
-4. Copy the API key and follow your MCP client's instructions to add the configuration to your client.
+- Replace `<your-key-here>` with your Gram API key.
+- Add this configuration to the MCP client's configuration file.
 
 ## Next steps
 
-Your MCP server is now live and ready to use! Consider these next steps:
+Your MCP server is now live. Here are some next steps to consider:
 
-- **Iterate on tool descriptions**: Refine tool definitions and use variations to help LLMs better understand and invoke them accurately.
-- **Create custom toolsets**: Group tools by task to design structured, step-by-step workflows tailored to specific use cases.
-- **Integrate with frameworks**: Leverage the Gram SDK for Python or TypeScript to build agentic workflows. On the **Playground** page, you can select a ready-to-use code snippet in [Python](https://pypi.org/project/gram-ai/) or [JavaScript](https://www.npmjs.com/package/@gram-ai/sdk).
+- **Iterate on tool descriptions:** Refine tool definitions and use variations to help LLMs better understand and invoke them accurately.
+- **Create custom toolsets:** Group tools by task to design structured, step-by-step workflows tailored to specific use cases.
+- **Integrate with frameworks:** Use the Gram Python or TypeScript SDK to build agentic workflows. On the **Playground** page, you can select a ready-to-use code snippet in [Python](https://pypi.org/project/gram-ai/) or [JavaScript](https://www.npmjs.com/package/@gram-ai/sdk).
 
 ## Troubleshooting
 
-**Tools not working as expected?**
+Common MCP server issues and fixes:
+
+### Tools not working?
 
 - Check your authentication configuration.
 - Verify your server URL is accessible.
 
-**LLM choosing wrong tools?**
+### Wrong tools being selected?
 
 - Reduce the number of tools in your toolset.
-- Use Custom tools to create workflows with precise steps.
+- Use custom tools to create workflows with precise steps.
 - Create focused toolsets for different use cases.
