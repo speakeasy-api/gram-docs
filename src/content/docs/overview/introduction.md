@@ -26,7 +26,7 @@ This is where **Gram** comes in. Gram helps you effortlessly map your API to too
 - Test toolsets in the Gram Playground.
 - Fine-tune individual tools by prompt-engineering their names and descriptions.
 - Deploy toolsets as hosted MCP servers.
-- Integrate toolsets into agentic workflows using Gram's Python or TypeScript SDKs.
+- Integrate toolsets into agentic workflows using Gram's [Python](https://pypi.org/project/gram-ai/) or [TypeScript](https://www.npmjs.com/package/@gram-ai/sdk) SDKs.
 
 ## Useful links
 
