@@ -134,7 +134,7 @@ To connect the MCP client to the MCP server, you'll need to configure it with a 
 
 Your MCP server is now live. Here are some next steps to consider:
 
-- **Iterate on tool descriptions:** Refine tool definitions and use tool [variations](/concepts/tool-variations) to help LLMs better understand and invoke them accurately.
+- **Iterate on tool descriptions:** Refine tool definitions and use [tool variations](/concepts/tool-variations) to help LLMs better understand and invoke them accurately.
 - **Create custom toolsets:** Group tools by task to design structured, step-by-step workflows tailored to specific use cases.
 - **Integrate with frameworks:** Use the Gram Python or TypeScript SDK to build agentic workflows. On the **Playground** page, you can select a ready-to-use code snippet in [Python](https://pypi.org/project/gram-ai/) or [JavaScript](https://www.npmjs.com/package/@gram-ai/sdk).
 
@@ -154,5 +154,5 @@ Common MCP server issues and fixes:
 - Create focused toolsets for different use cases.
 
 :::tip[Related guides]
-- [Core Gram Concepts](/blog/gram-concepts)
+- [Core Gram concepts](/blog/gram-concepts)
 :::
