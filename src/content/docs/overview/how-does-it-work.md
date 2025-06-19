@@ -1,6 +1,6 @@
 ---
 title: How Gram works
-description: Step-by-step: How Gram transforms your APIs into LLM tools, from OpenAPI parsing to prompt-engineered tool definitions.
+description: "Step-by-step: How Gram transforms your APIs into LLM tools, from OpenAPI parsing to prompt-engineered tool definitions."
 ---
 
 ## Step 1: Upload an OpenAPI document
@@ -13,9 +13,9 @@ Your API may have dozens or even hundreds of endpoints, each mapped to a tool de
 
 ## Step 3: Configure an environment
 
-To use an API, you typically need authentication and authorization credentials, and the API's server URL. In Gram, you'll include this information in an _environment_ before you can start interacting with tools. When you upload an OpenAPI document, Gram creates a default environment for you that you can modify.
+To use an API, you typically need authentication and authorization credentials, and the API's server URL. In Gram, you'll include this information in an [_environment_](/concepts/environments#creating-environments) before you can start interacting with tools. When you upload an OpenAPI document, Gram creates a default environment for you that you can modify.
 
-## Step 4: Test toolsets 
+## Step 4: Test toolsets
 
 Use the Gram Playground to test your toolsets with popular language models. You can chat with an LLM to evaluate its performance on a given task using a toolset.
 
