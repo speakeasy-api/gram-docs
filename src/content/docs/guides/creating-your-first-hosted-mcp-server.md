@@ -36,11 +36,15 @@ To upload an OpenAPI document:
 
 ![Validating tool definitions](/img/guides/01-upload-openapi-document-done.png)
 
-Gram will parse the uploaded OpenAPI document and generate tool definitions for each endpoint.
+Gram will parse the uploaded OpenAPI document and generate [tool definitions](/concepts/tool-definitions) for each endpoint.
+
+:::tip[Best practice]
+Write detailed, contextual descriptions in your OpenAPI document to help LLM agents understand and use your tools correctly. Learn more about [optimizing OpenAPI documents with the `x-gram` extension](/concepts/openapi#using-the-x-gram-extension).
+:::
 
 ## Step 2: Create a toolset
 
-Gram allows you to organize your MCP server tools into focused, purpose-specific toolsets for better performance and accuracy. 
+Gram allows you to organize your MCP server tools into focused, purpose-specific toolsets for better performance and accuracy.
 
 To create a toolset:
 
@@ -58,7 +62,7 @@ To create a toolset:
 ![Selecting tools](/img/guides/02-selecting-tools.png)
 
 :::tip[Best practice]  
-Include only the tools necessary for a specific workflow to reduce ambiguity and avoid tool selection errors.  
+Include only the tools necessary for a specific workflow to reduce ambiguity and avoid tool selection errors. Learn more about the [art of tool curation](/blog/tool-curation).
 :::
 
 ## Step 3: Test the toolset
@@ -96,7 +100,7 @@ To connect the MCP client to the MCP server, you'll need to configure it with a 
 
 ![MCP server configuration](/img/guides/04-mcp-server-configuration.png)
 
-- Click **MCP Config** to view the server configuration. 
+- Click **MCP Config** to view the server configuration.
 
 ![MCP server configuration](/img/guides/04-mcp-config-gram.png)
 
@@ -130,7 +134,7 @@ To connect the MCP client to the MCP server, you'll need to configure it with a 
 
 Your MCP server is now live. Here are some next steps to consider:
 
-- **Iterate on tool descriptions:** Refine tool definitions and use variations to help LLMs better understand and invoke them accurately.
+- **Iterate on tool descriptions:** Refine tool definitions and use tool [variations](/concepts/tool-variations) to help LLMs better understand and invoke them accurately.
 - **Create custom toolsets:** Group tools by task to design structured, step-by-step workflows tailored to specific use cases.
 - **Integrate with frameworks:** Use the Gram Python or TypeScript SDK to build agentic workflows. On the **Playground** page, you can select a ready-to-use code snippet in [Python](https://pypi.org/project/gram-ai/) or [JavaScript](https://www.npmjs.com/package/@gram-ai/sdk).
 
@@ -148,3 +152,7 @@ Common MCP server issues and fixes:
 - Reduce the number of tools in your toolset.
 - Use custom tools to create workflows with precise steps.
 - Create focused toolsets for different use cases.
+
+:::tip[Related guides]
+- [Core Gram Concepts](/blog/gram-concepts)
+:::
