@@ -12,6 +12,9 @@ export default defineConfig({
   trailingSlash: "never",
   adapter: vercel(),
   site: import.meta.env.VITE_SITE,
+  redirects: {
+    "/concepts/tool-defintions": "/concepts/tool-definitions",
+  },
   vite: {
     server: {
       allowedHosts: ["localhost", "127.0.0.1", "devbox"],

@@ -10,7 +10,7 @@ generate a list of tool definitions it found. You can load multiple documents re
 
 ## Step 2: Create toolsets
 
-Your API may have tens or hundreds of endpoints that get mapped to tool defintions. Exposing all of these to an LLM is a bad idea in most cases because it can lead to _tool confusion_. Instead, you want to arrange tools into sets (we call them _toolsets_) that relate to specific tasks and workflows.
+Your API may have tens or hundreds of endpoints that get mapped to tool definitions. Exposing all of these to an LLM is a bad idea in most cases because it can lead to _tool confusion_. Instead, you want to arrange tools into sets (we call them _toolsets_) that relate to specific tasks and workflows.
 
 ## Step 3: Fill out auth and server details
 
