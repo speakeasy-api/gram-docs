@@ -1,9 +1,35 @@
 ---
 title: Environments
 description: Manage auth and server details for your API
+sidebar:
+  order: 3
 ---
 
-APIs typically require some form of authentication/authorization and a server URL before a client such as an AI agent can access them. Additionally, you might have different environments such as "production" and "staging" or an API that is multi-tenanted. In Gram, you can create multiple environments to hold different sets of credentials and server URLs. When initializing the Gram SDKs, you specify which environment to use and the tools that are passed to the LLM will be bound to that environment.
+APIs typically require authentication, authorization, and a server URL before they can be accessed. In many cases, you’ll also need to manage multiple environments – such as **production** and **staging** – or support multi-tenant configurations.
+
+With Gram, you can define multiple environments to manage different sets of credentials, server URLs, and other runtime variables. These environments can then be selected and applied when using the Gram SDKs in your agentic workflows.
+
+Additionally, Gram will automatically warn you if you attempt to use a toolset in the Playground without configuring the necessary environment variables, such as API keys, base URLs, or other required parameters.
+
+![Gram warnings about missing environment variables](/img/concepts/environments/gram-warning-missing-variables.png)
+
+## Creating environments
+
+To create an environment, you need to navigate to the **Environments** page and click on the **+ New Environment** button.
+
+![Creating an environment](/img/concepts/environments/creating-an-environment.png)
+
+You can then enter a name for the environment. Then, on your environment page, you can add the environment variables by clicking on the **New Variable** button.
+
+![Adding environment variables](/img/concepts/environments/adding-environment-variables.png)
+
+You can also attach an environment to a toolset by clicking the **Fill for toolset** button, then selecting the specific toolset you want to configure. This allows you to pre-fill all required environment variables for that toolset, ensuring it's ready to use across the Playground, SDKs, and MCP clients.
+
+![Attaching an environment to a toolset](/img/concepts/environments/attaching-an-environment-to-a-toolset.png)
+
+## Using environment variables with Gram SDKs
+
+When initializing the Gram SDKs, you specify which environment to use and the tools that are passed to the LLM will be bound to that environment.
 
 ```ts title="vercel-example.ts" {15}
 import { generateText } from "ai";
