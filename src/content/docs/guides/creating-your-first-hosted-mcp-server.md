@@ -18,6 +18,9 @@ The steps covered include:
 
 To follow along, you'll need:
 
+- An OpenAPI document (OpenAPI 3.0+ specification) for your API. You can use the OpenAPI document we are using in this guide [here](https://github.com/ritza-co/gram-examples/blob/main/push-advisor-api/openapi.yaml).
+- A Gram account (sign up at [Gram](https://getgram.ai)).
+
 - A [Gram account](https://app.getgram.ai).
 - An OpenAPI 3.0+ document for an API. This guide uses [this example OpenAPI document](https://github.com/ritza-co/gram-examples/blob/main/push-advisor-api/openapi.yaml) for a Push Advisor API.
 
