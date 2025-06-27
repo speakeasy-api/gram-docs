@@ -17,15 +17,15 @@ In this guide, we'll show you how to connect Claude Code to a [Gram-hosted MCP s
 
 We'll connect Claude Code to a Gram-hosted MCP server built around the **Push Advisor API**, a simple "vibe check" service that tells you whether it's safe to push code to production.
 
-By the end, you'll be able to ask Claude Code if the vibes are good to push code to production right from your terminal, with Claude Code automatically calling the appropriate API endpoints through your MCP server.
+This setup enables asking Claude Code if the vibes are good to push code to production right from the terminal, with Claude Code automatically calling the appropriate API endpoints through the MCP server.
 
 You can find the full code for the example API as well as the OpenAPI document in the [example repository](https://github.com/ritza-co/gram-examples/tree/main/push-advisor-api).
 
 ## Prerequisites
 
-Before we start, you'll need **Claude Code CLI** ([install from Anthropic](https://docs.anthropic.com/en/docs/claude-code) if you haven't already) and **a Gram account** (sign up at [getgram.ai](https://getgram.ai)).
+Before starting, install **Claude Code CLI** ([install from Anthropic](https://docs.anthropic.com/en/docs/claude-code)) and create **a Gram account** (sign up at [getgram.ai](https://getgram.ai)).
 
-Let's verify Claude Code is installed correctly:
+Verify Claude Code is installed correctly:
 
 ```bash
 claude --help
@@ -37,13 +37,13 @@ You should see Claude's available commands and options. You'll need to [authenti
 
 If you already have a Gram MCP server configured, you can skip to [Step 2](#connect-claude-code-to-your-gram-server). Otherwise, let's quickly set up the Push Advisor example.
 
-For an in-depth guide on how Gram works and a more detailed guide on how to create a Gram MCP server, check out our [Gram concepts guide](./gram-concepts).
+For an in-depth guide on how Gram works and a more detailed guide on how to create a Gram MCP server, check out the [Gram concepts guide](./gram-concepts).
 
 ### Creating tools
 
 The Push Advisor API is a simple deployment decision service that tells you whether "the vibes are good" to push code based on the day of the week. It's hosted at `canpushtoprod.abdulbaaridavids04.workers.dev` and includes endpoints like `/vibe-check` for deployment vibes.
 
-1. Log in to your [Gram dashboard](https://getgram.ai)
+1. Log in to the [Gram dashboard](https://getgram.ai)
 2. Go to the **Home** tab and click **New OpenAPI Source**
 3. Upload the [Push Advisor OpenAPI document](https://github.com/ritza-co/gram-examples/blob/main/push-advisor-api/openapi.yaml)
 4. Give it a name and an MCP server slug for the MCP server you'll create later
@@ -66,9 +66,9 @@ Set the `OPENAPI_SERVER_URL` to `https://canpushtoprod.abdulbaaridavids04.worker
 
 ### Publishing your MCP server
 
-Finally, let's make your toolset available as an MCP server. 
+Finally, lets make the toolset available as an MCP server. 
 
-Go to the **MCP** tab, find your "Push Advisor" toolset, and click **Edit**. On the MCP Details page, tick the **Public** checkbox and click **Save**.
+Go to the **MCP** tab, find the "Push Advisor" toolset, and click **Edit**. On the MCP Details page, tick the **Public** checkbox and click **Save**.
 
 ![MCP Details](./assets/mcp-details.png)
 
@@ -86,7 +86,7 @@ Now we'll connect Claude Code to your newly created MCP server.
 
 ### Get your MCP configuration
 
-In your Gram dashboard, go to the **MCP** tab, find your "push-advisor" server, and click **MCP Config** to copy the configuration.
+In the Gram dashboard, go to the **MCP** tab, find the "push-advisor" server, and click **MCP Config** to copy the configuration.
 
 The configuration will look something like this:
 
@@ -169,7 +169,7 @@ claude mcp get push-advisor
 
 ## Test your setup
 
-Now let's test the connection by starting Claude Code and running a vibe check.
+Now test the connection by starting Claude Code and running a vibe check.
 
 
 ```bash
@@ -195,13 +195,15 @@ Ask Claude to check if it's safe to push code to production today.
 
 ![Claude Code Tool Permission](./assets/claude-code-tool-permission.png)
 
-Claude Code will use the `can_i_push_to_prod` tool to check the current day and ask for permission to use it. You'll see a prompt asking you to confirm the tool call.
+Claude Code will use the `can_i_push_to_prod` tool to check the current day and ask for permission to use it. A prompt will appear asking to confirm the tool call.
 
 ![Claude Code Push Request](./assets/claude-code-push-request.png)
 
 
 
-## Troubleshooting
+## Troubleshooting 
+
+Let's go through some common issues and how to fix them.
 
 ### Server not found
 
@@ -222,7 +224,7 @@ If you get authentication errors, verify your Gram API key in the dashboard unde
 
 ### Tool calls not working
 
-If Claude Code isn't calling your tools, test the MCP server in the **Gram Playground** first, check that your toolset includes the tools you're trying to use, and verify the environment is correctly configured with required variables.
+If Claude Code isn't calling the tools, test the MCP server in the **Gram Playground** first, check that the toolset includes the tools to use, and verify the environment is correctly configured with required variables.
 
 ## What's next
 
