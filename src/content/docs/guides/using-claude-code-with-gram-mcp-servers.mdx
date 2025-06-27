@@ -7,7 +7,7 @@ sidebar:
 
 [Claude Code](https://docs.anthropic.com/en/docs/claude-code) is Anthropic's terminal-based CLI that brings Claude's capabilities directly to your command line. Unlike Claude Desktop, which runs in a graphical interface, Claude Code operates entirely in your terminal and has access to your current project folder. 
 
-![Claude Code intro](./assets/claude-code-intro.png)
+![Claude Code intro](/img/guides/claude-code-intro.png)
 
 When combined with [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) servers, Claude Code becomes even more powerful. You can connect it to APIs, databases, and services using MCP, granting Claude access to your tools and infrastructure.
 
@@ -37,7 +37,7 @@ You should see Claude's available commands and options. You'll need to [authenti
 
 If you already have a Gram MCP server configured, you can skip to [Step 2](#connect-claude-code-to-your-gram-server). Otherwise, let's quickly set up the Push Advisor example.
 
-For an in-depth guide on how Gram works and a more detailed guide on how to create a Gram MCP server, check out the [Gram concepts guide](./gram-concepts).
+For an in-depth guide on how Gram works and a more detailed guide on how to create a Gram MCP server, check out the [Gram concepts guide](/blog/gram-concepts).
 
 ### Creating tools
 
@@ -50,31 +50,31 @@ The Push Advisor API is a simple deployment decision service that tells you whet
 
 Your Push Advisor Toolset will be created automatically. You can find it in the **Toolsets** tab.
 
-![Push Advisor Toolset](./assets/toolset-created.png)
+![Push Advisor Toolset](/img/guides/toolset-created.png)
 
 ### Configuring environment variables
 
-[Environments](../concepts/environments) store API keys and configuration separate from your toolset logic. 
+[Environments](/concepts/environments) store API keys and configuration separate from your toolset logic. 
 
 Go to the **Environments** tab and click the "Default" environment. Click **Fill for toolset** and select your "Push Advisor" toolset to automatically populate the required variables. 
 
-![Fill environment variables](./assets/fill-env-vars-toolset.png)
+![Fill environment variables](/img/guides/fill-env-vars-toolset.png)
 
 Set the `OPENAPI_SERVER_URL` to `https://canpushtoprod.abdulbaaridavids04.workers.dev` and click **Save**.
 
-![Set server URL](./assets/set-server-url.png)
+![Set server URL](/img/guides/set-server-url.png)
 
 ### Publishing your MCP server
 
-Finally, lets make the toolset available as an MCP server. 
+Finally, let's make the toolset available as an MCP server. 
 
 Go to the **MCP** tab, find the "Push Advisor" toolset, and click **Edit**. On the MCP Details page, tick the **Public** checkbox and click **Save**.
 
-![MCP Details](./assets/mcp-details.png)
+![MCP Details](/img/guides/mcp-details.png)
 
 Scroll down to the **MCP Config** section and copy the Public Server configuration.
 
-![Push Advisor MCP Server](./assets/copy-mcp-config.png)
+![Push Advisor MCP Server](/img/guides/copy-mcp-config.png)
 
 :::tip[Tip]
 Alternatively, you can use the Authenticated Server configuration. This is useful if you want to use the MCP server in a private environment. You'll need to generate an API key in the **Settings** tab and use it in the MCP Config.
@@ -165,7 +165,7 @@ You should see `push-advisor` in the list. To see the full configuration:
 claude mcp get push-advisor
 ```
 
-![Claude Code MCP Install](./assets/claude-code-mcp-install.png)
+![Claude Code MCP Install](/img/guides/claude-code-mcp-install.png)
 
 ## Test your setup
 
@@ -180,10 +180,12 @@ This starts an interactive session with Claude Code in your terminal.
 
 Ask Claude a basic question like `whats the vibe today?`
 
-<video width="600" controls>
-  <source src="./assets/claude-code-showcase.mp4" type="video/mp4" />
+<div class="flex justify-center">
+  <video controls>
+    <source src="/videos/claude-code-showcase.mp4" type="video/mp4"></source>
     Your browser does not support the video tag.
-</video>
+  </video>
+</div>
 
 ### Tool permissions
 
@@ -193,11 +195,11 @@ Ask Claude to check if it's safe to push code to production today.
 > Is it safe to push code to production today?
 ```
 
-![Claude Code Tool Permission](./assets/claude-code-tool-permission.png)
+![Claude Code Tool Permission](/img/guides/claude-code-tool-permission.png)
 
 Claude Code will use the `can_i_push_to_prod` tool to check the current day and ask for permission to use it. A prompt will appear asking to confirm the tool call.
 
-![Claude Code Push Request](./assets/claude-code-push-request.png)
+![Claude Code Push Request](/img/guides/claude-code-push-request.png)
 
 
 
