@@ -7,7 +7,7 @@ sidebar:
 
 [Gemini CLI](https://github.com/google-gemini/gemini-cli) is Google's open-source terminal-based AI agent that brings Gemini's capabilities directly to your command line. Unlike web-based interfaces, Gemini CLI operates entirely in your terminal and has access to your current project folder, offering a lightweight and efficient way to interact with Gemini models from within your project.
 
-![Gemini CLI intro](./assets/mcp-gemini/gemini-cli-intro.png)
+![Gemini CLI intro](/img/guides/mcp-gemini/gemini-cli-intro.png)
 
 When combined with [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) servers, Gemini CLI becomes even more powerful. You can connect it to APIs, databases, and services using MCP, granting Gemini access to your tools and infrastructure through built-in MCP support.
 
@@ -69,24 +69,24 @@ Gram provides a guided setup flow to create your toolset and MCP server. Go to t
 
 Upload the [Push Advisor OpenAPI document](https://github.com/ritza-co/gram-examples/blob/main/push-advisor-api/openapi.yaml) and enter the name of your API.
 
-![Upload OpenAPI Spec](./assets/mcp-gemini/upload-openapi-spec.png)
+![Upload OpenAPI Spec](/img/guides/mcp-gemini/upload-openapi-spec.png)
 
 
 #### Step 2 - Create Toolset
 
 Give your toolset a name (e.g., "Push Advisor") and click **Continue**. You'll also be able to see the names of the tools that will be generated from your OpenAPI document.
 
-![Push Advisor create toolset](./assets/mcp-gemini/create-toolset.png)
+![Push Advisor create toolset](/img/guides/mcp-gemini/create-toolset.png)
 
 #### Step 3 - Configure MCP
 
-![Configure MCP](./assets/mcp-gemini/configure-mcp.png)
+![Configure MCP](/img/guides/mcp-gemini/configure-mcp.png)
 
 Enter the MCP server slug for the MCP server URL you want your hosted MCP server to be available at. Click **Continue**.
 
 Your Push Advisor Toolset will be created automatically. You can find it in the **Toolsets** tab.
 
-![Push Advisor Toolset](./assets/mcp-gemini/toolset-created.png)
+![Push Advisor Toolset](/img/guides/mcp-gemini/toolset-created.png)
 
 ### Configuring environment variables
 
@@ -94,11 +94,11 @@ Your Push Advisor Toolset will be created automatically. You can find it in the 
 
 Go to the **Environments** tab and click the "Default" environment. Click **Fill for toolset** and select your "Push Advisor" toolset to automatically populate the required variables. 
 
-![Fill environment variables](./assets/mcp-gemini/fill-env-vars-toolset.png)
+![Fill environment variables](/img/guides/mcp-gemini/fill-env-vars-toolset.png)
 
 Set the `OPENAPI_SERVER_URL` variable to the URL of your API server. Click **Save**.
 
-![Set server URL](./assets/mcp-gemini/set-server-url.png)
+![Set server URL](/img/guides/mcp-gemini/set-server-url.png)
 
 ### Publishing your MCP server
 
@@ -106,11 +106,11 @@ Finally, lets make the toolset available as an MCP server.
 
 Go to the **MCP** tab, find the "Push Advisor" toolset, and click **Edit**. On the MCP Details page, tick the **Public** checkbox and click **Save**.
 
-![MCP Details](./assets/mcp-gemini/mcp-details.png)
+![MCP Details](/img/guides/mcp-gemini/mcp-details.png)
 
 Scroll down to the **MCP Config** section and copy the Public Server configuration.
 
-![Push Advisor MCP Server](./assets/mcp-gemini/copy-mcp-config.png)
+![Push Advisor MCP Server](/img/guides/mcp-gemini/copy-mcp-config.png)
 
 The configuration will look something like this:
 
@@ -161,7 +161,7 @@ Now we'll connect Gemini CLI to your newly created MCP server.
 
 Gemini CLI uses a `settings.json` configuration file to manage MCP servers. You can configure servers either globally at `~/.gemini/settings.json` or for a specific project at `.gemini/settings.json` in your project root.
 
-![Gemini CLI settings.json](./assets/mcp-gemini/gemini-cli-settings-json.png)
+![Gemini CLI settings.json](/img/guides/mcp-gemini/gemini-cli-settings-json.png)
 
 **For the Public Server configuration**, add this to your `settings.json`:
 
@@ -224,11 +224,11 @@ Once in the Gemini CLI session, use the `/mcp` command to view your MCP server s
 
 You should see `GramPushadvisor` in the server list with a list of tools available.
 
-![Gemini CLI MCP Status](./assets/mcp-gemini/gemini-cli-mcp-status.png)
+![Gemini CLI MCP Status](/img/guides/mcp-gemini/gemini-cli-mcp-status.png)
 
 You can also view more details about the servers' tools by using `ctrl + T` to view the tool details.
 
-![Gemini CLI Toggle Tool Details](./assets/mcp-gemini/gemini-cli-toggle-tool-details.png)
+![Gemini CLI Toggle Tool Details](/img/guides/mcp-gemini/gemini-cli-toggle-tool-details.png)
 
 ## Test your setup
 
@@ -237,7 +237,7 @@ Now test the connection by running a vibe check.
 Ask Gemini a basic question like `whats the vibe today?`
 
 <video width="600" controls>
-  <source src="./assets/mcp-gemini/gemini-cli-showcase.mp4" type="video/mp4" />
+  <source src="/img/guides/mcp-gemini/gemini-cli-showcase.mp4" type="video/mp4" />
     Your browser does not support the video tag.
 </video>
 
@@ -251,11 +251,11 @@ Ask Gemini to check if it's safe to push code to production today:
 
 Gemini CLI will use the `can_i_push_to_prod` tool to check the current day. Before making the API call, it will ask for your permission to use the tool:
 
-![Gemini CLI Tool Permission](./assets/mcp-gemini/gemini-cli-tool-permission.png)
+![Gemini CLI Tool Permission](/img/guides/mcp-gemini/gemini-cli-tool-permission.png)
 
 You can choose to approve the tool call once, or always allow this tool to disable future prompts. Once approved, Gemini will make the API call and respond with the vibe check results:
 
-![Gemini CLI Push Request](./assets/mcp-gemini/gemini-cli-push-request.png)
+![Gemini CLI Push Request](/img/guides/mcp-gemini/gemini-cli-push-request.png)
 
 ## Troubleshooting 
 
@@ -265,7 +265,7 @@ Let's go through some common issues and how to fix them.
 
 If Gemini CLI can't find your server, click `ctrl + O` to view the MCP Debug console.
 
-![Gemini CLI Debug Issue](./assets/mcp-gemini/gemini-cli-debug-issue.png)
+![Gemini CLI Debug Issue](/img/guides/mcp-gemini/gemini-cli-debug-issue.png)
 
 If you see `failed to start or connect to MCP server`, verify that the `settings.json` file is correct and matches the configuration from Gram.
 
