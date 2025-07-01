@@ -39,14 +39,31 @@ If you already have a Gram MCP server configured, you can skip to [Step 2](#conn
 
 For an in-depth guide on how Gram works and a more detailed guide on how to create a Gram MCP server, check out the [Gram concepts guide](./gram-concepts).
 
-### Creating tools
+### Creating a toolset
 
 The Push Advisor API is a simple deployment decision service that tells you whether "the vibes are good" to push code based on the day of the week. It's hosted at `canpushtoprod.abdulbaaridavids04.workers.dev` and includes endpoints like `/vibe-check` for deployment vibes.
 
-1. Log in to the [Gram dashboard](https://getgram.ai)
-2. Go to the **Home** tab and click **New OpenAPI Source**
-3. Upload the [Push Advisor OpenAPI document](https://github.com/ritza-co/gram-examples/blob/main/push-advisor-api/openapi.yaml)
-4. Give it a name and an MCP server slug for the MCP server you'll create later
+Gram provides a guided setup flow to create your toolset and MCP server. Go to the [Gram dashboard](https://getgram.ai), click the **New Project** button and enter a project name. You'll then be guided through the following steps:
+
+#### Step 1 - Upload OpenAPI
+
+Upload the [Push Advisor OpenAPI document](https://github.com/ritza-co/gram-examples/blob/main/push-advisor-api/openapi.yaml) and enter the name of your API.
+
+![Upload OpenAPI Spec](./assets/upload-openapi-spec.png)
+
+
+#### Step 2 - Create Toolset
+
+Give your toolset a name (e.g., "Push Advisor") and click **Continue**. You'll also be able to see the names of the tools that will be generated from your OpenAPI document.
+
+![Push Advisor create toolset](./assets/create-toolset.png)
+
+
+#### Step 3 - Configure MCP
+
+![Configure MCP](./assets/configure-mcp.png)
+
+Enter the MCP server slug for the MCP server URL you want your hosted MCP server to be available at. Click **Continue**.
 
 Your Push Advisor Toolset will be created automatically. You can find it in the **Toolsets** tab.
 
@@ -76,17 +93,6 @@ Scroll down to the **MCP Config** section and copy the Public Server configurati
 
 ![Push Advisor MCP Server](./assets/copy-mcp-config.png)
 
-:::tip[Tip]
-Alternatively, you can use the Authenticated Server configuration. This is useful if you want to use the MCP server in a private environment. You'll need to generate an API key in the **Settings** tab and use it in the MCP Config.
-:::
-
-## Connect Claude Code to your Gram server
-
-Now we'll connect Claude Code to your newly created MCP server.
-
-### Get your MCP configuration
-
-In the Gram dashboard, go to the **MCP** tab, find the "push-advisor" server, and click **MCP Config** to copy the configuration.
 
 The configuration will look something like this:
 
@@ -104,7 +110,11 @@ The configuration will look something like this:
 }
 ```
 
-Or if you're using the Authenticated Server configuration:
+:::tip[Tip]
+Alternatively, you can use the Authenticated Server configuration. This is useful if you want to use the MCP server in a private environment. You'll need to generate an API key in the **Settings** tab and use it in the MCP Config.
+:::
+
+If you're using the Authenticated Server configuration:
 
 ```json
 {
@@ -125,7 +135,9 @@ Or if you're using the Authenticated Server configuration:
 }
 ```
 
-### Add the server to Claude Code
+## Connect Claude Code to your Gram server
+
+Now we'll connect Claude Code to your newly created MCP server.
 
 Claude Code uses a different approach than Claude Desktop for MCP server configuration. Instead of a JSON config file, you add servers using the `claude mcp add` command.
 
