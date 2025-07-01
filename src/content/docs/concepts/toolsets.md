@@ -1,21 +1,38 @@
 ---
 title: Toolsets
-description: Organize your agentic tools into cohesive sets to solve specific problems
+description: Organize your agentic tools into cohesive sets that help agents solve specific problems
+sidebar:
+  order: 1
 ---
 
-Toolsets solve the problem of dumping too many tools into the context window of an LLM. At a certain point, this can exhaust the context window preventing an agent from working or cause an LLM to make incorrect choices about which tools to call.
+Giving an LLM access to too many tools can exhaust the context window, which may prevent agents from functioning properly or cause the LLM to choose the wrong tools.
+
+To avoid exhausting the context window, Gram lets you organize tool definitions into curated collections called **toolsets**. Each toolset is designed to support a specific goal or use case. 
+
+For example, you might create a toolset to identify inactive customers and send them promotional coupons. It could include one tool to retrieve customer data and another to send emails. These tools might come from different APIs but can be combined in a single toolset for a unified workflow.
+
+You can also use toolsets to scope separate toolsets for different teams, for example, sales, marketing, and support. This ensures agents only have access to the tools relevant to their workflows, reducing confusion and improving LLM performance.
+
+![Toolsets](/img/concepts/toolsets/toolsets-listing.png)
 
 :::tip[Good to know]
-Certain language models even place a hard cap on the total number of tools that can be passed to them in a chat completion call.
+Certain language models place a hard cap on the total number of tools that can be passed to them in a chat completion call.
 :::
 
-## The right tools for the job
+## Designing effective toolsets
 
-It's a good idea to think of the task you want an agent to solve using your API and integrations you enabled and then creating a toolset with just the tools that will help it accomplish that task. Ensuring that a toolset has a cohesive set of tools means an agent will have a much higher chance of successfully working with your API.
+When creating a toolset, start by identifying the specific task you want an LLM client to perform using your API and enabled integrations, then include only the tools necessary to accomplish that task. A cohesive, task-focused toolset significantly increases the likelihood that an agent will interact with your API correctly and effectively. 
+
+To ensure your toolsets are LLM-friendly:
+
+- Refine tool names and descriptions using Gram's [tool-variations](/concepts/tool-variations) feature to improve clarity and usability for the LLM.
+- Keep toolsets focused by including only what's needed for the task. Avoid unrelated tools that may confuse the agent.
 
 ## Experimenting with toolsets
 
-Toolsets can also be used to experiment and find the right combination of tools to solve agentic tasks. You can create multiple toolsets and split test your agents to find the right combination of tools or compose multiple agents that each use distinct toolsets.
+The Gram Playground provides an interactive environment for testing your toolsets. Using the Chat feature, you can send natural language prompts and see how the LLM selects tools and handles responses in real time.
+
+When your toolset is ready, you can deploy it as an MCP server or integrate it directly into your agents for production use.
 
 <div class="flex justify-center">
   <video controls>
@@ -27,25 +44,28 @@ Toolsets can also be used to experiment and find the right combination of tools 
 
 ## Toolsets as MCP servers
 
-In addition to building powerful agents with well-scoped toolsets, every toolset is exposed by Gram as an MCP server using the streamable HTTP transpot. On a toolset's page, you'll find instructions on how to connect MCP clients like Claude and Cursor to a toolset's MCP server.
+In addition to enabling powerful agents through well-scoped toolsets, Gram automatically exposes each toolset as an MCP server using the streamable HTTP transport. In the Playground, you can view and retrieve the MCP server configuration for any toolset.
 
-<div class="flex justify-center">
-  <video controls>
-    <source src="/videos/mcp_servers.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</div>
+![MCP server configuration](/img/concepts/toolsets/mcp-server-configuration.png)
 
-## Custom Domains
+Click **Publish Settings** to open a modal where you can customize the MCP server URL and set its visibility to public or private.
 
-MCP servers can be hosted through a custom subdomain - such as `{your_sub_domain}/mcp`.
+If the MCP server is set to public, clicking the **MCP Config** button will reveal two configuration options:
 
-Contact gram support to get access to a custom subdomain on your account. To complete setup visit the `/settings` page of the gram dashboard. 
+- **Public MCP Server:** No authentication required.
+- **Authenticated Server (with Gram key):** Requires a Gram API key for access.
 
-At a high level two DNS entries will need to be created:
+![MCP server configuration](/img/concepts/toolsets/mcp-server-toolsets-config-options.png)
 
-1. A new CNAME record pointing to `cname.getgram.ai.`
-2. A new TXT record `_gram.{your_sub_domain}` with a value of `gram-domain-verify={your_sub_domain},{gram_organization_id}`.
-3. Then reach out to gram to complete your domain linking process.
+## Custom domains
 
+MCP servers can be hosted through a custom subdomain such as `{your_sub_domain}/mcp`.
 
+Contact Gram support to enable a custom subdomain for your account, then go to **Settings** in the Gram dashboard to complete the setup. 
+
+You'll need to create two DNS entries:
+
+1. A CNAME record pointing to `cname.getgram.ai.`
+2. A TXT record named `_gram.{your_sub_domain}` with the value `gram-domain-verify={your_sub_domain},{gram_organization_id}`.
+
+Once both DNS records have been created, contact Gram to complete the domain linking process.

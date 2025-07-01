@@ -1,16 +1,37 @@
 ---
-title: Introduction
-description: An intro into what Gram is and how it helps build powerful LLM integrations.
+title: Introducing Gram
+description: Gram effortlessly turns OpenAPI documents into LLM-ready tools, generating optimized tool definitions from your APIs for powerful agentic workflows.
 sidebar:
   order: 0
 ---
 
-Gram is a platform for turning your APIs into powerful LLM tools. APIs come in all shapes and size but tools that AI/LLMs invoke tend to have a fairly consistent shape. Namely, tools has these anatomical features:
+**[Gram](https://getgram.ai)** is a platform for turning APIs into powerful LLM tools. 
 
-- **Name:** A short, descriptive name for the tool that usually follows snake or kebab case.
-- **Description:** A helpful description of the tool. This is a very important piece of content and is often prompt-engineered to ensure an LLM can understand when and how to correctly call a tool and how to interpret the output.
-- **Input schema:** This is a JSON Schema that describes what the input to the tool call should look like. This schema guides the LLM to craft the tool call arguments correctly.
+Rather than manually writing tool descriptions or forcing generic API descriptions into an LLM-friendly format, Gram maps your API endpoints to tool definitions, which you use to define toolsets that you can easily refine to ensure LLMs can understand and use your services.
 
-Contrast this with something like an API specification format such as OpenAPI which describes endpoints using their HTTP method and path as well as path, query and header parameters, security requirements, request body and response shape. Not to mention that the descriptions on each endpoint of your API and any request/response schemas were not crafted with an LLM in mind and sometimes not included at all.
+APIs come in all shapes and sizes, but the tools LLMs use share a consistent structure, characterized by:
 
-This is where Gram comes in. The goal is to help you map your API to tools as effortlessly as possible. Gram takes OpenAPI documents and condenses the information in them into "tool definitions". The tool input schema is worked out for you and sensible defaults are chosen for the name and description. Once your API is loaded into Gram, you can tune it by prompt-engineering the tool name and description and then chat with it or seamlessly enable a hosted MCP server. Gram takes care of routing tool calls to your API and converting security and tool call arguments into HTTP requests.
+- **Name:** A short, descriptive name for the tool in snake or kebab case.
+- **Description:** A helpful description of the tool. This is an essential feature that's often prompt-engineered to ensure an LLM can understand when and how to correctly call a tool and interpret the output.
+- **Input schema:** A JSON Schema that defines the required input for the tool call, ensuring the LLM crafts arguments correctly.
+
+To integrate an API into agentic workflows, you need to map API endpoints to tools. There are generally two ways to do this:
+
+- **Manually writing tool definitions**, whether by following the MCP Specification or using function calls, which becomes tedious as the number of endpoints grows.
+- **Converting your API to MCP servers**, either using the API itself (for example, FastAPI with FastMCP) or an OpenAPI document. Since OpenAPI documents describe endpoints by HTTP methods, paths, parameters, security requirements, and response shapes, they often lack LLM-specific descriptions.
+
+This is where **Gram** comes in. Gram helps you effortlessly map your API to tools by condensing OpenAPI documents into [tool definitions](concepts/tool-definitions). It automatically handles the tool input schema and provides sensible defaults for names and descriptions. From there, you can use the Gram platform to:
+
+- Combine tools into task-focused toolsets.
+- Test toolsets in the Gram Playground.
+- Fine-tune individual tools by prompt-engineering their names and descriptions.
+- Deploy toolsets as hosted MCP servers.
+- Integrate toolsets into agentic workflows using Gram's [Python](https://pypi.org/project/gram-ai/) or [TypeScript](https://www.npmjs.com/package/@gram-ai/sdk) SDKs.
+
+## Useful links
+
+- [Creating a hosted MCP server](/guides/creating-your-first-hosted-mcp-server)
+- [OpenAPI concepts](/concepts/openapi)
+- [Tool definitions](/concepts/tool-definitions)
+- [Toolsets](/concepts/toolsets)
+- [Environment variables](/concepts/environments)
