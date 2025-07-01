@@ -102,7 +102,7 @@ Set the `OPENAPI_SERVER_URL` variable to the URL of your API server. Click **Sav
 
 ### Publishing your MCP server
 
-Finally, lets make the toolset available as an MCP server. 
+Finally, let's make the toolset available as an MCP server. 
 
 Go to the **MCP** tab, find the "Push Advisor" toolset, and click **Edit**. On the MCP Details page, tick the **Public** checkbox and click **Save**.
 
@@ -226,7 +226,7 @@ You should see `GramPushadvisor` in the server list with a list of tools availab
 
 ![Gemini CLI MCP Status](/img/guides/mcp-gemini/gemini-cli-mcp-status.png)
 
-You can also view more details about the servers' tools by using `ctrl + T` to view the tool details.
+You can also view more details about the server's tools by using `Ctrl + T` to toggle the tool details.
 
 ![Gemini CLI Toggle Tool Details](/img/guides/mcp-gemini/gemini-cli-toggle-tool-details.png)
 
@@ -234,7 +234,7 @@ You can also view more details about the servers' tools by using `ctrl + T` to v
 
 Now test the connection by running a vibe check.
 
-Ask Gemini a basic question like `whats the vibe today?`
+Ask Gemini a basic question like `what's the vibe today?`
 
 <video width="600" controls>
   <source src="/img/guides/mcp-gemini/gemini-cli-showcase.mp4" type="video/mp4" />
@@ -253,7 +253,7 @@ Gemini CLI will use the `can_i_push_to_prod` tool to check the current day. Befo
 
 ![Gemini CLI Tool Permission](/img/guides/mcp-gemini/gemini-cli-tool-permission.png)
 
-You can choose to approve the tool call once, or always allow this tool to disable future prompts. Once approved, Gemini will make the API call and respond with the vibe check results:
+You can choose to approve the tool call once, or always allow this tool, which will disable future prompts for this tool. Once approved, Gemini will make the API call and respond with the vibe check results:
 
 ![Gemini CLI Push Request](/img/guides/mcp-gemini/gemini-cli-push-request.png)
 
@@ -263,7 +263,7 @@ Let's go through some common issues and how to fix them.
 
 ### Server not found
 
-If Gemini CLI can't find your server, click `ctrl + O` to view the MCP Debug console.
+If Gemini CLI can't find your server, press `Ctrl + O` to view the MCP Debug console.
 
 ![Gemini CLI Debug Issue](/img/guides/mcp-gemini/gemini-cli-debug-issue.png)
 
@@ -271,7 +271,11 @@ If you see `failed to start or connect to MCP server`, verify that the `settings
 
 ### Authentication errors
 
-If you get authentication errors, verify your Gram API key in the dashboard under **Settings > API Keys**, check that your environment variables are set correctly in Gram, and ensure the Push Advisor API base URL is accessible.
+If you get authentication errors:
+
+1. Verify your Gram API key in the dashboard under **Settings > API Keys**
+2. Check that your environment variables are set correctly in Gram
+3. Ensure the Push Advisor API base URL is accessible
 
 ### Tool calls not working
 
