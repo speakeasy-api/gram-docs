@@ -1,42 +1,36 @@
 ---
-title: How does it work?
-description: A step-by-step guide to how Gram works.
+title: How Gram works
+description: "Step-by-step: How Gram transforms your APIs into LLM tools, from OpenAPI parsing to prompt-engineered tool definitions."
 ---
 
-## Step 1: Load your API
+## Step 1: Upload an OpenAPI document
 
-Start by uploading your OpenAPI documents into Gram. It will parse these and
-generate a list of tool definitions it found. You can load multiple documents representing different services in your organization. It all becomes a sea of tools for you to work with.
+When you upload an [OpenAPI document](/concepts/openapi), Gram parses it and generates [tool definitions](/concepts/tool-definitions) from your API endpoints. You can upload multiple OpenAPI documents covering different services across your organization, providing a variety of tools for you to work with.
 
 ## Step 2: Create toolsets
 
-Your API may have tens or hundreds of endpoints that get mapped to tool defintions. Exposing all of these to an LLM is a bad idea in most cases because it can lead to _tool confusion_. Instead, you want to arrange tools into sets (we call them _toolsets_) that relate to specific tasks and workflows.
+Your API may have dozens or even hundreds of endpoints, each mapped to a tool definition. Exposing all of them to an LLM can lead to _tool confusion_. Gram lets you [curate tools into collections](/blog/tool-curation) (called [toolsets](/concepts/toolsets)) that support specific tasks or workflows.
 
-## Step 3: Fill out auth and server details
+## Step 3: Configure an environment
 
-APIs often require authentication/authorization details as well information on
-where they are hosted (the server URL). In Gram, these concepts are combined into _environments_. Before you can start interacting with tools you want to fill out credentials and server URLs. We create a "default" environment for you that you can start filling out after uploading your OpenAPI document.
+To use an API, you typically need authentication and authorization credentials, and the API's server URL. In Gram, you'll include this information in an [environment](/concepts/environments#creating-environments) before you can start interacting with tools. When you upload an OpenAPI document, Gram creates a default environment for you that you can modify.
 
-## Step 4: Test your toolsets out
+## Step 4: Test toolsets
 
-Use the playground on the Gram dashboard to test your toolsets out. You'll have access to popular language models. With your chosen toolset, chat with the LLM and evaluate how well it can use the tools you just created for a given task.
+Use the Gram Playground to test your toolsets with popular language models. You can chat with an LLM to evaluate its performance on a given task using a toolset.
 
-## Step 5: Integrate!
+## Step 5: Integrate a toolset
 
-### Hosted MCP server
+You can integrate your toolset with LLMs and agentic frameworks using a hosted MCP server or SDKs.
 
-Every Gram toolset you create is exposed as a hosted MCP server. [Model Context Protocol (MCP)][mcp] has become a de-facto standard for packaging tools
-and making them available to various language models and LLM clients. On the Gram dashboard, navigate to a toolset and you'll find a section guiding you on how to add the MCP server to your favorite LLM client.
+### Expose a toolset as a hosted MCP server
 
-[mcp]: https://modelcontextprotocol.io
+Gram exposes each toolset as a hosted MCP server. The [Model Context Protocol (MCP)](https://modelcontextprotocol.io) has become the go-to standard for packaging tools and making them available to various language models and LLM clients. The Gram dashboard guides you on how to add your toolset as an MCP server to your favorite LLM client, or you can follow [this walkthrough](/guides/creating-your-first-hosted-mcp-server) for step-by-step instructions.
 
-### Agentic frameworks and SDKs
+### Integrate a toolset with agentic frameworks and SDKs
 
-You've got everything in place to start integrating with popular agentic frameworks such as Langchain, OpenAI Agents SDK and Vercel AI SDK. We've built a Gram [Python SDK][gram-py] and [TypeScript SDK][gram-ts] that help you integrate with all of these frameworks in your Python or TypeScript codebase.
+Gram provides everything you need to integrate your toolset with popular agentic frameworks such as LangChain, and SDKs like OpenAI Agents SDK and Vercel AI SDK. The Gram [Python](https://github.com/speakeasy-api/gram-python) and [TypeScript](https://github.com/speakeasy-api/gram-typescript) SDKs help you integrate with these frameworks in your Python or TypeScript codebase.
 
-[gram-py]: https://github.com/speakeasy-api/gram-python
-[gram-ts]: https://github.com/speakeasy-api/gram-typescript
+## Step 6: Improve tool performance
 
-## Step 6: Iterate
-
-It's likely you'll find that some of your API-endpoints-turned-tools are not being used by LLMs or getting confused with other tools. In Gram, you can modify tool descriptions and names beyond what was chosen from your OpenAPI document. We call these modifications _tool variations_. Taking the time to prompt-engineer your tools with variations along with effectively cherry-picking them into task-focused toolsets can result in very effective agents down the line.
+If you find that some of your tools created from API endpoints are not being used by LLMs or are getting confused with other tools, Gram allows you to modify their descriptions and names to improve performance. Prompt-engineer [tool variations](/concepts/tool-variations) and curate [task-focused toolsets](/concepts/toolsets) to make agents more effective.
