@@ -7,11 +7,11 @@ sidebar:
 
 [Gemini CLI](https://github.com/google-gemini/gemini-cli) is Google's open-source terminal-based AI agent that brings Gemini's capabilities directly to your command line. Unlike web-based interfaces, Gemini CLI operates entirely in your terminal and has access to your current project folder, offering a lightweight and efficient way to interact with Gemini models from within your project.
 
-![Gemini CLI intro](./assets/mcp-gemini/gemini-cli-intro.png)
+![Gemini CLI intro](/img/guides/mcp-gemini/gemini-cli-intro.png)
 
 When combined with [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) servers, Gemini CLI becomes even more powerful. You can connect it to APIs, databases, and services using MCP, granting Gemini access to your tools and infrastructure through built-in MCP support.
 
-In this guide, we'll show you how to connect Gemini CLI to a [Gram-hosted MCP server](./the-easiest-way-to-host-mcp-servers) using our Push Advisor example from the [Gram concepts guide](./gram-concepts). You'll learn how to set up the connection, test it, and use natural language to perform vibe checks before you vibe code.
+In this guide, we'll show you how to connect Gemini CLI to a [Gram-hosted MCP server](/blog/the-easiest-way-to-host-mcp-servers) using our Push Advisor example from the [Gram concepts guide](/blog/gram-concepts). You'll learn how to set up the connection, test it, and use natural language to perform vibe checks before you vibe code.
 
 ## What you'll build
 
@@ -23,18 +23,18 @@ You can find the full code for the example API as well as the OpenAPI document i
 
 ## Prerequisites
 
-Before starting, install **Gemini CLI** and create **a Gram account** (sign up at [getgram.ai](https://getgram.ai)). Ensure you have Node.js version 18 or higher installed. 
+Before starting, install **Gemini CLI** and create a **Gram account** (sign up at [getgram.ai](https://getgram.ai)). Ensure you have Node.js version 18 or higher installed.
 
 ### Installing Gemini CLI
 
 You have two options to install Gemini CLI:
 
-**Option 1: Run directly with npx:**
+**Option 1:** Run directly with npx
 ```bash
 npx https://github.com/google-gemini/gemini-cli
 ```
 
-**Option 2: Install globally:**
+**Option 2:** Install globally
 ```bash
 npm install -g @google/gemini-cli
 ```
@@ -47,7 +47,7 @@ Test that Gemini CLI is working:
 gemini --help
 ```
 
-You should see Gemini's available commands and options.
+You should see Gemini CLI's available commands and options.
 
 ### Authentication
 
@@ -55,62 +55,66 @@ When you first run `gemini`, you'll be prompted to authenticate. You can sign in
 
 ## Creating a Gram MCP server
 
-If you already have a Gram MCP server configured, you can skip to [connecting Gemini CLI to your server](#connect-gemini-cli-to-your-gram-server). Otherwise, let's quickly set up the Push Advisor example.
+If you already have a Gram MCP server configured, you can skip to [connecting Gemini CLI to your server](#connect-gemini-cli-to-your-mcp-server). Otherwise, let's quickly set up the Push Advisor example.
 
-For an in-depth guide on how Gram works and a more detailed guide on how to create a Gram MCP server, check out the [Gram concepts guide](./gram-concepts).
+For an in-depth guide on how Gram works and a more detailed guide on how to create a Gram MCP server, check out the [Gram concepts guide](/blog/gram-concepts).
 
 ### Creating a toolset
 
 The Push Advisor API is a simple deployment decision service that tells you whether "the vibes are good" to push code based on the day of the week. It's hosted at `canpushtoprod.abdulbaaridavids04.workers.dev` and includes endpoints like `/vibe-check` for deployment vibes.
 
-Gram provides a guided setup flow to create your toolset and MCP server. Go to the [Gram dashboard](https://getgram.ai), click the **New Project** button and enter a project name. You'll then be guided through the following steps:
+Gram provides a guided setup flow to create your toolset and MCP server. Go to the [Gram dashboard](https://getgram.ai), click the **New Project** button.
+
+![New project in Gram](/img/guides/mcp-gemini/gram-new-project.png)
+
+Enter a project name and click **Submit**. You'll then be guided through the following steps:
 
 #### Step 1 - Upload OpenAPI
 
 Upload the [Push Advisor OpenAPI document](https://github.com/ritza-co/gram-examples/blob/main/push-advisor-api/openapi.yaml) and enter the name of your API.
 
-![Upload OpenAPI Spec](./assets/mcp-gemini/upload-openapi-spec.png)
+![Upload OpenAPI Spec](/img/guides/mcp-gemini/upload-openapi-spec.png)
 
 
 #### Step 2 - Create Toolset
 
 Give your toolset a name (e.g., "Push Advisor") and click **Continue**. You'll also be able to see the names of the tools that will be generated from your OpenAPI document.
 
-![Push Advisor create toolset](./assets/mcp-gemini/create-toolset.png)
+![Push Advisor create toolset](/img/guides/mcp-gemini/create-toolset.png)
 
 #### Step 3 - Configure MCP
 
-![Configure MCP](./assets/mcp-gemini/configure-mcp.png)
-
 Enter the MCP server slug for the MCP server URL you want your hosted MCP server to be available at. Click **Continue**.
 
-Your Push Advisor Toolset will be created automatically. You can find it in the **Toolsets** tab.
+![Configure MCP](/img/guides/mcp-gemini/configure-mcp.png)
 
-![Push Advisor Toolset](./assets/mcp-gemini/toolset-created.png)
+Your Push Advisor Toolset will be created, and you can find it in the **Toolsets** tab.
+
+![Push Advisor Toolset](/img/guides/mcp-gemini/toolset-created.png)
 
 ### Configuring environment variables
 
-[Environments](../concepts/environments) store API keys and configuration separate from your toolset logic. 
+[Environments](/concepts/environments) store API keys and configuration separate from your toolset logic.
 
-Go to the **Environments** tab and click the "Default" environment. Click **Fill for toolset** and select your "Push Advisor" toolset to automatically populate the required variables. 
+Go to the **Environments** tab and click the "Default" environment. Click on **Edit** and then **Fill for Toolset** and select your "Push Advisor" toolset to automatically populate the required variables.
 
-![Fill environment variables](./assets/mcp-gemini/fill-env-vars-toolset.png)
+![Fill environment variables](/img/guides/mcp-gemini/fill-env-vars-toolset.png)
 
-Set the `OPENAPI_SERVER_URL` variable to the URL of your API server. Click **Save**.
+Set the `<API_name>_SERVER_URL` environment variable to `https://canpushtoprod.abdulbaaridavids04.workers.dev`. Click **Update** and then **Save**.
 
-![Set server URL](./assets/mcp-gemini/set-server-url.png)
+![Set server URL](/img/guides/mcp-gemini/set-server-url.png)
 
 ### Publishing your MCP server
 
-Finally, lets make the toolset available as an MCP server. 
+Finally, let's make the toolset available as an MCP server.
 
 Go to the **MCP** tab, find the "Push Advisor" toolset, and click **Edit**. On the MCP Details page, tick the **Public** checkbox and click **Save**.
 
-![MCP Details](./assets/mcp-gemini/mcp-details.png)
+![MCP Details](/img/guides/mcp-gemini/mcp-details.png)
 
 Scroll down to the **MCP Config** section and copy the Public Server configuration.
 
-![Push Advisor MCP Server](./assets/mcp-gemini/copy-mcp-config.png)
+![Push Advisor MCP Server](/img/guides/mcp-gemini/copy-mcp-config.png)
 
 The configuration will look something like this:
 
@@ -153,6 +157,14 @@ If you're using the Authenticated Server configuration:
 }
 ```
 
+:::tip[Configuration Options]
+- `"command"`: The executable to run (in this case `npx`)
+- `"args"`: Array of command-line arguments
+- `"env"`: Environment variables for the server process (optional)
+- `"timeout"`: Request timeout in milliseconds (optional, default: 600,000ms)
+- `"trust"`: When `true`, bypasses all tool call confirmations (optional, default: `false`)
+:::
+
 ## Connect Gemini CLI to your MCP server
 
 Now we'll connect Gemini CLI to your newly created MCP server.
@@ -161,52 +173,10 @@ Now we'll connect Gemini CLI to your newly created MCP server.
 
 Gemini CLI uses a `settings.json` configuration file to manage MCP servers. You can configure servers either globally at `~/.gemini/settings.json` or for a specific project at `.gemini/settings.json` in your project root.
 
-![Gemini CLI settings.json](./assets/mcp-gemini/gemini-cli-settings-json.png)
+Copy your MCP server configuration from Gram for either the Public Server or the Authenticated Server and add the configuration to your `.gemini/settings.json` file.
 
-**For the Public Server configuration**, add this to your `settings.json`:
+![Gemini CLI settings.json](/img/guides/mcp-gemini/gemini-cli-settings-json.png)
 
-```json
-{
-  "mcpServers": {
-    "GramPushadvisor": {
-      "command": "npx",
-      "args": [
-        "mcp-remote",
-        "https://app.getgram.ai/mcp/canipushtoprod"
-      ]
-    }
-  }
-}
-```
-
-**For the Authenticated Server configuration**, add this to your `settings.json`:
-
-```json
-{
-  "mcpServers": {
-    "GramPushadvisor": {
-      "command": "npx",
-      "args": [
-        "mcp-remote",
-        "https://app.getgram.ai/mcp/canipushtoprod",
-        "--header",
-        "Authorization: ${GRAM_KEY}"
-      ],
-      "env": {
-        "GRAM_KEY": "Bearer your-api-key-here"
-      }
-    }
-  }
-}
-```
-
-:::tip[Configuration Options]
-- `"command"`: The executable to run (in this case `npx`)
-- `"args"`: Array of command-line arguments
-- `"env"`: Environment variables for the server process (optional)
-- `"timeout"`: Request timeout in milliseconds (optional, default: 600,000ms)
-- `"trust"`: When `true`, bypasses all tool call confirmations (optional, default: `false`)
-:::
 
 ### Verify the connection
 
@@ -224,11 +194,11 @@ Once in the Gemini CLI session, use the `/mcp` command to view your MCP server s
 
 You should see `GramPushadvisor` in the server list with a list of tools available.
 
-![Gemini CLI MCP Status](./assets/mcp-gemini/gemini-cli-mcp-status.png)
+![Gemini CLI MCP Status](/img/guides/mcp-gemini/gemini-cli-mcp-status.png)
 
-You can also view more details about the servers' tools by using `ctrl + T` to view the tool details.
+You can also view more details about the servers' tools by using `ctrl + t` to view the tool details.
 
-![Gemini CLI Toggle Tool Details](./assets/mcp-gemini/gemini-cli-toggle-tool-details.png)
+![Gemini CLI Toggle Tool Details](/img/guides/mcp-gemini/gemini-cli-toggle-tool-details.png)
 
 ## Test your setup
 
@@ -237,7 +207,7 @@ Now test the connection by running a vibe check.
 Ask Gemini a basic question like `whats the vibe today?`
 
 <video width="600" controls>
-  <source src="./assets/mcp-gemini/gemini-cli-showcase.mp4" type="video/mp4" />
+  <source src="/videos/gemini-cli-showcase.mp4" type="video/mp4" />
     Your browser does not support the video tag.
 </video>
 
@@ -251,13 +221,13 @@ Ask Gemini to check if it's safe to push code to production today:
 
 Gemini CLI will use the `can_i_push_to_prod` tool to check the current day. Before making the API call, it will ask for your permission to use the tool:
 
-![Gemini CLI Tool Permission](./assets/mcp-gemini/gemini-cli-tool-permission.png)
+![Gemini CLI Tool Permission](/img/guides/mcp-gemini/gemini-cli-tool-permission.png)
 
 You can choose to approve the tool call once, or always allow this tool to disable future prompts. Once approved, Gemini will make the API call and respond with the vibe check results:
 
-![Gemini CLI Push Request](./assets/mcp-gemini/gemini-cli-push-request.png)
+![Gemini CLI Push Request](/img/guides/mcp-gemini/gemini-cli-push-request.png)
 
-## Troubleshooting 
+## Troubleshooting
 
 Let's go through some common issues and how to fix them.
 
@@ -265,7 +235,7 @@ Let's go through some common issues and how to fix them.
 
 If Gemini CLI can't find your server, click `ctrl + O` to view the MCP Debug console.
 
-![Gemini CLI Debug Issue](./assets/mcp-gemini/gemini-cli-debug-issue.png)
+![Gemini CLI Debug Issue](/img/guides/mcp-gemini/gemini-cli-debug-issue.png)
 
 If you see `failed to start or connect to MCP server`, verify that the `settings.json` file is correct and matches the configuration from Gram.
 
@@ -278,12 +248,12 @@ If you get authentication errors, verify your Gram API key in the dashboard unde
 If Gemini CLI isn't calling the tools:
 
 1. Test the MCP server in the **Gram Playground** first
-2. Check that the toolset includes the tools you want to use  
+2. Check that the toolset includes the tools you want to use
 3. Verify the environment is correctly configured with required variables
 4. Use `/mcp` in Gemini CLI to confirm the server lists the expected tools
 
 ## What's next
 
-You now have Gemini CLI connected to a Gram-hosted MCP server with vibe checking capabilities. 
+You now have Gemini CLI connected to a Gram-hosted MCP server with vibe checking capabilities.
 
-Ready to build your own MCP server? [Try Gram today](https://getgram.ai) and see how easy it is to turn any API into agent-ready tools. 
+Ready to build your own MCP server? [Try Gram today](https://getgram.ai) and see how easy it is to turn any API into agent-ready tools.
