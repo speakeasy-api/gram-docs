@@ -10,7 +10,7 @@ Roo Code is a [VS Code extension](https://marketplace.visualstudio.com/items?ite
 
 When paired with [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) servers, you can connect it to your APIs, databases, and infrastructure services, granting Roo Code contextual access to your tools and data.
 
-In the guide that follows, we'll walk through connecting Roo Code to a [Gram-hosted MCP server](./the-easiest-way-to-host-mcp-servers) using our Push Advisor example from the [Gram concepts guide](./gram-concepts). You'll learn how to set up the connection, test it, and use natural language to perform vibe checks before you vibe code.
+In the guide that follows, we'll walk through connecting Roo Code to a [Gram-hosted MCP server](/blog/the-easiest-way-to-host-mcp-servers) using our Push Advisor example from the [Gram concepts guide](/blog/gram-concepts). You'll learn how to set up the connection, test it, and use natural language to perform vibe checks before you vibe code.
 
 Find the full code and OpenAPI document in the [Push Advisor API repository](https://github.com/ritza-co/gram-examples/tree/main/push-advisor-api).
 
@@ -146,17 +146,17 @@ Now we'll connect Roo Code to your newly created MCP server.
 
 ### Add the server to Roo Code
 
-Roo Code uses a `settings.json` configuration file to manage MCP servers. You can configure servers either globally at `~/.roocode/settings.json` or for a specific project at `.roocode/settings.json` in your project root.
+Roo Code uses an `mcp_settings.json` configuration file to manage MCP servers.
 
-To add a server to Roo Code, click the **Server** icon at the top right of the Roo Code window. 
+To add a server to Roo Code, click the **Server** icon at the top right of the Roo Code window.
 
 ![Screenshot showing the Roo Code Edit Global MCP button](/img/guides/mcp-installing-roo-code/roo-code-mcp-button.png)
 
-Click **Edit Global MCP** to open Roo Code's global MCP server `settings.json` file.
+Click **Edit Global MCP** to open Roo Code's global MCP server `mcp_settings.json` file.
 
-![Screenshot showing the Roo Code MCP server settings.json file](/img/guides/mcp-installing-roo-code/roo-code-settings-paste.png)
+![Screenshot showing the Roo Code MCP server mcp_settings.json file](/img/guides/mcp-installing-roo-code/roo-code-settings-paste.png)
 
-Add the following to the `settings.json` file:
+Add the following to the `mcp_settings.json` file:
 
 ```json
 {
@@ -212,9 +212,9 @@ Roo Code will use the `vibe_check` tool to check the current day. Before making 
 
 ![Screenshot showing Roo Code asking for permission to use the tool](/img/guides/mcp-installing-roo-code/roo-code-tool-permission.png)
 
-You can choose to approve the tool call once, or always allow this tool, which will disable future prompts for this tool. Once approved, Roo Code will make the API call and respond with the vibe check results:
+You can choose to approve the tool call once, or always allow this tool, which will disable future prompts for this tool. Once approved, Roo Code will make the API call and respond with the vibe check results.
 
-## Troubleshooting 
+## Troubleshooting
 
 Let's go through some common issues and how to fix them.
 
@@ -222,7 +222,7 @@ Let's go through some common issues and how to fix them.
 
 If Roo Code can't find your server:
 
-- Check that the `settings.json` file is correct and matches the configuration from Gram.
+- Check that the `mcp_settings.json` file is correct and matches the configuration from Gram.
 - Verify that the MCP server is listed in Roo Code's server configuration panel.
 - Ensure the `npx` command is available (reinstall Node.js if needed).
 - Try restarting Roo Code after making configuration changes.
