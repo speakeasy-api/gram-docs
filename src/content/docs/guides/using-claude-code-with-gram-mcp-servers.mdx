@@ -1,5 +1,5 @@
 ---
-title: "Using Claude Code with Gram MCP servers"
+title: "Using Claude Code with Gram-hosted MCP servers"
 description: "Learn how to connect Claude Code to Gram-hosted MCP servers, giving Claude access to your APIs and tools directly from the terminal."
 sidebar:
   order: 2
@@ -36,9 +36,7 @@ If installation is successful, you'll see Claude Code's available commands and o
 
 ## Creating a Gram MCP server
 
-If you already have a Gram MCP server configured, you can skip to [Step 2](#connect-claude-code-to-your-gram-server). Otherwise, let's set up the Push Advisor example now.
-
-For an in-depth guide on how Gram works and a more detailed guide on how to create a Gram MCP server, check out the [Gram concepts guide](/blog/gram-concepts).
+If you already have a Gram MCP server configured, you can skip to [connecting Claude Code to your Gram-hosted MCP server](#connecting-claude-code-to-your-gram-hosted-mcp-server). For an in-depth guide to how Gram works and more details on how to create a Gram-hosted MCP server, check out the [Gram concepts guide](/blog/gram-concepts).
 
 ### Setting up a Gram project
 
@@ -143,7 +141,7 @@ The authenticated server configuration looks something like this:
 }
 ```
 
-## Connecting Claude Code to your Gram server
+## Connecting Claude Code to your Gram-hosted MCP server
 
 Now we'll connect Claude Code to your newly created MCP server.
 
@@ -174,9 +172,9 @@ In the command for authenticated servers:
 - `-e GRAM_KEY=...` – Sets your API key as an environment variable.
 - `--header` – The flag that passes the authorization header to the remote server.
 
-### Verifying the connection
+## Verifying the connection
 
-Check that your server was added successfully:
+Check that the server was added successfully:
 
 ```bash
 claude mcp list
