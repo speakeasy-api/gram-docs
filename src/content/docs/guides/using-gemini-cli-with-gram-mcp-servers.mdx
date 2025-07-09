@@ -1,11 +1,11 @@
 ---
-title: "Using Gemini CLI with Gram MCP servers"
+title: "Using Gemini CLI with Gram-hosted MCP servers"
 description: "Learn how to connect Gemini CLI to Gram-hosted MCP servers, giving Gemini access to your APIs and tools directly from the terminal."
 sidebar:
   order: 3
 ---
 
-[Gemini CLI](https://github.com/google-gemini/gemini-cli) is Google's open-source terminal-based tool that brings Gemini's capabilities directly to your command line. Unlike web-based interfaces, the Gemini CLI operates entirely in your terminal and has access to your current project folder, offering a lightweight and efficient way to interact with Gemini models from within your project.
+[Gemini CLI](https://github.com/google-gemini/gemini-cli) is Google's open-source terminal-based tool that brings Gemini's capabilities directly to your command line. Unlike web-based interfaces, Gemini CLI operates entirely in your terminal and has access to your current project folder, offering a lightweight and efficient way to interact with Gemini models from within your project.
 
 ![Gemini CLI terminal interface showing welcome message](/img/guides/mcp-gemini/gemini-cli-intro.png)
 
@@ -23,7 +23,7 @@ You'll need:
 - [Gemini CLI](https://github.com/google-gemini/gemini-cli) installed.
 - Node.js version 18 or higher.
 
-## Getting started
+## Installing Gemini CLI
 
 You have two options to install Gemini CLI:
 
@@ -37,7 +37,7 @@ npx https://github.com/google-gemini/gemini-cli
 npm install -g @google/gemini-cli
 ```
 
-### Verifying installation
+## Verifying the installation
 
 Test that Gemini CLI is working:
 
@@ -47,15 +47,13 @@ gemini --help
 
 If installation is successful, you'll see Gemini CLI's available commands and options.
 
-### Authentication
+## Authenticating with Gemini CLI
 
 When you first run `gemini`, you'll be prompted to authenticate. You can sign in with your personal Google account to get free access to Gemini 2.5 Pro with generous usage limits (60 requests per minute, 1,000 requests per day).
 
 ## Creating a Gram MCP server
 
-If you already have a Gram MCP server configured, you can skip to [connecting Gemini CLI to your server](#connect-gemini-cli-to-your-mcp-server). Otherwise, let's set up the Push Advisor example now.
-
-For an in-depth guide on how Gram works and a more detailed guide on how to create a Gram MCP server, check out the [Gram concepts guide](/blog/gram-concepts).
+If you already have a Gram-hosted MCP server configured, you can skip to [connecting Gemini CLI to your Gram-hosted MCP server](#connecting-gemini-cli-to-your-gram-hosted-mcp-server). For an in-depth guide to how Gram works and more details on how to create a Gram-hosted MCP server, check out the [Gram concepts guide](/blog/gram-concepts).
 
 ### Setting up a Gram project
 
@@ -168,37 +166,38 @@ Here's what these configuration options do:
 - `"timeout"` – Request timeout in milliseconds (optional, default: 600,000ms).
 - `"trust"` – When `true`, bypasses all tool call confirmations (optional, default: `false`).
 
-## Connect Gemini CLI to your MCP server
+## Connecting Gemini CLI to your Gram-hosted MCP server
 
 Now we'll connect Gemini CLI to your newly created MCP server.
 
-### Add the server to Gemini CLI
+Gemini CLI uses a `settings.json` configuration file to manage MCP servers. You can configure MCP servers in one of two files:
 
-Gemini CLI uses a `settings.json` configuration file to manage MCP servers. You can configure servers either globally at `~/.gemini/settings.json` or for a specific project at `.gemini/settings.json` in your project root.
+- Globally at `~/.gemini/settings.json`.
+- For a specific project at `.gemini/settings.json` in your project root.
 
-Copy your MCP server configuration from Gram for either the Public Server or the Authenticated Server and add the configuration to your `.gemini/settings.json` file.
+Copy your public or authenticated MCP server configuration from Gram and add it to the `.gemini/settings.json` file.
 
 ![Screenshot showing the Gemini CLI settings.json configuration file](/img/guides/mcp-gemini/gemini-cli-settings-json.png)
 
-### Verifying the connection
+## Verifying the connection
 
-Start Gemini CLI and check that your server was configured correctly:
+Start Gemini CLI:
 
 ```bash
 gemini
 ```
 
-Once in the Gemini CLI session, use the `/mcp` command to view your MCP server status:
+Then use the `/mcp` command to view the MCP server status:
 
 ```bash
 /mcp
 ```
 
-You should see `GramPushadvisor` in the server list with a list of tools available.
+You should see `GramPushadvisor` and its available tools listed.
 
 ![Screenshot showing Gemini CLI MCP server status with available tools](/img/guides/mcp-gemini/gemini-cli-mcp-status.png)
 
-You can also view more details about the servers' tools by using `ctrl + t` to view the tool details.
+Press `Ctrl + T` to view detailed information about the server's tools.
 
 ![Screenshot showing Gemini CLI tool details toggle](/img/guides/mcp-gemini/gemini-cli-toggle-tool-details.png)
 
@@ -225,7 +224,7 @@ Gemini CLI will use the `can_i_push_to_prod` tool to check the current day. Befo
 
 ![Screenshot showing Gemini CLI's tool permission prompt when requesting to use an MCP tool](/img/guides/mcp-gemini/gemini-cli-tool-permission.png)
 
-You can choose to approve the tool call once, or always allow this tool to disable future prompts. Once approved, Gemini will make the API call and respond with the vibe check results:
+You can approve the tool call once, or choose to always allow this tool or all tools from the server to skip future prompts. Once approved, Gemini will make the API call and respond with the vibe check results:
 
 ![Screenshot showing the result after Gemini CLI successfully calls the Push Advisor API tool](/img/guides/mcp-gemini/gemini-cli-push-request.png)
 
@@ -235,9 +234,9 @@ Let's go through some common issues and how to fix them.
 
 ### Server not found
 
-If Gemini CLI can't find your server, click `ctrl + O` to view the MCP Debug console.
+If Gemini CLI can't find your server, press `Ctrl + O` to view the Debug Console.
 
-![Screenshot showing the Gemini CLI debug console with server connection issues](/img/guides/mcp-gemini/gemini-cli-debug-issue.png)
+![Screenshot showing the Gemini CLI Debug Console with server connection issues](/img/guides/mcp-gemini/gemini-cli-debug-issue.png)
 
 If you see `failed to start or connect to MCP server`:
 
@@ -259,7 +258,7 @@ If Gemini CLI isn't calling the tools:
 
 - Test the MCP server in the **Gram Playground** first.
 - Check that the toolset includes the tools you want to use.
-- Verify the environment is correctly configured with required variables.
+- Verify the environment is correctly configured with the required variables.
 - Use `/mcp` in Gemini CLI to confirm the server lists the expected tools.
 
 ## What's next
