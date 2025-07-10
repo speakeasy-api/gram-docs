@@ -78,16 +78,16 @@ export default defineConfig({
           autogenerate: { directory: "guides" },
         },
         {
+          label: "Clients",
+          autogenerate: { directory: "clients" },
+        },
+        {
           label: "Concepts",
           autogenerate: { directory: "concepts" },
         },
         {
           label: "Blog",
           autogenerate: { directory: "blog" },
-        },
-        {
-          label: "Clients",
-          autogenerate: { directory: "clients" },
         },
       ],
       plugins: [starlightLlmsTxt()],
