@@ -85,6 +85,10 @@ export default defineConfig({
           label: "Blog",
           autogenerate: { directory: "blog" },
         },
+        {
+          label: "Clients",
+          autogenerate: { directory: "clients" },
+        },
       ],
       plugins: [starlightLlmsTxt()],
     }),
