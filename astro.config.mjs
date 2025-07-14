@@ -75,11 +75,17 @@ export default defineConfig({
         },
         {
           label: "Guides",
-          autogenerate: { directory: "guides" },
-        },
-        {
-          label: "Clients",
-          autogenerate: { directory: "clients" },
+          items: [
+            {
+              label: "Basics",
+              autogenerate: { directory: "guides" },
+            },
+            {
+              label: "MCP Clients",
+              autogenerate: { directory: "clients" },
+              collapsed: true,
+            },
+          ],
         },
         {
           label: "Concepts",
