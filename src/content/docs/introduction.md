@@ -28,7 +28,7 @@ Gram makes tool creation & curation easy. [Tools](concepts/tool-definitions) are
 
 ## Going live: deploying MCP servers
 
-Once tools have been refined, the MCP server is ready to deploy. Deployment can be [Gram-hosted](/guides/creating-your-first-hosted-mcp-server) or self-hosted
+Once tools have been refined, the MCP server is ready to deploy. Deployment can be [Gram-hosted](/guides/creating-your-first-hosted-mcp-server) or self-hosted.
 
 ## Useful links
 
