@@ -7,7 +7,7 @@ sidebar:
 
 **[Gram](https://getgram.ai)** is the fastest way to build a production-ready MCP server.
 
-It is a platform that enable any company to **create, curate and host** Agentic tools for their APIs.
+It is a platform that enable any company to **create, curate and host** agentic tools for your APIs.
 
 ## From REST to MCP: Create and then Curate.
 
