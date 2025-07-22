@@ -135,7 +135,12 @@ Here's what these configuration options do:
 - `"timeout"` – Request timeout in milliseconds (optional, defaults to `600,000ms`).
 - `"trust"` – When `true`, bypasses all tool call confirmations (optional, defaults to `false`).
 
-## Connecting Claude Desktop to your Gram-hosted MCP server
+Now that you have your MCP server configuration, you can connect it to Claude Desktop. We'll look at two ways to do this:
+
+1. Using the MCP configuration file in Claude Desktop.
+2. Using the Claude Connectors feature to connect directly to your Gram-hosted MCP server. 
+
+## Connecting Claude Desktop to your Gram-hosted MCP server using the MCP configuration file
 
 <div class="flex justify-center">
   <video controls>
@@ -210,6 +215,63 @@ What's the vibe today?
 Claude will use your Gram-hosted MCP server to check the vibes by calling the Push Advisor API.
 
 ![Screenshot showing Claude Desktop successfully calling the Push Advisor API](/img/guides/mcp-installing-ide/claude-desktop-vibe-check.png)
+
+## Connecting Claude Desktop to your Gram-hosted MCP server using Claude Connectors
+
+Claude Connectors allow you to connect Claude Desktop to your Gram-hosted MCP server without manually editing the configuration file. This is more user-friendly, but comes with one important limitation: **your MCP server must be public**. If you need to use an authenticated server, you'll need to use the MCP configuration file method described above.
+
+Here's how to set up a connection using Claude Connectors:
+
+### Step 1: Access Claude Desktop settings
+
+In Claude Desktop, open settings:
+
+- **macOS:** Go to **Claude -> Settings...** from the menu bar.
+- **Windows:** Access settings through the application menu.
+
+### Step 2: Open the Connectors tab
+
+Select **Connectors** from the left sidebar. This is where you can manage your connections to external services.
+
+### Step 3: Add a custom connector
+
+Click the **Add custom connector** button.
+
+In the popup, provide the following information:
+
+- **Name:** A descriptive name for your connector (e.g., "Push MCP Server").
+- **URL:** The URL of your Gram-hosted MCP server (e.g., `https://app.getgram.ai/mcp/canipushtoprod`).
+
+Claude Desktop may show a warning about trusting the server. Since this is your own MCP server, you can safely ignore this warning.
+
+Click **Add** to create the connector.
+
+### Step 4: Test the connection
+
+No need to restart, you can test the connection immediately. In the chat, ask Claude something that requires the MCP server, like:
+
+```text
+Can I push to prod today?
+```
+
+Claude should prompt you with a tool call request. This means the connection is working, and Claude can now use your Gram-hosted MCP server to access the Push Advisor API.
+
+## Deciding which method to use
+
+Both methods connect Claude Desktop to your Gram-hosted MCP server, but they have different use cases:
+
+- **MCP configuration file:** Use this method if you need to connect to an authenticated MCP server or if you want more control over the configuration.
+- **Claude Connectors:** Use this method for a simpler setup with public MCP servers. It's more user-friendly and doesn't require manual configuration file editing.
+
+## Comparison of connection methods
+
+| Attribute/Requirement         | MCP Configuration File | Claude Desktop Connectors |
+| ----------------------------- | ---------------------- | ------------------------- |
+| Public MCP server             | ✅                     | ✅                        |
+| Local MCP server              | ✅                     | ❌                        |
+| Supports authenticated server | ✅                     | ❌                        |
+| Manual configuration needed   | ✅                     | ❌                        |
+| User-friendly setup           | ❌                     | ✅                        |
 
 ## Troubleshooting
 
