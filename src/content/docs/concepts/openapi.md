@@ -75,6 +75,7 @@ x-gram:
 ```
 
 When `responseFilterType` is set to `jq`, the LLM can apply jq filters to the response data, such as:
+
 - `.user | {name, email, status}` to extract only specific user fields
 - `.data[] | select(.active == true)` to filter for active items
 - `.results | map({id, title})` to transform arrays of objects
@@ -87,13 +88,4 @@ Using the `x-gram` extension is optional. With Gram's [tool variations](/concept
 
 ## Limitations of OpenAPI 3.0.x
 
-Many LLMs don't support the JSON Schema version used in OpenAPI 3.0.x documents. While Gram supports OpenAPI 3.0.x documents, some agent SDKs may run into issues when invoking tools that use outdated JSON Schema settings.
-
-For example, the following OpenAPI 3.0.x fields are known to cause compatibility problems:
-
-- `nullable: true` may cause issues with the Vercel AI SDK and similar.
-- `exclusiveMinimum: <boolean>` and `exclusiveMaximum: <boolean>` are considered invalid. The modern equivalent is `exclusiveMinimum: <number>` and `exclusiveMaximum: <number>`.
-
-:::tip[Transparent upgrade coming soon]
-We are working on a feature that will transparently upgrade your **OpenAPI 3.0.x** document to **OpenAPI 3.1.x** at the time of upload, including automatic migration of unsupported JSON Schema options. If this issue is a blocker, contact us for available short-term workarounds.
-:::
+Many LLMs don't support the JSON Schema version used in OpenAPI 3.0.x documents. When these documents are uploaded to Gram, they are transparently upgraded to 3.1.0 using the steps defined in [Migrating from OpenAPI 3.0 to 3.1.0](https://www.openapis.org/blog/2021/02/16/migrating-from-openapi-3-0-to-3-1-0). When this happens you might notice that line numbers no longer match the original OpenAPI document. It's recommended to upgrade your OpenAPI documents to 3.1.x to have a more streamlined experience.
