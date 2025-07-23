@@ -1,6 +1,6 @@
 ---
 title: OAuth for MCP
-description: Grams options for placing OAuth in front of your MCP Server
+description: Placing OAuth in front of a Gram MCP Server
 sidebar:
   order: 5
 ---
