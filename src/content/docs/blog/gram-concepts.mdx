@@ -170,41 +170,6 @@ Let's create our toolset by adding both the GitHub tools and our custom Push Dec
 
 Go to the **Toolsets** tab and click **New Toolset**. Give it a name and add the tools you want to include. Click **Save** to create the toolset.
 
-## Configuring environments
-
-An **environment** stores API keys, tokens, server URLs, and other runtime settings, keeping secrets separate from logic. This separation is crucial for managing different deployment contexts (for example, production and staging), multi-tenant APIs, or team-specific credentials.
-
-### Why environments matter
-
-APIs typically require authentication and a server URL before an AI agent can access them. You might also need different configurations for:
-
-- **Production and staging environments** with different API endpoints.
-- **Multi-tenant APIs**, where each customer has their own subdomain.
-- **Team-specific credentials**, where different groups use different API keys.
-
-When you attach an environment to a toolset, every API call automatically includes the correct authentication details and server configuration.
-
-For example, if we have a toolset that includes GitHub tools for managing issues, you might create different environments with varying permission levels:
-
-- A **`support-readonly` environment** that uses a GitHub token with read-only access, allowing agents to view issues and pull requests but not modify them.
-- A **`support-manager` environment** that uses a token with write permissions, enabling senior support staff's agents to close issues, add labels, and update milestones.
-- A **`development` environment** that uses a token with full repository access for development team agents.
-
-This ensures that each agent operates within its intended scope, preventing accidental modifications or unauthorized access.
-
-### Creating environments
-
-<video width="600" controls>
-  <source src="/img/blog/concepts/creating-environment.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
-</video>
-
-
-To set up an environment, switch to the **Environments** tab and click **New Environment**. Give the environment a name (for example, `demo-environment`). 
-
-Gram can automatically populate environment variables based on your selected toolsets. When you click **Fill for toolset**, Gram analyzes the chosen toolset, identifies all required environment variables, and creates empty placeholders for each one. You can then set values for the relevant variables and remove any that aren't needed.
-
-Click **Save** to create the environment.
 
 ## Testing, publishing, and integrating your toolset
 

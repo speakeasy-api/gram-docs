@@ -2,7 +2,7 @@
 title: Deploying an MCP server
 description: Deploying a hosted MCP server using Gram
 sidebar:
-  order: 4
+  order: 5
 ---
 
 Gram automatically exposes each toolset as a hosted MCP server.
