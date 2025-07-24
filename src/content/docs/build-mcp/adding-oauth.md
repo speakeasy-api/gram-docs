@@ -10,7 +10,9 @@ For assistance with OAuth implementation, including proxy setup and DCR complian
 :::
 
 
-Starting March 2025, the MCP specification recommends OAuth-based authentication, but most existing OAuth implementations don't meet MCP's specific requirements. The specification calls for OAuth 2.1 with Dynamic Client Registration (DCR), which most major OAuth providers—including Google, GitHub, and Microsoft Azure AD—don't support. This mismatch between MCP's vision and existing OAuth infrastructure creates a common implementation barrier for enterprise adoption.
+Starting March 2025, the MCP specification recommends OAuth-based authentication, but most existing OAuth implementations don't meet MCP's specific requirements. The specification calls for OAuth 2.1 and support for Dynamic Client Registration (DCR), which most major OAuth providers—including Google, GitHub, and Microsoft Azure AD—don't support. This mismatch between MCP's vision and existing OAuth infrastructure creates a common implementation barrier for enterprise adoption.
+
+The requirements for OAuth 2.1 in MCP can be found [here].(https://modelcontextprotocol.io/specification/draft/basic/authorization#protocol-requirements)
 
 Gram bridges this gap by supporting multiple authentication approaches, from simple token-based methods to complex OAuth proxy solutions. How you set up authentication depends on the OAuth capabilities of the underlying API and the intended purpose of your MCP server. Understanding these different approaches and their trade-offs is essential for selecting the right authentication strategy.
 
@@ -23,20 +25,20 @@ Authorization code flow enables user-interactive OAuth with proper consent scree
 
 **When should you use it**: If you want to host an MCP server for large-scale use by external developers, you should plan to built out support for DCR.
 
-**Examples**: [Stripe](https://docs.stripe.com/mcp) & [Asana](https://developers.asana.com/docs/integrating-with-asanas-mcp-server) both have added support for DCR.
+**Examples**: [Stripe](https://docs.stripe.com/mcp) & [Asana](https://developers.asana.com/docs/integrating-with-asanas-mcp-server) both have added support for DCR to their APIs to accomodate MCP.
 
 #### Implementation in Gram
 
 If the API is already configured to support DCR, enabling the authorization flow on Gram is simple:
 
-1. Create a manifest file for your OAuth server
-2. Navigate to **Environments** tab
-3. Upload the manifest file to the environment
-4. Attach environment to toolset
+1. Create a manifest file for the OAuth server in Gram.
+2. Attach the manifest to your toolset.
 
 ### Without DCR
 
-**When should you use it**: Most APIs don't support DCR, so Gram offers an OAuth proxy that translates between MCP requirements and standard OAuth implementations. The proxy will use a specific client id and secret to access the API on behalf of the users of the MCP server. This is useful for MCP servers that won't be exposed to the public.
+**When should you use it**: Most APIs don't support DCR, so Gram offers an OAuth proxy that translates between MCP requirements and standard OAuth implementations. The proxy will use a specific client id and secret to access the API on behalf of the users of the MCP server.
+
+This is useful for MCP servers that won't be exposed to the public, or in cases where a server acting as a single client_id is acceptable.
 
 **Examples**: [Cloudflare OAuth Proxy](https://blog.cloudflare.com/remote-model-context-protocol-servers-mcp/#workers-oauth-provider-an-oauth-2-1-provider-library-for-cloudflare-workers)
 
