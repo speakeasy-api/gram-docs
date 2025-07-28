@@ -34,11 +34,13 @@ If the API is already configured to support DCR, enabling the authorization flow
 1. Create a manifest file for the OAuth server in Gram.
 2. Attach the manifest to your toolset.
 
+Please [book in time with our team](https://calendly.com/sagar-speakeasy/30min). We'll get you up and running.
+
 ### Without DCR
 
-**When should you use it**: Most APIs don't support DCR, so Gram offers an OAuth proxy that translates between MCP requirements and standard OAuth implementations. The proxy will use a specific client id and secret to access the API on behalf of the users of the MCP server.
+**When should you use it**: Most APIs don't support DCR, so Gram offers an OAuth proxy that translates between MCP requirements and standard OAuth implementations. The proxy will use a specific client id and secret to interface with the underlying OAuth provider on behalf of the users of the MCP server.
 
-This is useful for MCP servers that won't be exposed to the public, or in cases where a server acting as a single client_id is acceptable.
+This is useful for MCP servers that don't require dynamic public clients, or in cases acting as a single underlying OAuth provider is reasonable.
 
 **Examples**: [Cloudflare OAuth Proxy](https://blog.cloudflare.com/remote-model-context-protocol-servers-mcp/#workers-oauth-provider-an-oauth-2-1-provider-library-for-cloudflare-workers)
 
@@ -55,16 +57,14 @@ If you want to implement OAuth proxy in Gram, please [book in time with our team
 
 ## Client Credentials Flow
 
-Client credentials flow is a simpler authentication method. The server exchanges a client ID and secret for access tokens. Gram handles the token exchange process automatically.
+Client credentials flow is a simpler authentication method. The server exchanges a client ID and secret for access tokens. Gram handles the token exchange process automatically. The tool call flow will automatically cache tokens received from a client_credentials exchange based on the expiration of that token. We automatically support both `client_secret_post` and `client_secret_basic` flows.
 
 #### Implementation in Gram
 
 1. Upload the OpenAPI specification to Gram
-2. Navigate to **Environments** tab
-3. Add environment variables:
-   - `CLIENT_ID`: Application client identifier
-   - `CLIENT_SECRET`: Application client secret
-4. Attach environment to toolset
+2. Add the following entries to a gram environment or pass them directly to an MCP server:
+   - `{DOCUMENT}_CLIENT_ID`: Application client identifier
+   - `{DOCUMENT}_CLIENT_SECRET`: Application client secret
 
 ## Access Token Authentication
 
@@ -73,8 +73,7 @@ Access token authentication allows passing pre-obtained tokens directly to the M
 #### Implementation in Gram
 
 1. Obtain access token from the OAuth provider
-2. Navigate to **Environments** tab
-3. Add `ACCESS_TOKEN` environment variable
-4. Attach environment to toolset
+2. Add the following entries to a gram environment or pass them directly to an MCP server:
+   - Add `{DOCUMENT}_ACCESS_TOKEN` environment variable
 
 Popular services like GitHub use this approach. While technically OAuth-based, no OAuth flow occurs through the MCP client.
