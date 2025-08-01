@@ -2,7 +2,7 @@
 title: Adding OAuth to an MCP Server
 description: Configure authentication for MCP servers using different OAuth methods
 sidebar:
-  order: 5
+  order: 6
 ---
 
 If your API already supports OAuth, placing an OAuth provider in front of your MCP Server is a preferred way to do authorization according to the MCP spec.
@@ -44,7 +44,7 @@ If your API uses `clientCredentials`, Gram allows you to pass a client_id and cl
 :::tip[NOTE]
 Placing Managed OAuth in front of a server is a Pro and Enterprise feature.
 
-Please [book in time with our team](https://calendly.com/sagar-speakeasy/30min). We'll get you up and running.
+Please [book in time with our team](https://calendly.com/sagar-speakeasy/30min) for white-glove service with proxy setup or DCR compliance. We'll get you up and running.
 :::
 
 
