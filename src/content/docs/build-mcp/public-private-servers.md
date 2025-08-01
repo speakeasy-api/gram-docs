@@ -13,9 +13,9 @@ sidebar:
 ## Public Servers
 
 Making a server public means it is now visible to MCP Clients without the use of a Gram API Key.
-This does not mean a user would be able to access your underlying APIs; they of course would still need to provide the proper API credentials to the server.
+This does not mean a user would be able to access your underlying APIs unauthentication, they of course would still need to provide the proper API credentials to the server.
 
-Public Servers are good for use cases where you may want to provide a single server to your customers or even if you want internal employees to be able to only worry about API credentials and not need their own Gram API Key.
+Public Servers are good for use cases where you may want to provide a single server to your customers or even if you want internal employees to be able to access a server with API credentials and not need their own Gram API Key.
 
 Making a server public is also a requirement for:
 - Hosted MCP Documentation Pages
@@ -30,11 +30,11 @@ This is a good option if you only want to share a server selectively to internal
 
 # Pass-through Authentication vs. Managed Authentication
 
-![Screenshot of MCP Authentication Toggle](/img/guides/public-private-server.png)
+![Screenshot of MCP Authentication Toggle](/img/guides/passthrough-managed-auth.png)
 
 ## Pass-through Authentication
 
-In pass-through authentication a customer directly passes their credentials and environment variables to the MCP Server. This is a requirement for a publicly used server, but is also an option available to private servers.
+In pass-through authentication a user directly passes their credentials and environment variables to the MCP Server. This is a requirement for a publicly used server, but is also an option available to private servers.
 
 ```
 {
@@ -58,7 +58,7 @@ In pass-through authentication a customer directly passes their credentials and 
 
 ## Managed Authentication
 
-Managed authentication allows you to use stored Gram environments with your MCP server. To do this, you must be authenticated with a Gram API Key. You are also able to use a combination of pass-through variables and stored Gram environments if you choose so.
+Managed authentication allows you to use stored Gram environments with your MCP server. To do this, you must be authenticated with a Gram API Key. You are also able to use a combination of pass-through variables and stored Gram environments if you choose to do so.
 
 ```
 {
