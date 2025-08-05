@@ -50,7 +50,7 @@ You'll need:
 
 ### Understanding the Architecture
 
-Here's a high-level look at what we'll build.:
+Here's a high-level look at what we'll build:
 
 ![Architecture Diagram](/img/blog/adding-ai-chat-to-your-app-guide/architecture-diagram.png)
 
@@ -64,7 +64,7 @@ Next, we'll transform your existing API into something AI models can understand 
 
 ### Documenting your API
 
-First, we need to create an OpenAPI document that describes your API endpoints. Gram uses this to create an MCP server that is interoperatible with your API. As our example app uses Next.js, we'll use JSDoc comments to automatically generate this specification.
+First, we need to create an OpenAPI document that describes your API endpoints. Gram uses this to create an MCP server that is interoperable with your API. As our example app uses Next.js, we'll use JSDoc comments to automatically generate this specification.
 
 ```bash
 # Install swagger documentation tools
@@ -241,7 +241,7 @@ Save this configuration, we'll use it in our chat service setup.
 
 ## Integrating MCP with your existing application
 
-We'll build a chat interface that floats over the TaskBoard app, and connect it to our MCP server through a Python microservice. The FastAPI service handles the chat logic and tool execution, so we wont need to rewrite our existing Next.js frontend apart from adding the chat UI.
+We'll build a chat interface that floats over the TaskBoard app, and connect it to our MCP server through a Python microservice. The FastAPI service handles the chat logic and tool execution, so we won't need to rewrite our existing Next.js frontend apart from adding the chat UI.
 
 ### Building the FastAPI chat service
 
@@ -668,7 +668,7 @@ docker-compose ps
 docker-compose logs -f
 ```
 
-Now lets test our new chat component by asking it to list all our current tasks. We'll login to the app, create a new task, and then open the chat component. We'll then ask the agent to show us all our tasks.
+Now let's test our new chat component by asking it to list all our current tasks. We'll login to the app, create a new task, and then open the chat component. We'll then ask the agent to show us all our tasks.
 
 <video width="600" controls>
   <source src="/videos/taskboard-show-tasks.mp4" type="video/mp4" />
@@ -677,7 +677,7 @@ Now lets test our new chat component by asking it to list all our current tasks.
 
 Notice how the agent is only listing the tasks that are assigned to the logged in user.
 
-Now lets ask the agent to create a new task. We'll ask it to create a task reminding me to review last week's PR from Jeff. We'll also be purposefully vague with our request to see how the agent handles coming up with more context for the details field.
+Now let's ask the agent to create a new task. We'll ask it to create a task reminding me to review last week's PR from Jeff. We'll also be purposefully vague with our request to see how the agent handles coming up with more context for the details field.
 
 <video width="600" controls>
   <source src="/videos/taskboard-new-task.mp4" type="video/mp4" />
@@ -701,7 +701,7 @@ Here are a few common issues and how to resolve them.
 - Look for errors in browser developer console
 
 **AI can't access data:**
-- Confirm MCP server is accessible, if you're using ngrok, make sure you're using the **correct** URL.
+- Confirm the MCP server is accessible, if you're using ngrok, make sure you're using the **correct** URL.
 - Check user authentication is working
 - Verify API endpoints are returning expected data
 
@@ -711,7 +711,7 @@ Here are a few common issues and how to resolve them.
 - Verify CORS settings allow your frontend domain
 
 
-If you're having issues, you can enable logging in your chat service to see what's going on. This adds a level of verbosity to your chat service, which can be helpful when you're trying to figure how the agent uses the tools.
+If you're having issues, you can enable logging in your chat service to see what's going on. This adds a level of verbosity to your chat service, which can be helpful when you're trying to figure out how the agent uses the tools.
 
 ```python main.py
 import logging
@@ -732,21 +732,10 @@ async def chat(request: ChatRequest):
     return response
 ```
 
-The logging will show you the tools that the agent used, the messages that were sent to and from the agent, and the response from the agent. This can be helpful when you're trying to figure how the agent uses the tools.
+The logging will show you the tools that the agent used, the messages that were sent to and from the agent, and the response from the agent. This can be helpful when you're trying to figure out how the agent uses the tools.
 
 ![Chat Service Logging](/img/blog/adding-ai-chat-to-your-app-guide/chat-service-logging.png)
 
-
-### Beyond task management
-
-This guide works for any application that has a REST API, here are a few potential examples:
-
-- **E-commerce**: "Show me orders from last month with delivery issues"
-- **CRM**: "Create follow-up tasks for all prospects in California"  
-- **Content Management**: "Find all articles that need review by Friday"
-- **Inventory**: "Which products are running low and need reordering?"
-
-The key is having a well-documented API that describes your application's capabilities clearly. 
 
 ## Conclusion
 
