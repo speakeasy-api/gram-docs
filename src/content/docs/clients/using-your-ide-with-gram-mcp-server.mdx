@@ -2,14 +2,14 @@
 title: "Using your IDE with Gram-hosted MCP servers"
 description: "Learn how to create Gram-hosted MCP servers and connect them to your IDE to give your AI assistants access to your APIs and tools."
 sidebar:
-  order: 1
+  order: 6
 ---
 
 The Model Context Protocol (MCP) connects your AI assistants to real-world tools and data sources. Instead of manually copying and pasting information between tools and your AI assistant, your AI assistant can interact directly with APIs, databases, and services through standardized tool calls.
 
 [Gram](https://getgram.ai) makes setting up MCP servers simple by hosting servers in the cloud, so you don't need to handle local configurations, manage infrastructure, or deal with authentication complexity. With Gram, you can turn any OpenAPI document into a fully functional MCP server in minutes.
 
-This guide shows you how to create a Gram-hosted MCP server and use it across some of the most popular MCP clients.
+This guide shows you how to create a Gram-hosted MCP server and use it across some of the most popular IDE-based MCP clients.
 
 Find the full code and OpenAPI document in the [Push Advisor API repository](https://github.com/ritza-co/gram-examples/tree/main/push-advisor-api).
 
@@ -17,8 +17,8 @@ Find the full code and OpenAPI document in the [Push Advisor API repository](htt
 
 To follow this guide, you'll need:
 
-- A [Gram account](https://getgram.ai).
-- An MCP client. This guide covers Claude Desktop, Cursor, VS Code with Copilot, Windsurf, and Amp.
+- A [Gram account](https://app.getgram.ai).
+- An MCP client. This guide covers Cursor, VS Code with Copilot, Windsurf, and Amp. For Claude Desktop, see the [dedicated Claude Desktop guide](/clients/using-claude-desktop-with-gram-mcp-server).
 
 ## Creating a Gram-hosted MCP server
 
@@ -26,7 +26,7 @@ If you already have a Gram-hosted MCP server configured, you can skip to the rel
 
 ### Setting up a Gram project
 
-In the [Gram dashboard](https://getgram.ai), click **New Project** to start the guided setup flow for creating a toolset and MCP server.
+In the [Gram dashboard](https://app.getgram.ai), click **New Project** to start the guided setup flow for creating a toolset and MCP server.
 
 ![Screenshot of the Gram dashboard showing the New Project link](/img/guides/mcp-installing-ide/gram-new-project.png)
 
@@ -135,85 +135,7 @@ Here's what these configuration options do:
 - `"timeout"` – Request timeout in milliseconds (optional, defaults to `600,000ms`).
 - `"trust"` – When `true`, bypasses all tool call confirmations (optional, defaults to `false`).
 
-These configurations will work across all MCP clients. Next, we'll show you how to add MCP server configurations to the most popular MCP clients.
-
-## Adding the Gram-hosted MCP server to Claude Desktop
-
-Claude Desktop is Anthropic's standalone AI assistant application that supports MCP through a JSON configuration file.
-
-<div class="flex justify-center">
-  <video controls>
-    <source src="/videos/installing-mcp-claude-desktop.mp4" type="video/mp4"></source>
-    Your browser does not support the video tag.
-  </video>
-</div>
-
-### Step 1: Access Claude Desktop settings
-
-In Claude Desktop, open settings:
-
-- **macOS:** Go to **Claude -> Settings...** from the menu bar.
-- **Windows:** Access settings through the application menu.
-
-### Step 2: Open the MCP configuration
-
-Select **Developer** from the left sidebar, then click **Edit Config**. This will create or open the MCP configuration file at:
-
-- **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
-- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
-
-### Step 3: Add the MCP server configuration
-
-Replace the file content with your Gram MCP configuration. For a public server, use:
-
-```json
-{
-  "mcpServers": {
-    "GramPushadvisor": {
-      "command": "npx",
-      "args": [
-        "mcp-remote",
-        "https://app.getgram.ai/mcp/canipushtoprod"
-      ]
-    }
-  }
-}
-```
-
-For an authenticated server, use:
-
-```json
-{
-  "mcpServers": {
-    "GramPushadvisor": {
-      "command": "npx",
-      "args": [
-        "mcp-remote",
-        "https://app.getgram.ai/mcp/canipushtoprod",
-        "--header",
-        "Authorization: ${GRAM_KEY}"
-      ],
-      "env": {
-        "GRAM_KEY": "Bearer your-api-key-here"
-      }
-    }
-  }
-}
-```
-
-### Step 4: Test the connection
-
-Save the configuration file, then close Claude Desktop completely and reopen it. When the application has restarted, click the hamburger icon in the chat field to see the available tools. 
-
-Test the connection by asking:
-
-```
-What's the vibe today?
-```
-
-Claude will use your Gram-hosted MCP server to check the vibes by calling the Push Advisor API.
-
-![Screenshot showing Claude Desktop successfully calling the Push Advisor API](/img/guides/mcp-installing-ide/claude-desktop-vibe-check.png)
+These configurations will work across all MCP clients. Next, we'll show you how to add MCP server configurations to the most popular IDE-based MCP clients.
 
 ## Adding the Gram-hosted MCP server to Cursor
 
