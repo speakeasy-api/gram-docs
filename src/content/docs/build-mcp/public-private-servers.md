@@ -73,12 +73,12 @@ For example, you could give potential customers a temporary Gram API key to test
         "mcp-remote",
         "https://app.getgram.ai/mcp/ritza-rzx-todo",
         "--header",
-        "Gram-Environment:default",  // Specify which Gram environment to use
+        "Gram-Environment:default",
         "--header",
         "Authorization:${GRAM_KEY}"
       ],
       "env": {
-        "GRAM_KEY": "Bearer <your-key-here>"
+        "GRAM_KEY": "Bearer <your-gram-key>"
       }
     }
   }
