@@ -70,33 +70,32 @@ export default defineConfig({
       customCss: ["./src/fonts/font-face.css", "./src/styles/global.css"],
       sidebar: [
         {
-          label: "Overview",
-          autogenerate: { directory: "overview" },
-        },
-        {
-          label: "Guides",
+          label: "Start here",
           items: [
+            "introduction",
+            "how-does-it-work",
             {
-              label: "Basics",
-              autogenerate: { directory: "guides" },
-            },
-            {
-              label: "MCP Clients",
-              autogenerate: { directory: "clients" },
+              label: "Gram Concepts",
               collapsed: true,
+              autogenerate: { directory: "concepts" },
             },
           ],
         },
         {
-          label: "Concepts",
-          autogenerate: { directory: "concepts" },
+          label: "Build an MCP server",
+          autogenerate: { directory: "build-mcp" },
+        },
+        {
+          label: "Integrate with MCP Clients",
+          autogenerate: { directory: "clients" },
+          collapsed: true,
         },
         {
           label: "Blog",
           autogenerate: { directory: "blog" },
         },
       ],
-      plugins: [starlightLlmsTxt()],
+      plugins: [starlightLlmsTxt({ projectName: "gram" })],
     }),
   ],
 });

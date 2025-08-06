@@ -42,13 +42,14 @@ paths:
         summary: ""
         description: |
           <context>
-            This endpoint returns details about a product for a given merchant. 
+            This endpoint returns details about a product for a given merchant.
           </context>
           <prerequisites>
             - If you are presented with a product or merchant slug then you must first resolve these to their respective IDs.
             - Given a merchant slug use the `resolve_merchant_id` tool to get the merchant ID.
             - Given a product slug use the `resolve_product_id` tool to get the product ID.
           </prerequisites>
+        responseFilterType: jq
       responses:
         "200":
           description: Details about a product
@@ -60,17 +61,31 @@ paths:
 
 Without the `x-gram` extension, the generated tool would be named `ecommerce_e_commerce_v1_product`, and have the description `"Get a product by its ID"`, resulting in a poor quality tool. The `x-gram` extension allows you to customize a tool's name and description without altering the original information in the OpenAPI document.
 
+### Response Filtering
+
+The `x-gram` extension supports response filtering to help LLMs process API responses more effectively. Use the `responseFilterType` property to specify how responses should be filtered:
+
+- **`jq`**: Enables [jq](https://jqlang.org/) filtering on JSON responses. This allows the LLM to extract specific data from complex API responses using jq syntax, reducing noise and focusing on relevant information.
+
+```yaml
+x-gram:
+  name: get_user_profile
+  description: "Get detailed user profile information"
+  responseFilterType: jq
+```
+
+When `responseFilterType` is set to `jq`, the LLM can apply jq filters to the response data, such as:
+
+- `.user | {name, email, status}` to extract only specific user fields
+- `.data[] | select(.active == true)` to filter for active items
+- `.results | map({id, title})` to transform arrays of objects
+
+Omitting `responseFilterType` or setting it to `none` disables response filtering.
+
+More response filter types will be available in future releases.
+
 Using the `x-gram` extension is optional. With Gram's [tool variations](/concepts/tool-variations) feature, you can modify a tool's name and description when curating tools into toolsets. However, it might be worth using the `x-gram` extension to make your OpenAPI document clean, descriptive, and LLM-ready before bringing it into Gram, so your team doesn't need to fix tool names and descriptions later.
 
 ## Limitations of OpenAPI 3.0.x
 
-Many LLMs don't support the JSON Schema version used in OpenAPI 3.0.x documents. While Gram supports OpenAPI 3.0.x documents, some agent SDKs may run into issues when invoking tools that use outdated JSON Schema settings.
-
-For example, the following OpenAPI 3.0.x fields are known to cause compatibility problems:
-
-- `nullable: true` may cause issues with the Vercel AI SDK and similar.
-- `exclusiveMinimum: <boolean>` and `exclusiveMaximum: <boolean>` are considered invalid. The modern equivalent is `exclusiveMinimum: <number>` and `exclusiveMaximum: <number>`.
-
-:::tip[Transparent upgrade coming soon]
-We are working on a feature that will transparently upgrade your **OpenAPI 3.0.x** document to **OpenAPI 3.1.x** at the time of upload, including automatic migration of unsupported JSON Schema options. If this issue is a blocker, contact us for available short-term workarounds.
-:::
+Many LLMs don't support the JSON Schema version used in OpenAPI 3.0.x documents. When these documents are uploaded to Gram, they are transparently upgraded to 3.1.0 using the steps defined in [Migrating from OpenAPI 3.0 to 3.1.0](https://www.openapis.org/blog/2021/02/16/migrating-from-openapi-3-0-to-3-1-0). When this happens you might notice that line numbers no longer match the original OpenAPI document. It's recommended to upgrade your OpenAPI documents to 3.1.x to have a more streamlined experience.
