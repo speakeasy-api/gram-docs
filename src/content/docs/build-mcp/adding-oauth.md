@@ -43,6 +43,8 @@ If your API uses the `clientCredentials` flow, Gram allows you to pass a client_
 :::tip[NOTE]
 Placing Managed OAuth in front of a server is a Pro and Enterprise feature.
 
+An MCP Server must be marked `public` to attach Managed OAuth in front of it.
+
 Please [book in time with our team](https://calendly.com/sagar-speakeasy/30min) for white-glove service with proxy setup or DCR compliance. We'll get you up and running.
 :::
 
@@ -101,3 +103,4 @@ You will store the following in Gram to enable our OAuth proxy to interact with 
 - Client ID & Client Secret
 - List of Scopes (optional)
 - Token endpoint auth methods supported (optional)
+- You may need to whitelist oauth proxy redirect uris in your OAuth provider (https://{mcp_server_domain}.com/oauth/{mcp_slug}/callback)
