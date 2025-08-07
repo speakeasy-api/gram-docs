@@ -2,7 +2,7 @@
 title: Control server visibility
 description: Understanding Public and Private MCP Servers.
 sidebar:
-  order: 3
+  order: 2
 ---
 
 Gram allows you to manage settings that control how users access your Gram-hosted MCP server (public vs private) and how they authenticate with the underlying API (pass-through vs managed). These settings can be used in different combinations, giving you four possible configuration options as shown below.
