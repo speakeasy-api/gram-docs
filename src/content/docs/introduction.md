@@ -55,9 +55,10 @@ Gram provides completely [managed hosting of MCP servers](/guides/creating-your-
 
 ## Further Reading
 
+- [Quickstart](/gram-quickstart)
 - [Creating your first toolset](/build-mcp/create-default-toolset)
 - [Curating custom toolsets](/build-mcp/custom-toolsets)
-- [Deploying an MCP server](/build-mcp/deploy-mcp-server)
+- [Deploying an MCP server](/host-mcp/deploy-mcp-server)
 - [OpenAPI concepts](/concepts/openapi)
 - [Tool definitions](/concepts/tool-definitions)
 - [Toolsets](/concepts/toolsets)
