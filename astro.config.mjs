@@ -16,6 +16,7 @@ export default defineConfig({
     "/concepts/tool-defintions": "/concepts/tool-definitions",
     "/how-does-it-work": "/introduction",
     "/blog/gram-concepts": "/introduction",
+    "/blog/tool-curation": "/build-mcp/advanced-tool-curation",
     "/blog/the-easiest-way-to-host-mcp-servers": "/gram-quickstart",
     "/build-mcp/adding-oauth": "/host-mcp/adding-oauth",
     "/build-mcp/deploy-mcp-servers": "/host-mcp/deploy-mcp-servers",
