@@ -17,7 +17,9 @@ export default defineConfig({
     "/how-does-it-work": "/introduction",
     "/blog/gram-concepts": "/introduction",
     "/blog/the-easiest-way-to-host-mcp-servers": "/gram-quickstart",
-    "/build-mcp/*": "/host-mcp/*",
+    "/build-mcp/adding-oauth": "/host-mcp/adding-oauth",
+    "/build-mcp/deploy-mcp-servers": "/host-mcp/deploy-mcp-servers",
+    "/build-mcp/public-private-servers": "/host-mcp/public-private-servers",
   },
   vite: {
     server: {
