@@ -1,5 +1,5 @@
 ---
-title: Curating a custom toolset
+title: Curate a custom toolset
 description: Curate tools into toolsets for production-ready MCP servers on the Gram platform.
 sidebar:
   order: 1
@@ -29,7 +29,7 @@ To create a toolset:
 ## Best practices for curating toolsets
 
 :::tip[The art of tool curation]
-If you want to go deeper in this topic, see, [the art of tool curation](/blog/tool-curation).
+If you want to go deeper in this topic, see, [the art of tool curation](/build-mcp/advanced-tool-curation).
 :::
 
 - **Design workflow-first** - Group tools by agent tasks, not API structure. Create "Deal Creation" or "Deal Management" toolsets rather than mixing all CRUD operations together.

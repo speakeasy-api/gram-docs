@@ -1,8 +1,8 @@
 ---
-title: Adding OAuth to an MCP Server
+title: Add OAuth to an MCP Server
 description: Configure authentication for MCP servers using different OAuth methods
 sidebar:
-  order: 6
+  order: 2
 ---
 
 Starting March 2025, the MCP specification recommends OAuth-based authentication for MCP Servers. If your API already supports OAuth, placing an OAuth provider in front of your MCP Server is a great option.

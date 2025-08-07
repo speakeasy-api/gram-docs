@@ -9,7 +9,15 @@ sidebar:
 
 It is a platform that enable any company to **create, curate and host** agentic tools for your APIs.
 
-## From REST to MCP: Create and then Curate.
+## Why MCP Matters
+
+Agents mainly interact with APIs through the [Model Context Protocol (MCP)](http://speakeasy.com/mcp). Since it was announced by Anthropic in November 2024, MCP has seen an unprecedented rate of adoption, quickly becoming the de facto standard. Companies like Microsoft, Google, OpenAI, and Cloudflare (among many others) have embraced it and offer MCP servers as a new way to interact with their existing APIs.
+
+But creating, deploying, hosting, and managing MCP servers remains confusing and challenging. Although MCP follows a familiar client-server model, it creates confusion about who should build, own, manage, and maintain the server. With APIs, it's always been clear. The producer (like Stripe) hosts the API, and the consumer (for example, an online shop) uses that API. With MCP, hosting models vary: Developers often "host" MCP servers on their own machines, or companies host them internally for team-wide access to third-party integrations.
+
+We think that companies will naturally gravitate to hosting and managing their own MCP servers, and we built Gram to make that easy.
+
+## From REST to MCP: Create and then Curate with Gram.
 
 A great MCP server is not a 1:1 mapping to your REST API.
 
@@ -27,7 +35,19 @@ Gram makes tool creation & curation easy. [Tools](concepts/tool-definitions) are
 - Create custom toolsets to map a workflow
 - Test and iterate on tools in the LLM playground
 
-## Going live: Deploying MCP servers
+## Going live: Distributing MCP servers
+
+![MCP server models](/img/blog/the-easiest-way-to-host-mcp-servers/managed-mcp.png)
+
+People use MCP in various ways, broadly categorized as follows:
+
+* **Local:** A developer downloads an MCP server to their developer machine, and configures an MCP client, like Claude or Cursor, to use the tools provided in that server.
+* **Remote:** A system administrator downloads an MCP server to a company-accessible server. Anyone at the company can configure their MCP client to interact with a company-accessible tool via this server.
+* **Managed:** The API **producer** hosts and manages the MCP server, allowing any of its customers to configure their MCP clients to connect to the server and use the API.
+
+Currently, MCP servers are mostly **local** (hosted by API consumers), which creates friction through replicated setup work and lack of centralized control. We believe the industry will evolve toward **Managed** MCP servers, where API producers handle hosting, security, and enterprise features.
+
+### Gram's managed hosting approach
 
 Once tools have been curated, the MCP server is ready to deploy. Every toolset automatically comes with an MCP server hosted at a Gram managed URL. Custom domains can be linked to created a branded, 1st party MCP server at `mcp.{{your-domain}}.com/{{server-name}}`
 

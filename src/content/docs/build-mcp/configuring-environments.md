@@ -1,5 +1,5 @@
 ---
-title: Configuring Environments
+title: Configure Environments
 description: Configure environments inside the Gram platform.
 sidebar:
   order: 3

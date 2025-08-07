@@ -1,5 +1,5 @@
 ---
-title: Testing toolsets
+title: Test toolsets
 description: Test tools in the LLM playground on the Gram platform.
 sidebar:
   order: 4
