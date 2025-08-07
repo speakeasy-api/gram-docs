@@ -7,7 +7,7 @@ sidebar:
 
 Gram allows you to manage settings that control how users access your Gram-hosted MCP server (public vs private) and how they authenticate with the underlying API (pass-through vs managed). These settings can be used in different combinations, giving you four possible configuration options as shown below.
 
-![Four MCP server configuration options showing combinations of public/private and passthrough/managed authentication](/mcp-server-four-options.png)
+![Four MCP server configuration options showing combinations of public/private and passthrough/managed authentication](/img/guides/mcp-server-four-options.png)
 
 Common use cases for each combination:
 - **Public + Pass-through**: Production APIs where customers already have their own API keys
@@ -19,7 +19,7 @@ Common use cases for each combination:
 
 Public servers are the easiest way to use Gram and are typically what you'd use for production MCP servers. Users can connect to the MCP server with no additional authentication, and you automatically get a hosted MCP documentation page.
 
-![Example of a Gram-hosted MCP documentation page showing available tools and endpoints](/gram-example-public-docs.png)
+![Example of a Gram-hosted MCP documentation page showing available tools and endpoints](/img/guides/gram-example-public-docs.png)
 
 Public servers also support [MCP Managed OAuth](/build-mcp/adding-oauth) for simplified authentication.
 
