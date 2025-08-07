@@ -27,7 +27,7 @@ Existing REST API are a starting point, but to create a functional MCP server, y
 2. **Add Context** - A user reading an API reference is coming in with some implicit context about the relevant business domain. The same is not true of an LLM examining a list of tools on an MCP server. It is up to the MCP server maintainer to make sure the server provides the LLM with the context it needs. Adding rich tool descriptions, prompts, and examples, greatly improves the performance of the MCP server. Focus on the _when_ and _why_ of the tool. Gram gives you the ability to add additional context to your tools.
 3. **Define Workflows** - REST APIs are resource-oriented: create a company, update the contact field, etc. MCP servers work best when they're workflow-based: "summarize recent channel activity". Gram gives you the ability to distribute custom tools that wrap multiple API endpoints and additional steps as a single tool.
 
-Gram makes tool creation & curation easy. [Tools](concepts/tool-definitions) are bootstrapped by pulling API paths, input schemas, security schemes, and descriptions out of OpenAPI documents. From there, the Gram platform can be used to curate the toolsets further.
+Gram makes tool creation & curation easy. [Tools](/concepts/tool-definitions) are bootstrapped by pulling API paths, input schemas, security schemes, and descriptions out of OpenAPI documents. From there, the Gram platform can be used to curate the toolsets further.
 
 - Remove unnecessary tools
 - Combine tools into use case specific toolsets.
@@ -51,7 +51,7 @@ Currently, MCP servers are mostly **local** (hosted by API consumers), which cre
 
 Once tools have been curated, the MCP server is ready to deploy. Every toolset automatically comes with an MCP server hosted at a Gram managed URL. Custom domains can be linked to created a branded, 1st party MCP server at `mcp.{{your-domain}}.com/{{server-name}}`
 
-Gram provides completely [managed hosting of MCP servers](/guides/creating-your-first-hosted-mcp-server) or self-hosted.
+Gram provides completely [managed hosting of MCP servers](/quickstart) or self-hosted.
 
 ## Further Reading
 
