@@ -1,8 +1,8 @@
 ---
-title: Public vs Private MCP Servers
+title: Control server visibility
 description: Understanding Public and Private MCP Servers.
 sidebar:
-  order: 5
+  order: 2
 ---
 
 Gram allows you to manage settings that control how users access your Gram-hosted MCP server (public vs private) and how they authenticate with the underlying API (pass-through vs managed). These settings can be used in different combinations, giving you four possible configuration options as shown below.
@@ -90,5 +90,3 @@ The `Gram-Environment` header specifies which Gram environment to link - you can
 Before using managed authentication, use the [Playground](/build-mcp/test-toolsets#_top) to ensure your environment is properly configured with all required API keys. The Playground will automatically prompt you to create any missing keys with the correct names.
 
 You can also mix managed and pass-through authentication, using Gram environments for some credentials while letting users provide others directly.
-
-

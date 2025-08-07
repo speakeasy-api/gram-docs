@@ -14,6 +14,13 @@ export default defineConfig({
   site: import.meta.env.VITE_SITE,
   redirects: {
     "/concepts/tool-defintions": "/concepts/tool-definitions",
+    "/how-does-it-work": "/introduction",
+    "/blog/gram-concepts": "/introduction",
+    "/blog/tool-curation": "/build-mcp/advanced-tool-curation",
+    "/blog/the-easiest-way-to-host-mcp-servers": "/gram-quickstart",
+    "/build-mcp/adding-oauth": "/host-mcp/adding-oauth",
+    "/build-mcp/deploy-mcp-servers": "/host-mcp/deploy-mcp-servers",
+    "/build-mcp/public-private-servers": "/host-mcp/public-private-servers",
   },
   vite: {
     server: {
@@ -73,7 +80,7 @@ export default defineConfig({
           label: "Start here",
           items: [
             "introduction",
-            "how-does-it-work",
+            "gram-quickstart",
             {
               label: "Gram Concepts",
               collapsed: true,
@@ -86,13 +93,13 @@ export default defineConfig({
           autogenerate: { directory: "build-mcp" },
         },
         {
+          label: "Productionize an MCP server",
+          autogenerate: { directory: "host-mcp" },
+        },
+        {
           label: "Integrate with MCP Clients",
           autogenerate: { directory: "clients" },
           collapsed: true,
-        },
-        {
-          label: "Blog",
-          autogenerate: { directory: "blog" },
         },
       ],
       plugins: [starlightLlmsTxt({ projectName: "gram" })],
