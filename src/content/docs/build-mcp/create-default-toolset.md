@@ -17,8 +17,8 @@ Gram converts OpenAPI endpoints into tool definitions that MCP clients can under
 
 To upload an OpenAPI document:
 
-- In the Gram dashboard, click **Your APIs** in the sidebar (under **Create**).
-- Click **+ New OpenAPI Source**.
+- In the Gram dashboard, click **Toolsets** in the sidebar (under **Create**).
+- Click **+ Add API**.
 
 ![Upload OpenAPI document](/img/guides/uploading-openapi-document.png)
 
