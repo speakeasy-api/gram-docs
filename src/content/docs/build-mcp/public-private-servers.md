@@ -6,8 +6,6 @@ sidebar:
 ---
 
 
-# Public vs. Private MCP Servers
-
 ![Screenshot of Server Visibility Toggle](/img/guides/public-private-server.png)
 
 ## Public Servers
