@@ -164,27 +164,33 @@ npm run generate-docs
 # Your OpenAPI spec will be available at /public/swagger.json
 ```
 
-We'll also use [x-gram extensions](/concepts/openapi#using-the-x-gram-extension) to add context that helps the assistant (LLM-based agent) understand your TaskBoard tools more accurately:
+You can also use [x-gram extensions](/concepts/openapi#using-the-x-gram-extension) in your JSDoc comments to add context that helps the assistant understand your TaskBoard tools more accurately:
 
-```yaml
-x-gram:
-  name: create_task
-  description: |
-    <context>
-      This endpoint creates a new Kanban task for the authenticated user.
-      Tasks can be created in any status (todo, doing, done) and will be associated with the user's account.
-    </context>
-    <prerequisites>
-      - userId parameter is required for authentication
-      - Title, details, and status are required fields
-    </prerequisites>
-    <usage>
-      - Use status=todo for new tasks that need to be started
-      - Use status=doing for tasks currently in progress
-      - Use status=done for completed tasks
-      - Title should be concise (max 200 characters)
-      - Details can include full description (max 1000 characters)
-    </usage>
+```typescript
+/**
+ * @swagger
+ * /api/tasks:
+ *   post:
+ *     summary: Create a new task
+ *     x-gram:
+ *       name: create_task
+ *       description: |
+ *         <context>
+ *           This endpoint creates a new Kanban task for the authenticated user.
+ *           Tasks can be created in any status (todo, doing, done) and will be associated with the user's account.
+ *         </context>
+ *         <prerequisites>
+ *           - userId parameter is required for authentication
+ *           - Title, details, and status are required fields
+ *         </prerequisites>
+ *         <usage>
+ *           - Use status=todo for new tasks that need to be started
+ *           - Use status=doing for tasks currently in progress
+ *           - Use status=done for completed tasks
+ *           - Title should be concise (max 200 characters)
+ *           - Details can include full description (max 1000 characters)
+ *         </usage>
+ */
 ```
 
 
@@ -196,7 +202,7 @@ Now we'll transform your API documentation into a hosted MCP server that the cha
 
 1. In the Gram dashboard, click **Your APIs** in the sidebar (under **Create**)
 2. Click **+ New OpenAPI Source**
-3. Upload your OpenAPI document (the generated `public/swagger.json` from Step 1)
+3. Upload your OpenAPI document (the generated `public/swagger.json` from the previous section)
 4. Name your API (e.g., "TaskBoard"), toolset and server slug (e.g., "taskboard-demo")
 
 <video width="600" controls>
@@ -363,7 +369,7 @@ logger:
   path: "logs/mcp-agent.jsonl"
 mcp:
   servers:
-    GramTaskboard:  # This matches the server name from Step 2
+    GramTaskboard:  # This matches the server name from the MCP Config section above
       command: "npx"
       args: [
         "mcp-remote",
