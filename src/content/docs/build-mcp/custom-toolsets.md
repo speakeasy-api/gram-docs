@@ -1,5 +1,5 @@
 ---
-title: Curating a custom toolset
+title: Curate a custom toolset
 description: Curate tools into toolsets for production-ready MCP servers on the Gram platform.
 sidebar:
   order: 1
