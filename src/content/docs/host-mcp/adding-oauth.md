@@ -1,8 +1,8 @@
 ---
-title: Adding OAuth to an MCP Server
+title: Add OAuth to an MCP Server
 description: Configure authentication for MCP servers using different OAuth methods
 sidebar:
-  order: 6
+  order: 3
 ---
 
 Starting March 2025, the MCP specification recommends OAuth-based authentication for MCP Servers. If your API already supports OAuth, placing an OAuth provider in front of your MCP Server is a great option.
@@ -60,6 +60,8 @@ The requirements for MCP OAuth can be found [here](https://modelcontextprotocol.
 While this is still fairly unadopted, companies like [Stripe](https://docs.stripe.com/mcp), [Asana](https://developers.asana.com/docs/integrating-with-asanas-mcp-server) & more have started to support DCR in their OAuth flows to accommodate MCP. If you want to host an MCP server for large-scale use by external developers, you should plan to build out support for DCR in your API.
 
 If your underlying API supports the necesarilly OAuth requirements, you can easily place any OAuth server in front of any Gram MCP Server with just a few clicks!
+
+Only one OAuth flow can be placed in front of an MCP server, so it is very important that your MCP server only includes a single downstream API provider that takes in OAuth.
 
 The artifact you are able to produce should look something like this:
 
