@@ -87,6 +87,8 @@ The artifact you are able to produce should look something like this:
 }
 ```
 
+Note: When implementing DCR an MCP Client such as Claude will use the same client_id in perpetuity unless you explicit provide a `client_secret_expires_at` value in the `/register` response. It is extremely important that you persist the client_ids you issue. MCP clients follow the OAuth specification precisely when it comes to retaining client_ids from DCR and they will not forget them when you uninstall a server!
+
 
 ### OAuth Proxy
 
