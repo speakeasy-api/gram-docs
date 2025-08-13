@@ -1,22 +1,22 @@
 ---
-title: Deploying an MCP server
+title: Deploy an MCP server
 description: Deploying a hosted MCP server using Gram
 sidebar:
-  order: 4
+  order: 1
 ---
 
-Gram automatically exposes each toolset as a hosted MCP server.
+Gram automatically exposes each of your toolsets as a hosted MCP server. You don't need to manage infrastructure, scaling, or versioning.
 
-To connect an MCP client to the MCP server, you'll need to configure it with a [Gram API key](/concepts/api-keys).
+Here are the steps to deploy an MCP server using Gram:
 
-### Generate a Gram API key
+## Generate a Gram API key
 
 - In **Settings**, click **Create API Key**.
 - Give the API key a name, and click **Create**.
 
 ![Creating an API key](/img/guides/04-adding-api-key.png)
 
-### Get the MCP server configuration
+## Get the MCP server configuration
 
 - In the Playground, click the **MCP** tab.
 
@@ -26,7 +26,7 @@ To connect an MCP client to the MCP server, you'll need to configure it with a [
 
 ![MCP server configuration](/img/guides/04-mcp-config-gram.png)
 
-### Configure an MCP client
+## Configure an MCP client
 
 - Copy the MCP server configuration from Gram. Here's an example of what it looks like:
 

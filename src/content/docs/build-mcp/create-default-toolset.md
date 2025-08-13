@@ -1,5 +1,5 @@
 ---
-title: Creating a default toolset
+title: Create a default toolset
 description: Generate MCP server tools from OpenAPI on the Gram platform.
 sidebar:
   order: 0

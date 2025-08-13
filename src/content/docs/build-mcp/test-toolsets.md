@@ -1,8 +1,8 @@
 ---
-title: Testing toolsets
+title: Test toolsets
 description: Test tools in the LLM playground on the Gram platform.
 sidebar:
-  order: 3
+  order: 4
 ---
 
 Once a toolset has been curated, it's ready to be tested in Gram's LLM playground.
