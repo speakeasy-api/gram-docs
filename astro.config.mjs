@@ -101,6 +101,11 @@ export default defineConfig({
           autogenerate: { directory: "clients" },
           collapsed: true,
         },
+        {
+          label: "Integrate with LLM APIs",
+          autogenerate: { directory: "api-clients" },
+          collapsed: true,
+        },
       ],
       plugins: [starlightLlmsTxt({ projectName: "gram" })],
     }),
