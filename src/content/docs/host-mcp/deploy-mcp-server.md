@@ -59,9 +59,26 @@ Under the **MCP Installation** section, you can see the MCP server installation 
 - Replace `<your-key-here>` with your Gram API key.
 - Add this configuration to the MCP client's configuration file.
 
-:::tip[Find out more]
-For more information on how to install remote MCP servers in various MCP clients, check out one of the following guides:
-- [Using Claude Code with Gram MCP Servers](/clients/using-claude-code-with-gram-mcp-servers)
-- [Using Cursor with Gram MCP Servers](/clients/using-cursor-with-gram-mcp-servers)
-- [Using Claude Desktop with Gram MCP Servers](/clients/using-claude-desktop-with-gram-mcp-servers)
-:::
+## Next steps
+
+Your MCP server is now live. Here are some next steps to consider:
+
+- **Iterate on tool descriptions:** Refine tool definitions and use [tool variations](/concepts/tool-variations) to help LLMs better understand and invoke them accurately.
+- **Create custom toolsets:** Group tools by task to design structured, step-by-step workflows tailored to specific use cases.
+- **Integrate with frameworks:** Use the Gram Python or TypeScript SDK to build agentic workflows. On the **Playground** page, you can select a ready-to-use code snippet in [Python](https://pypi.org/project/gram-ai/) or [JavaScript](https://www.npmjs.com/package/@gram-ai/sdk).
+
+## Troubleshooting
+
+Common MCP server issues and fixes:
+
+### Tools not working?
+
+- Check your authentication configuration.
+- Verify your server URL is accessible.
+
+### Wrong tools being selected?
+
+- Reduce the number of tools in your toolset.
+- Use custom tools to create workflows with precise steps.
+- Create focused toolsets for different use cases.
+
