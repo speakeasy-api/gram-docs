@@ -13,23 +13,23 @@ We've included best practices for curating toolsets below.
 
 To create a toolset:
 
-- In the Gram dashboard, click **Toolsets** in the sidebar (under **Curate**).
+- In the Gram dashboard, click **Toolsets** in the sidebar (under **Create**).
 - Click **+ New Toolset**.
 
-![Creating a toolset](/img/guides/02-adding-toolsets.png)
+![Creating a toolset](/img/guides/build-mcp/02-adding-toolsets.png)
 
 - Give the toolset a descriptive name.
 
-![Naming a toolset](/img/guides/02-naming-toolset.png)
+![Naming a toolset](/img/guides/build-mcp/02-naming-toolset.png)
 
-- When you click **Submit**, you'll be redirected to the toolset configuration page. Click **+ Add Tool** to add individual tools, or use the **Enable All** button to include all available tools in the set.
+- When you click **Create**, you'll be redirected to the toolset configuration page with a list of all available tools. You can select the tools you want to include in the toolset or use the **Enable All** button to include all available tools in the set.
 
-![Selecting tools](/img/guides/02-selecting-tools.png)
+![Selecting tools](/img/guides/build-mcp/02-selecting-tools.png)
 
 ## Best practices for curating toolsets
 
 :::tip[The art of tool curation]
-If you want to go deeper in this topic, see, [the art of tool curation](/build-mcp/advanced-tool-curation).
+If you want to go deeper in this topic, see [the art of tool curation](/build-mcp/advanced-tool-curation).
 :::
 
 - **Design workflow-first** - Group tools by agent tasks, not API structure. Create "Deal Creation" or "Deal Management" toolsets rather than mixing all CRUD operations together.

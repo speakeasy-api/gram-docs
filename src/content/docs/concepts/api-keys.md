@@ -7,7 +7,7 @@ sidebar:
 
 Gram API keys are used to authenticate requests to the Gram API and can be used with MCP server configurations or Gram SDKs.
 
-To generate a Gram API key, navigate to the **Settings** page of the Gram dashboard and click on the **Create API Key** button.
+To generate a Gram API key, navigate to the **Settings** page of the Gram dashboard and click on the **New API Key** button.
 
 ![Creating an API key](/img/concepts/api-keys/adding-api-key.png)
 
