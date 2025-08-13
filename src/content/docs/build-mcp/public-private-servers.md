@@ -6,9 +6,7 @@ sidebar:
 ---
 
 
-# Public vs. Private MCP Servers
-
-![Screenshot of Server Visibility Toggle](/img/guides/public-private-server.png)
+![Screenshot of Server Visibility Toggle](/img/guides/build-mcp/public-private-server.png)
 
 ## Public Servers
 
@@ -30,7 +28,7 @@ This is a good option if you only want to share a server selectively to internal
 
 # Pass-through Authentication vs. Managed Authentication
 
-![Screenshot of MCP Authentication Toggle](/img/guides/passthrough-managed-auth.png)
+![Screenshot of MCP Authentication Toggle](/img/guides/build-mcp/passthrough-managed-auth.png)
 
 ## Pass-through Authentication
 
