@@ -16,10 +16,3 @@ Gram generates logs for every deployment, showing what was processed successfull
 :::tip[Fun fact]
 Each Gram integration is backed by its own project. Every new integration release tags a particular deployment with a semantic version.
 :::
-
-<div class="flex justify-center">
-  <video controls>
-    <source src="/videos/getting_started.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</div>

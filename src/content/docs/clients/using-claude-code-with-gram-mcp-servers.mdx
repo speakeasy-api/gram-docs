@@ -78,7 +78,7 @@ Click **Toolsets** in the sidebar to view the Push Advisor toolset.
 
 [Environments](/concepts/environments) store API keys and configuration separate from your toolset logic.
 
-In the **Environments** tab, click the "Default" environment. Click **Edit** and then **Fill for Toolset**. Select the **Push Advisor** toolset and click **Fill Variables** to automatically populate the required variables.
+In the **Environments** tab, click the "Default" environment. Click the three dots in the top right corner of the environment card and then **Fill for Toolset**. Select the **Push Advisor** toolset and click **Fill Variables** to automatically populate the required variables.
 
 ![Screenshot showing the fill for toolset dialog to automatically populate required variables](/img/guides/claude-code/fill-env-vars-toolset.png)
 
@@ -90,11 +90,14 @@ The Push Advisor API is hosted at `canpushtoprod.abdulbaaridavids04.workers.dev`
 
 Let's make the toolset available as an MCP server.
 
-Go to the **MCP** tab, find the Push Advisor toolset, and click **Edit**. 
+Go to the **MCP** tab, find the Push Advisor toolset and click on it to open the MCP details page. 
 
-On the **MCP Details** page, tick the **Public** checkbox and click **Save**.
+
+Scroll down to the **Visibility** section and tick the **Public** checkbox.
 
 ![Screenshot of the MCP details page](/img/guides/claude-code/mcp-details.png)
+
+Next, you'll need to copy the MCP server configuration.
 
 Scroll down to the **MCP Config** section and copy the **Public Server** configuration.
 

@@ -5,8 +5,6 @@ sidebar:
   order: 3
 ---
 
-# Configuring Environments
-
 An **environment** stores API keys, tokens, server URLs, and other runtime settings, keeping secrets separate from logic. This separation is crucial for managing different deployment contexts (for example, production and staging), multi-tenant APIs, or team-specific credentials.
 
 ## Why Environments Matter
