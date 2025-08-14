@@ -5,9 +5,13 @@ sidebar:
   order: 7
 ---
 
-When building production MCP servers, you often need to protect sensitive endpoints with OAuth authentication. This guide shows you how to build an MCP server with external OAuth authentication using FusionAuth, including handling redirect flows and token management.
+When building production MCP servers, you often need to protect sensitive endpoints with OAuth authentication. This guide shows you how to build an MCP server with external OAuth authentication. We'll use FusionAuth as an example, but you can use any OAuth 2.0 provider you have set up (such as Auth0, Okta, Keycloak, or your own OAuth server).
 
 We'll build an enhanced version of the Push Advisor API from earlier guides, adding OAuth-protected endpoints that demonstrate real-world authentication patterns.
+
+:::tip[Already have OAuth set up?]
+If you already have an API with OAuth authentication and just want to configure Gram to use it, you can skip directly to [Configuring Gram to use OAuth](#configuring-gram-to-use-oauth).
+:::
 
 :::note[Live demo available]
 You can test the complete OAuth implementation at https://gram-oauth.abdulbaaridavids04.workers.dev with a working login page, protected endpoints, and OAuth discovery metadata.
@@ -17,7 +21,7 @@ You can test the complete OAuth implementation at https://gram-oauth.abdulbaarid
 
 In this guide, we'll:
 - First, set up an API with both public and OAuth-protected endpoints
-- Next, configure FusionAuth as an external OAuth provider
+- Next, configure an external OAuth provider (we'll use FusionAuth as an example)
 - Then create a manual login flow for token testing
 - Finally, integrate with Gram's OAuth configuration and test protected endpoints in the playground
 
@@ -37,15 +41,15 @@ const endpoints = {
 
 We've added a `deploy-history` endpoint that requires OAuth authentication. We've also added a `login` endpoint that provides a manual login page for token generation.
 
-## Configuring FusionAuth
+## Configuring your OAuth provider
 
-Before we implement OAuth protection in our API, we need to set up FusionAuth as our OAuth provider.
+Before we implement OAuth protection in our API, we need to set up an OAuth provider. In this example, we'll use FusionAuth, but the same principles apply to any OAuth 2.0 compliant provider like Auth0, Okta, Keycloak, or your own implementation.
 
 ### Application setup
 
-First, we'll set up FusionAuth to work with our API.
+First, we'll set up our OAuth provider to work with our API. These steps are similar across different OAuth providers:
 
-1. **Create Application**: In the FusionAuth admin panel, we'll create a new application named "Push Advisor API"
+1. **Create Application**: In your OAuth provider's admin panel, create a new application/client named "Push Advisor API"
 
 2. **OAuth Configuration**: 
    - Enable Authorization Code grant type
@@ -55,21 +59,27 @@ First, we'll set up FusionAuth to work with our API.
      https://localhost:8787/token
      ```
 
-![FusionAuth Application Settings](/src/content/docs/build-mcp/assets/fusionauth-app-settings.png)
+![OAuth Application Settings (FusionAuth example)](/src/content/docs/build-mcp/assets/fusionauth-app-settings.png)
 
 3. **Get Credentials**: Note the Client ID and Client Secret for your configuration
 
 ### API configuration
 
-Now we can configure our OAuth provider settings in the API:
+Now we can configure our OAuth provider settings in the API. Replace these values with your actual OAuth provider's configuration:
 
 ```javascript
-const FUSIONAUTH_CONFIG = {
-  url: 'https://fusionauth.ritza.co',
-  clientId: 'your-application-client-id', // From FusionAuth application
-  clientSecret: 'your-application-client-secret', // From FusionAuth application
+const OAUTH_CONFIG = {
+  url: 'https://fusionauth.ritza.co', // Replace with your OAuth provider's URL
+  clientId: 'your-application-client-id', // From your OAuth provider
+  clientSecret: 'your-application-client-secret', // From your OAuth provider
   applicationName: 'Push Advisor API'
 };
+
+// Note: Replace the URL above with your OAuth provider's base URL:
+// - Auth0: https://your-domain.auth0.com
+// - Okta: https://your-domain.okta.com
+// - Keycloak: https://your-keycloak-server.com/realms/your-realm
+// - Custom server: https://your-oauth-server.com
 ```
 
 Next, we'll implement the OAuth protection within the API. We'll add middleware that validates OAuth tokens against our external provider.
@@ -98,14 +108,14 @@ async function validateOAuthToken(request) {
       };
     }
 
-    // Validate against FusionAuth introspection endpoint
-    const response = await fetch(`${FUSIONAUTH_CONFIG.url}/oauth2/introspect`, {
+    // Validate against OAuth provider's introspection endpoint
+    const response = await fetch(`${OAUTH_CONFIG.url}/oauth2/introspect`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': `Basic ${btoa(`${FUSIONAUTH_CONFIG.clientId}:${FUSIONAUTH_CONFIG.clientSecret}`)}`
+        'Authorization': `Basic ${btoa(`${OAUTH_CONFIG.clientId}:${OAUTH_CONFIG.clientSecret}`)}`
       },
-      body: `token=${token}&client_id=${FUSIONAUTH_CONFIG.clientId}`
+      body: `token=${token}&client_id=${OAUTH_CONFIG.clientId}`
     });
 
     if (!response.ok) {
@@ -193,12 +203,12 @@ We'll also need to implement the OAuth discovery endpoint required by the MCP sp
 ```javascript
 function handleOAuthDiscovery(corsHeaders) {
   const discoveryDoc = {
-    "issuer": FUSIONAUTH_CONFIG.url,
-    "authorization_endpoint": `${FUSIONAUTH_CONFIG.url}/oauth2/authorize`,
-    "token_endpoint": `${FUSIONAUTH_CONFIG.url}/oauth2/token`,
-    "introspection_endpoint": `${FUSIONAUTH_CONFIG.url}/oauth2/introspect`,
-    "userinfo_endpoint": `${FUSIONAUTH_CONFIG.url}/oauth2/userinfo`,
-    "jwks_uri": `${FUSIONAUTH_CONFIG.url}/.well-known/jwks.json`,
+    "issuer": OAUTH_CONFIG.url,
+    "authorization_endpoint": `${OAUTH_CONFIG.url}/oauth2/authorize`,
+    "token_endpoint": `${OAUTH_CONFIG.url}/oauth2/token`,
+    "introspection_endpoint": `${OAUTH_CONFIG.url}/oauth2/introspect`,
+    "userinfo_endpoint": `${OAUTH_CONFIG.url}/oauth2/userinfo`,
+    "jwks_uri": `${OAUTH_CONFIG.url}/.well-known/jwks.json`,
     "response_types_supported": ["code"],
     "grant_types_supported": ["authorization_code", "refresh_token"],
     "scopes_supported": ["openid", "profile", "email", "api:read", "api:write"],
@@ -233,8 +243,8 @@ function handleLogin(request, corsHeaders) {
         <div class="oauth-flow">
             <h3>🚀 OAuth Authorization</h3>
             <p>Click below to authenticate with FusionAuth:</p>
-            <a href="${FUSIONAUTH_CONFIG.url}/oauth2/authorize?client_id=${FUSIONAUTH_CONFIG.clientId}&response_type=code&redirect_uri=https://gram-oauth.abdulbaaridavids04.workers.dev/token&scope=api:read%20api:write" 
-               class="oauth-btn">Login with FusionAuth</a>
+            <a href="${OAUTH_CONFIG.url}/oauth2/authorize?client_id=${OAUTH_CONFIG.clientId}&response_type=code&redirect_uri=https://gram-oauth.abdulbaaridavids04.workers.dev/token&scope=api:read%20api:write" 
+               class="oauth-btn">Login with OAuth Provider</a>
         </div>
 
         <!-- Demo Token Section -->
@@ -345,6 +355,10 @@ The OAuth Authorization Server Metadata is a JSON object that describes the OAut
 
 You can read more about the OAuth Authorization Server Metadata [here](https://www.rfc-editor.org/rfc/rfc8414).
 
+:::tip[Using different OAuth providers]
+The metadata format is standardized across OAuth providers. Most providers offer a discovery endpoint (like `/.well-known/openid-configuration`) that returns this metadata automatically. Check your OAuth provider's documentation for their specific discovery URL or metadata format.
+:::
+
 ## Testing in Gram playground
 
 Finally, let's test everything in the Gram playground.
@@ -371,11 +385,11 @@ To test our protected endpoints, we need to get a valid OAuth token. Here's how 
 
 ![API Login Page](/src/content/docs/build-mcp/assets/api-login-page.png)
 
-2. **Redirect to FusionAuth**: Click "Login with FusionAuth" which redirects to the FusionAuth login screen:
+2. **Redirect to OAuth Provider**: Click "Login with OAuth Provider" which redirects to your OAuth provider's login screen (in this example, FusionAuth):
 
-![FusionAuth Login Screen](/src/content/docs/build-mcp/assets/fusionauth-login-screen.png)
+![OAuth Provider Login Screen (FusionAuth example)](/src/content/docs/build-mcp/assets/fusionauth-login-screen.png)
 
-4. **Complete authentication**: After logging in, FusionAuth redirects back to our API with an authorization code
+4. **Complete authentication**: After logging in, your OAuth provider redirects back to our API with an authorization code
 
 5. **Get the access token**: Copy the access token from the success page
 
