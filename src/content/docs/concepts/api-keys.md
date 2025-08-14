@@ -5,9 +5,19 @@ sidebar:
   order: 7
 ---
 
-Gram API keys are used to authenticate requests to the Gram API and can be used with MCP server configurations or Gram SDKs.
+Gram API keys are used to authenticate requests to the Gram API and can be used with MCP server configurations or Gram SDKs. There are two types of API keys: Consumer keys and Producer keys.
 
-To generate a Gram API key, navigate to the **Settings** page of the Gram dashboard and click on the **New API Key** button.
+### Consumer keys
+
+Consumer keys are for accessing Gram servers with managed authentication. Use these when connecting MCP clients to Gram servers or when you need to query data from existing toolsets.
+
+### Producer keys
+
+Producer keys are for accessing Gram platform capabilities, like spec updates and toolset management. Use these when you need to programmatically create or modify toolsets, upload OpenAPI documents, or trigger deployments.
+
+### Creating an API key
+
+To generate a Gram API key, navigate to the **Settings** page of the Gram dashboard and click on the **New API Key** button. Select the appropriate scope based on whether you need Consumer or Producer access.
 
 ![Creating an API key](/img/concepts/api-keys/adding-api-key.png)
 
