@@ -102,7 +102,7 @@ export default defineConfig({
           collapsed: true,
         },
         {
-          label: "Integrate with LLM APIs",
+          label: "Use MCP Programmatically",
           autogenerate: { directory: "api-clients" },
           collapsed: true,
         },
