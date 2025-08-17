@@ -70,6 +70,7 @@ export default defineConfig({
         Header: "./src/components/header.astro",
         Hero: "./src/components/hero.astro",
         Pagination: "./src/components/pagination.astro",
+        TableOfContents: "./src/components/TableOfContents.astro",
       },
       editLink: {
         baseUrl: "https://github.com/speakeasy-api/gram-docs/edit/main/",
@@ -81,12 +82,11 @@ export default defineConfig({
           items: [
             "introduction",
             "gram-quickstart",
-            {
-              label: "Gram Concepts",
-              collapsed: true,
-              autogenerate: { directory: "concepts" },
-            },
           ],
+        },
+        {
+          label: "Gram Concepts",
+          autogenerate: { directory: "concepts" },
         },
         {
           label: "Build an MCP server",
