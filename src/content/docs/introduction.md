@@ -1,5 +1,5 @@
 ---
-title: Introducing Gram
+title: Introducing Gram 👋
 description: Gram effortlessly turns OpenAPI documents into LLM-ready tools, generating optimized tool definitions from your APIs for powerful agentic workflows.
 sidebar:
   order: 0
@@ -52,6 +52,18 @@ Currently, MCP servers are mostly **local** (hosted by API consumers), which cre
 Once tools have been curated, the MCP server is ready to deploy. Every toolset automatically comes with an MCP server hosted at a Gram managed URL. Custom domains can be linked to create a branded, 1st party MCP server at `mcp.{{your-domain}}.com/{{server-name}}`
 
 Gram provides completely [managed hosting of MCP servers](/gram-quickstart) or self-hosted.
+
+## LLM-Friendly Docs
+
+This documentation is also available in [llms.txt](https://llmstxt.org/) format, which is a simple markdown standard that LLMs can consume easily.
+
+The `llms.txt` references two ways to access the LLM-friendly documentation:
+* `llms-small.txt` is an abridged developer documentation for the site.
+* `llms-full.txt` contains the entire documentation. Note this may exceed the context window of your LLM.
+  
+In addition, any page can be accessed as markdown by appending .md to the URL. For example, this page would become `https://docs.getgram.ai/introduction.md` , which you can view [here](https://docs.getgram.ai/introduction.md).
+
+Finally, you can copy the contents of any page as markdown by pressing “Cmd+C” (or “Ctrl+C” on Windows) on your keyboard.
 
 ## Further Reading
 

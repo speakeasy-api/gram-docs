@@ -69,6 +69,7 @@ export default defineConfig({
         EditLink: "./src/components/edit-link.astro",
         Header: "./src/components/header.astro",
         Hero: "./src/components/hero.astro",
+        Page: "./src/components/Page.astro",
         Pagination: "./src/components/pagination.astro",
         TableOfContents: "./src/components/TableOfContents.astro",
       },

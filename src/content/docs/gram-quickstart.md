@@ -1,5 +1,5 @@
 ---
-title: "Quickstart"
+title: "Quickstart ⭐"
 description: "Get started with Gram in three simple steps: create an MCP server, configure toolsets, and connect to AI agents."
 sidebar:
   order: 2
