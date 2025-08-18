@@ -69,3 +69,10 @@ Using the `x-gram` extension is optional. With Gram's [tool variations](/concept
 ## Limitations of OpenAPI 3.0.x
 
 Many LLMs don't support the JSON Schema version used in OpenAPI 3.0.x documents. When these documents are uploaded to Gram, they are transparently upgraded to 3.1.0 using the steps defined in [Migrating from OpenAPI 3.0 to 3.1.0](https://www.openapis.org/blog/2021/02/16/migrating-from-openapi-3-0-to-3-1-0). When this happens you might notice that line numbers no longer match the original OpenAPI document. It's recommended to upgrade your OpenAPI documents to 3.1.x to have a more streamlined experience.
+
+:::tip[OpenAPI Resources]
+If you are looking for more information on how to write, understand and manage OpenAPI documents we reccomend checking out [Speakeasy's documentation site on OpenAPI](https://www.speakeasy.com/openapi).
+
+Speakeasy also provides a comprehensive OpenAPI Editor and CLI that help you edit, save and lint OpenAPI documents. You can login to Speakeasy [here](https://app.speakeasy.com) using the same credientials used to access the Gram platform.
+:::
+

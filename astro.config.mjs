@@ -100,12 +100,10 @@ export default defineConfig({
         {
           label: "Integrate with MCP Clients",
           autogenerate: { directory: "clients" },
-          collapsed: true,
         },
         {
           label: "Use MCP Programmatically",
           autogenerate: { directory: "api-clients" },
-          collapsed: true,
         },
       ],
       plugins: [starlightLlmsTxt({ projectName: "gram" })],
