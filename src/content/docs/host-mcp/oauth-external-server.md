@@ -59,7 +59,7 @@ First, we'll set up our OAuth provider to work with our API. These steps are sim
      https://localhost:8787/token
      ```
 
-![OAuth Application Settings (FusionAuth example)](/src/content/docs/build-mcp/assets/fusionauth-app-settings.png)
+![OAuth Application Settings (FusionAuth example)](/src/content/docs/host-mcp/assets/fusionauth-app-settings.png)
 
 3. **Get Credentials**: Note the Client ID and Client Secret for your configuration
 
@@ -274,7 +274,7 @@ function handleLogin(request, corsHeaders) {
 }
 ```
 
-![API Login Page](/src/content/docs/build-mcp/assets/api-login-page.png)
+![API Login Page](/src/content/docs/host-mcp/assets/api-login-page.png)
 
 
 ## Defining OAuth in the OpenAPI document
@@ -326,7 +326,7 @@ You'll need to make your toolset public to use OAuth.
 
 In the OAuth configuration page, choose **External Server** instead of OAuth Proxy and enter the server slug as well as the metadata for your OAuth server.
 
-![Gram OAuth Server Configuration](/src/content/docs/build-mcp/assets/gram-oauth-server-config.png)
+![Gram OAuth Server Configuration](/src/content/docs/host-mcp/assets/gram-oauth-server-config.png)
 
 The OAuth Authorization Server Metadata is a JSON object that describes the OAuth server. It's used by Gram to discover the OAuth server's capabilities.
 
@@ -365,13 +365,13 @@ Finally, let's test everything in the Gram playground.
 
 After [uploading our OpenAPI document](/build-mcp/create-default-toolset) and creating a toolset, we'll go to the playground to test it. When we ask the AI agent to get deployment history, it will automatically detect that OAuth authentication is required:
 
-![Gram Playground Testing](/src/content/docs/build-mcp/assets/gram-playground-testing.png)
+![Gram Playground Testing](/src/content/docs/host-mcp/assets/gram-playground-testing.png)
 
 Notice how the environment variables section shows `PUSH_ADVISOR_OAUTH_ACCESS_TOKEN` is `<EMPTY>`, and the agent tells us exactly what we need to do to authenticate. The agent can also discover the OAuth requirements automatically by calling the discovery endpoint.
 
 we can see that an OAuth access token is required but not yet provided:
 
-![Gram Access Token Required](/src/content/docs/build-mcp/assets/gram-access-token-required.png)
+![Gram Access Token Required](/src/content/docs/host-mcp/assets/gram-access-token-required.png)
 
 :::note[Note]
 In the Gram playground, you need to manually add OAuth tokens to environment variables for testing. In a proper MCP client implementation, the OAuth flow would be handled automatically by the client, including token refresh and management.
@@ -383,28 +383,28 @@ To test our protected endpoints, we need to get a valid OAuth token. Here's how 
 
 1. **Visit the login page**: First, we go to the `/login` page provided by the API to start the authentication process
 
-![API Login Page](/src/content/docs/build-mcp/assets/api-login-page.png)
+![API Login Page](/src/content/docs/host-mcp/assets/api-login-page.png)
 
 2. **Redirect to OAuth Provider**: Click "Login with OAuth Provider" which redirects to your OAuth provider's login screen (in this example, FusionAuth):
 
-![OAuth Provider Login Screen (FusionAuth example)](/src/content/docs/build-mcp/assets/fusionauth-login-screen.png)
+![OAuth Provider Login Screen (FusionAuth example)](/src/content/docs/host-mcp/assets/fusionauth-login-screen.png)
 
 4. **Complete authentication**: After logging in, your OAuth provider redirects back to our API with an authorization code
 
 5. **Get the access token**: Copy the access token from the success page
 
-![OAuth Token Success](/src/content/docs/build-mcp/assets/oauth-token-success.png)
+![OAuth Token Success](/src/content/docs/host-mcp/assets/oauth-token-success.png)
 
 
 ### Adding the token to Gram
 
 Now we can add our OAuth token to the Authentication environment variables in Gram:
 
-![Gram Playground OAuth Token](/src/content/docs/build-mcp/assets/gram-playground-oauth-token.png)
+![Gram Playground OAuth Token](/src/content/docs/host-mcp/assets/gram-playground-oauth-token.png)
 
 Once we've added a valid OAuth token, we can test the protected endpoints in the playground:
 
-![Gram OAuth Complete](/src/content/docs/build-mcp/assets/gram-oauth-complete.png)
+![Gram OAuth Complete](/src/content/docs/host-mcp/assets/gram-oauth-complete.png)
 
 ## Troubleshooting
 

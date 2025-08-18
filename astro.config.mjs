@@ -69,7 +69,9 @@ export default defineConfig({
         EditLink: "./src/components/edit-link.astro",
         Header: "./src/components/header.astro",
         Hero: "./src/components/hero.astro",
+        Page: "./src/components/Page.astro",
         Pagination: "./src/components/pagination.astro",
+        TableOfContents: "./src/components/TableOfContents.astro",
       },
       editLink: {
         baseUrl: "https://github.com/speakeasy-api/gram-docs/edit/main/",
@@ -81,12 +83,11 @@ export default defineConfig({
           items: [
             "introduction",
             "gram-quickstart",
-            {
-              label: "Gram Concepts",
-              collapsed: true,
-              autogenerate: { directory: "concepts" },
-            },
           ],
+        },
+        {
+          label: "Gram Concepts",
+          autogenerate: { directory: "concepts" },
         },
         {
           label: "Build an MCP server",
@@ -99,12 +100,10 @@ export default defineConfig({
         {
           label: "Integrate with MCP Clients",
           autogenerate: { directory: "clients" },
-          collapsed: true,
         },
         {
           label: "Use MCP Programmatically",
           autogenerate: { directory: "api-clients" },
-          collapsed: true,
         },
       ],
       plugins: [starlightLlmsTxt({ projectName: "gram" })],
