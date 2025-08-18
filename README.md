@@ -1,3 +1,15 @@
+<div align="center">
+
+[![Gram](banner.png)](https://getgram.ai)
+
+  <div>
+    <a href="https://docs.getgram.ai/" target="_blank"><b>Docs</b></a>&nbsp;&nbsp;//&nbsp;&nbsp;<a href="https://go.speakeasy.com/slack" target="_blank"><b>Join us on Slack</b></a>
+  </div>
+  <br />
+</div>
+
+<hr />
+
 # Gram Docs
 
 [![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
@@ -12,7 +24,7 @@ npm i
 npm run dev
 ```
 
-Now you can visit the project locally at http://localhost:4321.
+Now you can visit the project locally at <http://localhost:4321>.
 
 ## 🚀 Project Structure
 
