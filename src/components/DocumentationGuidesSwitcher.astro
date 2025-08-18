@@ -1,0 +1,44 @@
+---
+// Simple switcher component for Documentation vs Guides
+const currentPath = Astro.url.pathname;
+const isGuidePage = currentPath.includes('/guides/') || currentPath === '/guides/gram-quickstart';
+---
+
+<div class="doc-guides-switcher">
+  <div class="flex rounded-lg bg-gray-100 dark:bg-gray-800 p-1 mb-4">
+    <a
+      href="/introduction"
+      class={`switcher-link flex-1 py-2 px-3 rounded-md text-sm font-medium text-center transition-colors ${
+        !isGuidePage
+          ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
+          : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+      }`}
+    >
+      Documentation
+    </a>
+    <a
+      href="/guides/gram-quickstart"
+      class={`switcher-link flex-1 py-2 px-3 rounded-md text-sm font-medium text-center transition-colors ${
+        isGuidePage
+          ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
+          : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+      }`}
+    >
+      Guides
+    </a>
+  </div>
+</div>
+
+<style>
+  .doc-guides-switcher {
+    margin-bottom: 1rem;
+  }
+  
+  .switcher-link {
+    text-decoration: none;
+  }
+  
+  .switcher-link:hover {
+    text-decoration: none;
+  }
+</style>
