@@ -39,13 +39,6 @@ paths:
 
 Set `responseFilterType: jq` to enable [jq](https://jqlang.org/) filtering on JSON responses. This allows the LLM to extract specific data from complex API responses using jq syntax.
 
-```yaml
-x-gram:
-  name: get_user_profile
-  description: "Get detailed user profile information"
-  responseFilterType: jq
-```
-
 When `responseFilterType` is set to `jq`, the LLM can apply jq filters to the response data, such as:
 
 - `.user | {name, email, status}` to extract only specific user fields
