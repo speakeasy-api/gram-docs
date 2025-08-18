@@ -3,10 +3,10 @@ import config from "virtual:starlight/user-config";
 
 import LanguageSelect from "@astrojs/starlight/components/LanguageSelect.astro";
 import Search from "@astrojs/starlight/components/Search.astro";
-import SiteTitle from "@astrojs/starlight/components/SiteTitle.astro";
 import SocialIcons from "@astrojs/starlight/components/SocialIcons.astro";
 import ThemeSelect from "@astrojs/starlight/components/ThemeSelect.astro";
 import { LinkButton } from "@astrojs/starlight/components";
+import gramLogo from "../assets/gram-logo.png";
 
 /**
  * Render the `Search` component if Pagefind is enabled or the default search component has been overridden.
@@ -23,9 +23,15 @@ const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
   <div>
     <a
       href={siteTitleHref}
-      class="font-serif font-light text-content lowercase no-underline md:text-2xl"
-      >{siteTitle}</a
+      class="flex items-center no-underline"
     >
+      <img
+        src={gramLogo.src}
+        alt="Gram"
+        height="26"
+        class="transition-all duration-200 ease-in-out dark:invert mt-1"
+      />
+    </a>
   </div>
   <div class="flex print:hidden">
     {shouldRenderSearch && <Search />}
