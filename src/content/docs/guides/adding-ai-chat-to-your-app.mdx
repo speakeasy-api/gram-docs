@@ -1,77 +1,74 @@
 ---
-title: "How to add an LLM chat assistant to your existing app with MCP"
-description: "Transform any CRUD application into an LLM-powered chat interface using MCP and Gram. Learn how to add natural language capabilities to your app without rebuilding your backend."
+title: "How to add an LLM chat assistant to an existing app with MCP"
+description: "Transform any CRUD application into an LLM-powered chat interface using MCP and Gram: Add natural language capabilities without rebuilding the backend."
 sidebar:
   order: 1
 ---
 
-Have you ever wanted your users to simply ask "Show me all tasks assigned to Sarah that are due this week" instead of clicking through filters and menus? What if they could create, update, and manage data using natural language while respecting all your existing security and permissions?
+Imagine your users could simply ask, "Show me all tasks assigned to Sarah that are due this week" instead of clicking through filters and menus. What if users could create entries, update records, and manage data using natural language, all while respecting existing security and permissions?
 
-This guide shows you how to add intelligent chat capabilities to any existing application without rebuilding your backend or compromising your security model. We'll use [MCP (Model Context Protocol)](https://modelcontextprotocol.io/overview) and [Gram](https://getgram.ai) to turn your current API into tools that a large language model (LLM) can call via MCP, then build a chat interface that feels like magic to your users.
+This guide shows you how to add intelligent chat capabilities to any existing application without rebuilding the backend or compromising the security model. We'll use [Gram](https://getgram.ai) to turn your current API into tools that a large language model (LLM) can call via the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/overview). Then we'll build a chat interface that feels like magic to your users.
 
+All the code in this guide comes from the [TaskBoard example app](https://github.com/ritza-co/TaskBoard), a fully functional Kanban board with an MCP-powered chat assistant.
 
-All the code in this guide comes from our **[TaskBoard example app](https://github.com/ritza-co/TaskBoard)**, a fully functional Kanban board with an MCP-powered chat assistant.
-
-![TaskBoard Register](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-register.png)
+![The TaskBoard user registration page](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-register.png)
 
 :::note[Live Demo]
-You can also try a [live demo of the TaskBoard app with a chat assistant here](https://taskboard.abduldavids.co.za). 
+Try a [live demo of the TaskBoard app with a chat assistant here](https://taskboard.abduldavids.co.za). 
 
 @TODO: Change to gram or ritza hosted domain.
 :::
 
-## What you'll build
+## The integration we're building
 
-In this guide we'll take a look at how to add chat capabilities using MCP to our example app, TaskBoard app, a basic Kanban CRUD application.
+We'll add chat capabilities that use MCP to TaskBoard, a basic Kanban CRUD application built with Next.js and FastAPI. TaskBoard has three columns (To Do, In Progress, and Complete) that hold tasks. Users can create, update, and delete tasks, and move them between columns. The app handles basic user authentication and task management.
 
-TaskBoard is a simple Kanban board built with Next.js and FastAPI. It has three columns (Todo, Doing, Done) where users can create, delete and move tasks. The app handles basic user authentication and task management.
+![The TaskBoard user interface](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-interface.png)
 
-![TaskBoard Interface](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-interface.png)
-
-In this guide we'll add a floating chat assistant that interacts directly with the TaskBoard API. The chat assistant will be able to:
+The floating chat assistant we'll add interacts directly with the TaskBoard API and can respond to requests like:
 
 - "Create a task for the client presentation due next Friday"
 - "Show me all tasks that are overdue" 
 - "Move the database migration task to done"
 - "What items are in my doing column?"
 
-![TaskBoard with Chat](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-with-chat.png)
+![TaskBoard with chat functionality](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-with-chat.png)
 
-Your existing application logic stays completely unchanged. The assistant respects all existing user permissions and authentication and it can only access tasks the logged-in user is authorized to see and modify. We're simply adding a new way for users to interact with the same API behind the app that they're already using.
+The existing application logic stays completely unchanged. The assistant respects all existing user permissions and authentication, and it can only access tasks the logged-in user is authorized to see and modify. All we'll do is add a new way for users to interact with the API behind the app that they're already using.
 
 ### Prerequisites
 
-You'll need:
+To follow along, you'll need:
 
-- An existing web application with a REST API, we'll use the [TaskBoard app](https://github.com/ritza-co/TaskBoard) as an example
-- A Gram account, you can [sign up here](https://getgram.ai)
-- An OpenAI API key, which you can get from the [OpenAI dashboard](https://platform.openai.com/account/api-keys)
-- Python 3.11+ for the FastAPI microservice
+- An existing web application with a REST API. This guide uses the [example TaskBoard app](https://github.com/ritza-co/TaskBoard).
+- A [Gram account](https://getgram.ai).
+- An OpenAI API key. Get yours from the [OpenAI dashboard](https://platform.openai.com/account/api-keys).
+- Python 3.11 or higher for the FastAPI microservice.
 
-### Understanding the Architecture
+### Understanding the architecture
 
 Here's a high-level look at what we'll build:
 
-![Architecture Diagram](/img/blog/adding-ai-chat-to-your-app-guide/architecture-diagram.png)
+![Diagram of the MCP-powered chat integration architecture](/img/blog/adding-ai-chat-to-your-app-guide/architecture-diagram.png)
 
-When a user types a message in the chat, a request is sent to the Next.js backend, which extracts the `userId` and forwards it to the FastAPI Chat Service. This service then uses the `mcp-agent` to make a tool call to the Gram MCP Server, which in turn makes a request to your application's API. For local development, `ngrok` is used to expose your local API to the Gram MCP Server.
+When a user types a message in the chat, a request is sent to the Next.js backend, which extracts the `userId` and forwards it to the FastAPI chat service. The chat service uses `mcp-agent` to make a tool call to the Gram MCP server, which in turn makes a request to the application's API. For local development, `ngrok` is used to expose the local API to the Gram MCP server.
 
-This entire process happens securely, as the `userId` is passed at each step, ensuring that the assistant only accesses data the user is authorized to see. Your existing authentication and permissions are fully respected.
+The entire process happens securely: The `userId` is passed at each step, ensuring that the assistant only accesses data the user is authorized to see. Your existing authentication and permissions are fully respected.
 
-## Building a Gram MCP Server
+## Building a Gram MCP server
 
-Next, we'll transform your existing API into a toolset that language models can understand and call. We'll upload your API documentation to Gram, which will automatically generate MCP tools that preserve all your security and business logic.
+Next, we'll upload the API documentation to Gram, which will automatically generate MCP tools that language models can understand and call. This process preserves the application's security and business logic.
 
-### Documenting your API
+### Documenting the API
 
-First, we need to create an OpenAPI document that describes your API endpoints. Gram uses this to create an MCP server that is interoperable with your API. As our example app uses Next.js, we'll use JSDoc comments to automatically generate this specification.
+First, create an OpenAPI document that describes the API endpoints. Gram uses the OpenAPI document to create an MCP server that is interoperable with the API. As our example app uses Next.js, we'll use JSDoc comments to automatically generate this document.
 
 ```bash
 # Install OpenAPI generation tool for Next.js
 npm install -D next-swagger-doc
 ```
 
-Create a script to generate your OpenAPI spec. In your project root, create `generate-swagger.js`:
+Now create a script to generate the OpenAPI document. In the project root, create `generate-swagger.js`:
 
 ```javascript generate-swagger.js
 const { createSwaggerSpec } = require('next-swagger-doc');
@@ -104,7 +101,7 @@ fs.writeFileSync(outputPath, JSON.stringify(spec, null, 2));
 console.log(`✅ OpenAPI spec generated at ${outputPath}`);
 ```
 
-Add this script to your `package.json`:
+Add this script to `package.json`:
 
 ```json
 {
@@ -114,7 +111,7 @@ Add this script to your `package.json`:
 }
 ```
 
-Add JSDoc comments to your API routes with detailed descriptions:
+Add JSDoc comments to API routes with detailed descriptions:
 
 ```typescript app/api/items/route.ts
 /**
@@ -157,14 +154,14 @@ export async function POST(request: NextRequest) {
 }
 ```
 
-Generate your OpenAPI specification:
+Generate the OpenAPI document:
 
 ```bash
 npm run generate-docs
-# Your OpenAPI spec will be available at /public/swagger.json
+# Your OpenAPI document will be available at /public/swagger.json
 ```
 
-You can also use [x-gram extensions](/concepts/openapi#using-the-x-gram-extension) in your JSDoc comments to add context that helps the assistant understand your TaskBoard tools more accurately:
+You can also use [`x-gram` extensions](/concepts/openapi#using-the-x-gram-extension) in JSDoc comments to add context that helps the assistant understand the app's tools more accurately:
 
 ```typescript
 /**
@@ -194,30 +191,30 @@ You can also use [x-gram extensions](/concepts/openapi#using-the-x-gram-extensio
 ```
 
 
-### Creating your MCP server with Gram
+### Creating an MCP server with Gram
 
-Now we'll transform your API documentation into a hosted MCP server that the chat agent can use. Gram will read your OpenAPI spec and automatically generate the tools your chat assistant needs.
+Now we'll transform the API documentation into a hosted MCP server that the chat agent can use. Gram will read the OpenAPI document and automatically generate the tools the chat assistant needs.
 
-#### Uploading your OpenAPI document
+#### Uploading the OpenAPI document
 
-1. In the Gram dashboard, click **Your APIs** in the sidebar (under **Create**)
-2. Click **+ New OpenAPI Source**
-3. Upload your OpenAPI document (the generated `public/swagger.json` from the previous section)
-4. Name your API (e.g., "TaskBoard"), toolset and server slug (e.g., "taskboard-demo")
+1. In the Gram dashboard, click **Your APIs** in the sidebar (under **Create**).
+2. Click **+ New OpenAPI Source**.
+3. Upload the OpenAPI document (the generated `public/swagger.json` from the previous section).
+4. Name the API (for example, "TaskBoard"), toolset, and server slug (for example, "taskboard-demo").
 
 <video width="600" controls>
   <source src="/videos/taskboard-mcp-create.mp4" type="video/mp4" />
     Your browser does not support the video tag.
 </video>
 
-Gram will parse your OpenAPI document and generate [tool definitions](/concepts/tool-definitions) for each TaskBoard endpoint.
+Gram will parse the OpenAPI document and generate [tool definitions](/concepts/tool-definitions) for each TaskBoard endpoint.
 
-You can find your MCP server in the **MCP** tab.
+Find the MCP server in the **MCP** tab.
 
 
 #### Configuring authentication
 
-For development and testing, we need to expose our local TaskBoard API so Gram can access it. We'll use [ngrok](https://ngrok.com/) to create a public tunnel:
+For development and testing, we need to expose the local TaskBoard API so Gram can access it. We'll use [ngrok](https://ngrok.com/) to create a public tunnel:
 
 ```bash
 # Install ngrok if you haven't already
@@ -229,43 +226,41 @@ ngrok http 3000
 
 This gives you a public URL like `https://abc123.ngrok.io` that tunnels to your local `localhost:3000`.
 
-In your default environment variables, set your API base URL to your ngrok URL (e.g., `https://abc123.ngrok.io`)
+In your default environment variables, set the API base URL to the ngrok URL (for example, `https://abc123.ngrok.io`).
 
-![TaskBoard environment variables](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-env-var.png)
+![TaskBoard environment variables dialog](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-env-var.png)
 
 
 :::tip[Note]
-ngrok is perfect for development and testing. In production, your TaskBoard API should be publicly accessible at a permanent URL that Gram can reach.
+ngrok is perfect for development and testing. However, in production, the TaskBoard API should be publicly accessible at a permanent URL that Gram can reach.
 :::
 
 
-#### Testing your toolset
+#### Testing the toolset
 
-Test your TaskBoard toolset in the Gram playground:
+Test the TaskBoard toolset in the Gram playground:
 
-1. Go to the **Playground** tab in the sidebar and select your TaskBoard toolset
+1. Go to the **Playground** tab in the sidebar and select the TaskBoard toolset.
 2. Try natural language queries like:
    - "Show me all my tasks"
    - "Create a task called 'Review quarterly reports'"
 
-![Testing MCP Taskboard](/img/blog/adding-ai-chat-to-your-app-guide/testing-mcp-taskboard.png)
+![Testing the TaskBoard MCP tools in the Gram Playground](/img/blog/adding-ai-chat-to-your-app-guide/testing-mcp-taskboard.png)
 
 :::tip[Note]
-You'll need to manually provide the `userId` parameter in the playground in order for the agent to access the correct user's data. We'll automate this in the actual chat service.
+You'll need to manually provide the `userId` parameter in the Playground for the agent to access the correct user's data. We'll automate this in the actual chat service.
 
 Alternatively, you can ask the agent to use the login and register tools to manually login and get a `userId` token.
 :::
 
-#### Deploying as hosted MCP server
+#### Deploying the toolset as a hosted MCP server
 
-Go to the **MCP** tab in the sidebar and select your TaskBoard toolset. Scroll down to the **Visiblity** section and change your MCP server to **Public**.
+Go to the **MCP** tab in the sidebar and select the TaskBoard toolset. Scroll down to the **Visibility** section and change the MCP server to **Public**.
 
-![Gram Public MCP Server](/img/blog/adding-ai-chat-to-your-app-guide/gram-public-mcp-server.png)
+![Setting the MCP server to public in the Gram MCP tab](/img/blog/adding-ai-chat-to-your-app-guide/gram-public-mcp-server.png)
 
 
-Your toolset is now available as a hosted MCP server. To get the configuration, scroll down to the **MCP Config** section.
-
-You'll see a configuration like this:
+The toolset is now available as a hosted MCP server. Scroll down to the **MCP Config** section to get the server configuration. It will look something like this:
 
 ```json
 {
@@ -283,24 +278,24 @@ You'll see a configuration like this:
 }
 ```
 
-Save this configuration, we'll use it in our chat service setup. 
+Save this configuration. We'll use it when we set up the chat service. 
 
-## Integrating MCP with your existing application
+## Adding chat capabilities to the application
 
-We'll build a chat interface that floats over the TaskBoard app, and connect it to our MCP server through a Python microservice. The FastAPI service handles the chat logic and tool execution, so we won't need to rewrite our existing Next.js frontend apart from adding the chat UI.
+We'll build a chat interface that floats over the TaskBoard app, and connect it to the MCP server through a Python microservice. The FastAPI service handles the chat logic and tool execution, so we won't need to rewrite the existing Next.js frontend apart from adding the chat UI.
 
 ### Building the FastAPI chat service
 
-For our agent itself, we'll use the [mcp-agent](https://github.com/lastmile-ai/mcp-agent) library. 
+For the agent itself, we'll use the [`mcp-agent`](https://github.com/lastmile-ai/mcp-agent) library. 
 
-First we'll create a new directory for our chat service:
+First, create a new directory for the chat service:
 
 ```bash
 mkdir mcp-agent-service
 cd mcp-agent-service
 ```
 
-Now in our `mcp-agent-service` directory, we'll create a basic FastAPI service that uses `mcp-agent` to connect to your Gram MCP server:
+In the `mcp-agent-service` directory, create a basic FastAPI service that uses `mcp-agent` to connect to the Gram MCP server:
 
 ```python
 import os
@@ -350,7 +345,7 @@ async def chat(request: ChatRequest):
 
 #### Configuring environment variables
 
-Next, we'll create a `.env` file to store our environment variables. You can get your OpenAI API key from the [OpenAI dashboard](https://platform.openai.com/account/api-keys).
+Next, create a `.env` file to store environment variables. You can get your OpenAI API key from the [OpenAI dashboard](https://platform.openai.com/account/api-keys).
 
 ```env
 OPENAI_API_KEY=<YOUR_OPENAI_API_KEY>
@@ -359,7 +354,7 @@ TASKBOARD_SERVER_URL=<YOUR_API_BASE_URL> # replace with your public API base URL
 
 #### Configuring the MCP agent
 
-Now we'll create an `mcp_agent.config.yaml` file to configure the chat agent. This file tells the agent how to connect to your Gram MCP server and how to use the OpenAI API. For more information on the configuration, see the [mcp-agent documentation](https://github.com/lastmile-ai/mcp-agent).
+Now create an `mcp_agent.config.yaml` file to configure the chat agent. This file tells the agent how to connect to the Gram MCP server and how to use the OpenAI API. For more information on the configuration, see the [`mcp-agent` documentation](https://github.com/lastmile-ai/mcp-agent).
 
 ```yaml
 execution_engine: asyncio
@@ -384,12 +379,12 @@ openai:
 ```
 
 :::note[Note]
-This configuration comes directly from the **MCP Config** you copied from Gram in the previous step. The server name **must** match what you used when creating your MCP agent in the Python code.
+This configuration comes directly from the **MCP Config** you copied from Gram in the previous step. The server name **must** match what you used when creating the MCP agent in the Python code.
 :::
 
 ### Building the chat frontend component
 
-Next, we'll add a chat component to our app. For our TaskBoard example, we'll use a simple popup component that floats over the main interface. 
+Next, we'll add a chat component to the app. For the TaskBoard example, we'll use a simple popup component that floats over the main interface. 
 
 ```tsx ChatPopup.tsx
 const sendMessage = async () => {
@@ -472,9 +467,9 @@ const sendMessage = async () => {
   };
 ```
 
-See the [full code on GitHub](https://github.com/ritza-co/TaskBoard/blob/main/taskboard/src/components/ChatPopup.tsx)
+See the [full component code on GitHub](https://github.com/ritza-co/TaskBoard/blob/main/taskboard/src/components/ChatPopup.tsx).
 
-Now we'll create a Next.js API route that acts as a secure proxy between our frontend chat component and the Python microservice. This route handles user authentication and forwards the `userID` to the agent.
+Now we'll create a Next.js API route that acts as a secure proxy between the frontend chat component and the Python microservice. This route handles user authentication and forwards the `userID` to the agent.
 
 ```typescript app/api/chat/route.ts
 import { NextRequest, NextResponse } from 'next/server';
@@ -534,12 +529,12 @@ export async function POST(request: NextRequest) {
 }
 ```
 
-[See the full code on GitHub](https://github.com/ritza-co/TaskBoard/blob/main/taskboard/src/app/api/chat/route.ts)
+See the [full API route code on GitHub](https://github.com/ritza-co/TaskBoard/blob/main/taskboard/src/app/api/chat/route.ts).
 
 
-### Integrating chat into your app
+### Integrating chat into the app
 
-Let's wire everything together by adding our chat popup to the main application. We'll drop it into our TaskBoard dashboard where it can float over the Kanban board without getting in the way.
+Let's wire everything together by adding the chat popup to the main application. We'll drop the popup into the TaskBoard dashboard, where it can float over the Kanban board without getting in the way.
 
 ```tsx
 // components/ChatPopup.tsx (simplified from TaskBoard)
@@ -587,7 +582,7 @@ const ChatPopup: React.FC = () => {
 export default ChatPopup;
 ```
 
-Then integrate it into your main app:
+Integrate the popup into the main app:
 
 ```tsx Dashboard.tsx
 import ChatPopup from '@/components/ChatPopup';
@@ -607,9 +602,9 @@ export default function Dashboard() {
 
 ### Dockerizing the application
 
-Now let's containerize both services so they can run alongside your existing application. We'll define a Docker container for the chat service and add it to our example app's `docker-compose.yml` file.
+Now let's containerize both services so they can run alongside the existing application. We'll define a Docker container for the chat service and add it to the example app's `docker-compose.yml` file.
 
-In our `mcp-agent-service` directory, we'll create a `Dockerfile` to containerize our chat service.
+In the `mcp-agent-service` directory, create a `Dockerfile` to containerize the chat service.
 
 ```dockerfile
 FROM python:3.11-slim
@@ -636,7 +631,7 @@ EXPOSE 8085
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8085"]
 ```
 
-Then, we'll update our top-level `docker-compose.yml` file to include the chat service.
+Update the top-level `docker-compose.yml` file to include the chat service.
 
 ```yaml docker-compose.yml
 version: '3.8'
@@ -672,7 +667,7 @@ networks:
 
 #### Environment configuration
 
-We'll also update our `.env` file to include the chat service URL and the MCP server URL as well as the OpenAI API key. Docker will automatically pick up these variables and use them in the chat service.
+Now update the `.env` file to include the chat service URL, the MCP server URL, and the OpenAI API key. Docker will automatically pick up these variables and use them in the chat service.
 
 ```env
 OPENAI_API_KEY=your_openai_api_key_here
@@ -683,13 +678,13 @@ TASKBOARD_SERVER_URL=https://abc123.ngrok.io
 # TASKBOARD_SERVER_URL=https://your-app.com
 ```
 
-### Testing your integration
+### Testing the integration
 
-Time to see the chat assistant in action! With everything dockerized, we can now test our complete setup.
+Time to see the chat assistant in action! With everything dockerized, let's test the complete setup.
 
-#### Set up ngrok tunnel (for development)
+#### Set up the ngrok tunnel (for development)
 
-First, expose your TaskBoard API so Gram can access it:
+First, expose the TaskBoard API so Gram can access it:
 
 ```bash
 # In a separate terminal, start the ngrok tunnel
@@ -699,9 +694,9 @@ ngrok http 3000
 # and update your .env file with this URL
 ```
 
-We'll use an ngrok tunnel to expose our local API to the Gram MCP server. This is a temporary solution for development, in production you should use your public API URL.
+We'll use an ngrok tunnel to expose the local API to the Gram MCP server. This is a temporary solution for development. In production, you should use the public API URL.
 
-Now we can start the services:
+Start the services:
 
 ```bash
 # Start all services with Docker
@@ -714,50 +709,53 @@ docker-compose ps
 docker-compose logs -f
 ```
 
-Now let's test our new chat component by asking it to list all our current tasks. We'll login to the app, create a new task, and then open the chat component. We'll then ask the agent to show us all our tasks.
+To test the new chat component, we'll log in to the app and create a new task, then open the chat component and ask the agent to list all the current tasks.
 
 <video width="600" controls>
   <source src="/videos/taskboard-show-tasks.mp4" type="video/mp4" />
     Your browser does not support the video tag.
 </video>
 
-Notice how the agent is only listing the tasks that are assigned to the logged in user.
+Notice how the agent only lists the tasks assigned to the logged-in user.
 
-Now let's ask the agent to create a new task. We'll ask it to create a task reminding me to review last week's PR from Jeff. We'll also be purposefully vague with our request to see how the agent handles coming up with more context for the details field.
+Now let's ask the agent to create a new task to review last week's PR from Jeff. To see how the agent handles coming up with more context for the details field, we'll make our request purposefully vague.
 
 <video width="600" controls>
   <source src="/videos/taskboard-new-task.mp4" type="video/mp4" />
     Your browser does not support the video tag.
 </video>
 
-Awesome! The agent created a new task for us and it is now in the **Todo** column.
+The agent creates a new task for us in the **To Do** column.
 
 We can also ask the agent to delete a task.
 
-![TaskBoard Delete Task](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-delete-task.png)
+![Using the TaskBoard chat to ask the agent to delete a task](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-delete-task.png)
 
 
 ## Troubleshooting
 
 Here are a few common issues and how to resolve them.
 
-**Chat not responding:**
-- Verify all services are running
-- Check environment variables are set correctly
-- Look for errors in browser developer console
+Chat not responding:
 
-**Assistant can't access data:**
-- Confirm the MCP server is accessible, if you're using ngrok, make sure you're using the **correct** URL.
-- Check user authentication is working
-- Verify API endpoints are returning expected data
+- Verify that all services are running.
+- Check that the environment variables are set correctly.
+- Look for errors in the browser developer console.
 
-**Permission errors:**
-- Ensure user ID is passed correctly
-- Check API authentication middleware
-- Verify CORS settings allow your frontend domain
+Assistant can't access data:
+
+- Confirm that the MCP server is accessible. If you're using ngrok, make sure you're using the correct URL.
+- Check that user authentication is working.
+- Verify that the API endpoints are returning the expected data.
+
+Permission errors:
+
+- Ensure that the user ID is passed correctly.
+- Check the API authentication middleware.
+- Verify that CORS settings allow the frontend domain.
 
 
-If you're having issues, you can enable logging in your chat service to see what's going on. This adds a level of verbosity to your chat service, which can be helpful when you're trying to figure out how the agent uses the tools.
+If you're having issues, enable logging in the chat service to see detailed information about how the agent uses tools.
 
 ```python main.py
 import logging
@@ -778,15 +776,13 @@ async def chat(request: ChatRequest):
     return response
 ```
 
-The logging will show you the tools that the agent used, the messages that were sent to and from the agent, and the response from the agent. This can be helpful when you're trying to figure out how the agent uses the tools.
-
-![Chat Service Logging](/img/blog/adding-ai-chat-to-your-app-guide/chat-service-logging.png)
+![Chat service logs displayed in the terminal](/img/blog/adding-ai-chat-to-your-app-guide/chat-service-logging.png)
 
 
-## Conclusion
+## Next steps
 
-Adding an LLM-powered chat assistant to your existing application doesn't require rebuilding your backend or learning complex AI frameworks. With MCP and Gram, you can create powerful natural language interfaces that work seamlessly with your current architecture.
+Adding an LLM-powered chat assistant to an existing application doesn't require rebuilding the backend or learning complex AI frameworks. With MCP and Gram, you can create powerful natural language interfaces that work seamlessly with your current architecture.
 
-Your users get intuitive new ways to interact with your app, while you maintain complete control over security, permissions, and functionality. The assistant becomes another interface to your existing system—one that speaks your users' language.
+Your users get intuitive new ways to interact with your app, while you maintain complete control over security, permissions, and functionality. The assistant becomes another interface to your existing system – one that speaks your users' language.
 
 Ready to add a chat assistant to your app? Start by exploring the [TaskBoard example](https://github.com/ritza-co/TaskBoard), then create your first MCP server with [Gram](https://getgram.ai).
