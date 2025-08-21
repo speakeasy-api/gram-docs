@@ -1086,7 +1086,9 @@ Start both services:
 docker-compose up --build
 ```
 
-### Test the complete integration
+:::note[Note]
+If you restart ngrok, you'll get a new URL and will need to update both your `.env` file and the Gram environment variables in your MCP server configuration.
+:::
 
 Visit `http://localhost:3000`, log in, and click the chat button. Try these test queries:
 
