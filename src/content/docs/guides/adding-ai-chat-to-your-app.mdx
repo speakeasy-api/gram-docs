@@ -11,12 +11,11 @@ This guide shows you how to add intelligent chat capabilities to any existing ap
 
 All the code in this guide comes from the [TaskBoard example app](https://github.com/ritza-co/TaskBoard), a fully functional Kanban board with an MCP-powered chat assistant.
 
+
 ![The TaskBoard user registration page](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-register.png)
 
 :::note[Live Demo]
-Try a [live demo of the TaskBoard app with a chat assistant here](https://taskboard.abduldavids.co.za). 
-
-@TODO: Change to gram or ritza hosted domain.
+Try a [live demo of the TaskBoard app with a chat assistant here](https://taskboard.abduldavids.co.za).
 :::
 
 ## The integration we're building
@@ -40,10 +39,26 @@ The existing application logic stays completely unchanged. The assistant respect
 
 To follow along, you'll need:
 
-- An existing web application with a REST API. This guide uses the [example TaskBoard app](https://github.com/ritza-co/TaskBoard).
+- The [TaskBoard example app](https://github.com/ritza-co/TaskBoard) cloned locally (see setup below).
 - A [Gram account](https://getgram.ai).
 - An OpenAI API key. Get yours from the [OpenAI dashboard](https://platform.openai.com/account/api-keys).
 - Python 3.11 or higher for the FastAPI microservice.
+
+### Setup: Clone the TaskBoard Repository
+
+Before starting, clone and set up the TaskBoard repository:
+
+```bash
+# Create a directory for the project
+mkdir taskboard-project
+cd taskboard-project
+
+# Clone the repository
+git clone https://github.com/ritza-co/TaskBoard.git
+cd TaskBoard
+```
+
+The rest of this guide assumes you have the TaskBoard repository cloned locally and are working within the `TaskBoard` directory.
 
 ### Understanding the architecture
 
@@ -64,11 +79,12 @@ Next, we'll upload the API documentation to Gram, which will automatically gener
 First, create an OpenAPI document that describes the API endpoints. Gram uses the OpenAPI document to create an MCP server that is interoperable with the API. As our example app uses Next.js, we'll use JSDoc comments to automatically generate this document.
 
 ```bash
-# Install OpenAPI generation tool for Next.js
+# Navigate to the Next.js app directory and install OpenAPI generation tool
+cd taskboard
 npm install -D next-swagger-doc
 ```
 
-Now create a script to generate the OpenAPI document. In the project root, create `generate-swagger.js`:
+Now create a script to generate the OpenAPI document. In the taskboard directory, create `generate-swagger.js`:
 
 ```javascript generate-swagger.js
 const { createSwaggerSpec } = require('next-swagger-doc');
@@ -101,7 +117,7 @@ fs.writeFileSync(outputPath, JSON.stringify(spec, null, 2));
 console.log(`✅ OpenAPI spec generated at ${outputPath}`);
 ```
 
-Add this script to `package.json`:
+We have added this script to the `package.json` in the `/taskboard` directory:
 
 ```json
 {
@@ -111,7 +127,7 @@ Add this script to `package.json`:
 }
 ```
 
-Add JSDoc comments to API routes with detailed descriptions:
+We have created JSDoc comments for our API routes that have a structure similar to this:
 
 ```typescript app/api/items/route.ts
 /**
@@ -153,6 +169,8 @@ export async function POST(request: NextRequest) {
   // Your existing API logic
 }
 ```
+
+[See the full implementation here](https://github.com/ritza-co/TaskBoard/blob/main/taskboard/src/app/api/items/route.ts)
 
 Generate the OpenAPI document:
 
@@ -197,8 +215,8 @@ Now we'll transform the API documentation into a hosted MCP server that the chat
 
 #### Uploading the OpenAPI document
 
-1. In the Gram dashboard, click **Your APIs** in the sidebar (under **Create**).
-2. Click **+ New OpenAPI Source**.
+1. In the Gram dashboard, click **Toolsets** in the sidebar (under **CREATE**).
+2. Click **+ ADD API**.
 3. Upload the OpenAPI document (the generated `public/swagger.json` from the previous section).
 4. Name the API (for example, "TaskBoard"), toolset, and server slug (for example, "taskboard-demo").
 
@@ -211,10 +229,29 @@ Gram will parse the OpenAPI document and generate [tool definitions](/concepts/t
 
 Find the MCP server in the **MCP** tab.
 
-
 #### Configuring authentication
 
-For development and testing, we need to expose the local TaskBoard API so Gram can access it. We'll use [ngrok](https://ngrok.com/) to create a public tunnel:
+For development and testing, we need to expose the local TaskBoard API so Gram can access it. First, start the TaskBoard application, then create a public tunnel with [ngrok](https://ngrok.com/):
+
+```bash
+# Start the TaskBoard application (in taskboard directory)
+cd taskboard
+
+# Install dependencies and set up database
+npm install
+
+# Set up environment variables
+cp .env.example .env
+
+# Generate Prisma client and run database migrations
+npx prisma generate
+npx prisma migrate dev --name init
+
+# Start the development server
+npm run dev
+```
+
+In a new terminal window:
 
 ```bash
 # Install ngrok if you haven't already
@@ -226,7 +263,7 @@ ngrok http 3000
 
 This gives you a public URL like `https://abc123.ngrok.io` that tunnels to your local `localhost:3000`.
 
-In your default environment variables, set the API base URL to the ngrok URL (for example, `https://abc123.ngrok.io`).
+In your default environment variables, set the `TASKBOARD_SERVER_URL` to the ngrok URL (for example, `TASKBOARD_SERVER_URL=https://abc123.ngrok.io`).
 
 ![TaskBoard environment variables dialog](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-env-var.png)
 
@@ -234,7 +271,6 @@ In your default environment variables, set the API base URL to the ngrok URL (fo
 :::tip[Note]
 ngrok is perfect for development and testing. However, in production, the TaskBoard API should be publicly accessible at a permanent URL that Gram can reach.
 :::
-
 
 #### Testing the toolset
 
@@ -288,14 +324,14 @@ We'll build a chat interface that floats over the TaskBoard app, and connect it 
 
 For the agent itself, we'll use the [`mcp-agent`](https://github.com/lastmile-ai/mcp-agent) library. 
 
-First, create a new directory for the chat service:
+The chat service directory already exists in the project root. Navigate to it:
 
 ```bash
-mkdir mcp-agent-service
+# From the TaskBoard root directory
 cd mcp-agent-service
 ```
 
-In the `mcp-agent-service` directory, create a basic FastAPI service that uses `mcp-agent` to connect to the Gram MCP server:
+The `mcp-agent-service` directory contains a `main.py` file with a FastAPI service that uses `mcp-agent` to connect to the Gram MCP server. The structure looks like this:
 
 ```python
 import os
@@ -345,7 +381,7 @@ async def chat(request: ChatRequest):
 
 #### Configuring environment variables
 
-Next, create a `.env` file to store environment variables. You can get your OpenAI API key from the [OpenAI dashboard](https://platform.openai.com/account/api-keys).
+Next, create a `.env` file in the `mcp-agent-service` directory to store environment variables. You can get your OpenAI API key from the [OpenAI dashboard](https://platform.openai.com/account/api-keys).
 
 ```env
 OPENAI_API_KEY=<YOUR_OPENAI_API_KEY>
@@ -354,7 +390,7 @@ TASKBOARD_SERVER_URL=<YOUR_API_BASE_URL> # replace with your public API base URL
 
 #### Configuring the MCP agent
 
-Now create an `mcp_agent.config.yaml` file to configure the chat agent. This file tells the agent how to connect to the Gram MCP server and how to use the OpenAI API. For more information on the configuration, see the [`mcp-agent` documentation](https://github.com/lastmile-ai/mcp-agent).
+The `mcp_agent.config.yaml` file configures the chat agent. Update it with your own Gram MCP server URL. This file tells the agent how to connect to the Gram MCP server and how to use the OpenAI API. For more information on the configuration, see the [`mcp-agent` documentation](https://github.com/lastmile-ai/mcp-agent).
 
 ```yaml
 execution_engine: asyncio
@@ -368,7 +404,7 @@ mcp:
       command: "npx"
       args: [
         "mcp-remote",
-        "https://app.getgram.ai/mcp/ritza-rzx-taskboard",  # Your Gram MCP server URL
+        "https://app.getgram.ai/mcp/your-gram-mcp-server-url",  # Your Gram MCP server URL
         "--header",
         "MCP-TASKBOARD-SERVER-URL:${TASKBOARD_SERVER_URL}"  # Passes your ngrok URL to Gram
       ]
@@ -384,9 +420,9 @@ This configuration comes directly from the **MCP Config** you copied from Gram i
 
 ### Building the chat frontend component
 
-Next, we'll add a chat component to the app. For the TaskBoard example, we'll use a simple popup component that floats over the main interface. 
+The TaskBoard example includes a chat component implementation. The repository contains a simple popup component that floats over the main interface.
 
-```tsx ChatPopup.tsx
+```tsx src/components/ChatPopup.tsx
 const sendMessage = async () => {
     if (!input.trim() || isLoading || userMessageCount >= MAX_MESSAGES) return;
 
@@ -469,9 +505,9 @@ const sendMessage = async () => {
 
 See the [full component code on GitHub](https://github.com/ritza-co/TaskBoard/blob/main/taskboard/src/components/ChatPopup.tsx).
 
-Now we'll create a Next.js API route that acts as a secure proxy between the frontend chat component and the Python microservice. This route handles user authentication and forwards the `userID` to the agent.
+The Next.js API route at `src/app/api/chat/route.ts` acts as a secure proxy between the frontend chat component and the Python microservice. This route handles user authentication and forwards the `userID` to the agent:
 
-```typescript app/api/chat/route.ts
+```typescript src/app/api/chat/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 
 const CHAT_SERVICE_URL = process.env.CHAT_SERVICE_URL || 'http://localhost:8085';
@@ -534,7 +570,7 @@ See the [full API route code on GitHub](https://github.com/ritza-co/TaskBoard/bl
 
 ### Integrating chat into the app
 
-Let's wire everything together by adding the chat popup to the main application. We'll drop the popup into the TaskBoard dashboard, where it can float over the Kanban board without getting in the way.
+The chat popup is already integrated into the TaskBoard dashboard, where it floats over the Kanban board without getting in the way.
 
 ```tsx
 // components/ChatPopup.tsx (simplified from TaskBoard)
@@ -582,9 +618,9 @@ const ChatPopup: React.FC = () => {
 export default ChatPopup;
 ```
 
-Integrate the popup into the main app:
+The popup is integrated into the dashboard (`src/app/dashboard/page.tsx`):
 
-```tsx Dashboard.tsx
+```tsx src/app/dashboard/page.tsx
 import ChatPopup from '@/components/ChatPopup';
 
 export default function Dashboard() {
@@ -631,7 +667,7 @@ EXPOSE 8085
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8085"]
 ```
 
-Update the top-level `docker-compose.yml` file to include the chat service.
+The top-level `docker-compose.yml` file already includes the chat service configuration:
 
 ```yaml docker-compose.yml
 version: '3.8'
@@ -649,7 +685,7 @@ services:
       - taskboard-network
 
   chat-service:
-    build: ./chat-service
+    build: ./mcp-agent-service
     ports:
       - "8085:8085"
     environment:
@@ -667,7 +703,7 @@ networks:
 
 #### Environment configuration
 
-Now update the `.env` file to include the chat service URL, the MCP server URL, and the OpenAI API key. Docker will automatically pick up these variables and use them in the chat service.
+Now create a `.env` file in the project root directory (alongside `docker-compose.yml`) to include the chat service URL, the MCP server URL, and the OpenAI API key. Docker will automatically pick up these variables and use them in both services.
 
 ```env
 OPENAI_API_KEY=your_openai_api_key_here
@@ -684,15 +720,17 @@ Time to see the chat assistant in action! With everything dockerized, let's test
 
 #### Set up the ngrok tunnel (for development)
 
-First, expose the TaskBoard API so Gram can access it:
+If you haven't already started ngrok from the earlier setup, expose the TaskBoard API so Gram can access it:
 
 ```bash
-# In a separate terminal, start the ngrok tunnel
+# In a separate terminal, start the ngrok tunnel (only if not already running)
 ngrok http 3000
 
 # Copy the public URL (like https://abc123.ngrok.io) 
-# and update your .env file with this URL
+# and update your .env file and Gram environment variables with this URL
 ```
+
+**Note**: If you restart ngrok, you'll get a new URL and will need to update both your `.env` file and the Gram environment variables in your MCP server configuration.
 
 We'll use an ngrok tunnel to expose the local API to the Gram MCP server. This is a temporary solution for development. In production, you should use the public API URL.
 
