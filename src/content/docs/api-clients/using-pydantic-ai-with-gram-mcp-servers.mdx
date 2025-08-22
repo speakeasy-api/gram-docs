@@ -22,7 +22,7 @@ You'll need:
 
 ## Creating a Gram-hosted MCP server
 
-If you already have a Gram-hosted MCP server configured, you can skip to [connecting Pydantic AI to your Gram-hosted MCP server](#connecting-pydantic-ai-to-your-gram-hosted-mcp-server). 
+If you already have a Gram-hosted MCP server configured, you can skip to [connecting Pydantic AI to your Gram-hosted MCP server](#connecting-pydantic-ai-to-your-gram-hosted-mcp-server).
 
 For this guide, we'll use the public server URL: `https://app.getgram.ai/mcp/canipushtoprod`
 
@@ -37,8 +37,7 @@ Pydantic AI supports MCP servers through built-in MCP support using the `MCPServ
 First, install the required packages:
 
 ```bash
-pip install pydantic-ai>=0.0.14
-python-dotenv
+pip install pydantic-ai python-dotenv
 ```
 
 ### Environment setup
@@ -58,6 +57,18 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
+```
+
+To run the `async` code given in the sections to follow you can import `asyncio` and wrap the code in an async function as shown below:
+
+```python
+import asyncio
+
+async def main():
+    # wrap async code
+    # ................
+
+asyncio.run(main())
 ```
 
 ### Basic connection (public server)
@@ -155,10 +166,10 @@ agent = Agent(
 async with agent:
     # Run with detailed response
     result = await agent.run("Can I push to production today?")
-    
+
     # Access the response data
     print(f"Response: {result.output}")
-    
+
     # Access tool call information
     for message in result.all_messages():
         if hasattr(message, 'parts'):
@@ -192,12 +203,8 @@ agent = Agent(
 async with agent:
     # Stream the response
     async with agent.run_stream("What's the deployment status?") as stream:
-        async for chunk in stream:
+        async for chunk in stream.stream():
             print(chunk, end="", flush=True)
-        
-        # Get the final result
-        result = await stream.get_result()
-        print(f"\nFinal result: {result.output}")
 ```
 
 ## Using structured outputs
@@ -231,7 +238,7 @@ async with agent:
     result = await agent.run(
         "Check if I can deploy today and what the vibe is"
     )
-    
+
     # Access structured data
     decision = result.output
     print(f"Can deploy: {decision.can_deploy}")
@@ -272,15 +279,15 @@ async def create_mcp_agent():
             url="https://app.getgram.ai/mcp/canipushtoprod",
             headers=headers
         )
-        
+
         # Create agent
         agent = Agent(
             OpenAIModel("gpt-4o"),
             toolsets=[mcp_server]
         )
-        
+
         return agent
-            
+
     except Exception as e:
         print(f"Failed to create MCP agent: {e}")
         return None
@@ -291,11 +298,11 @@ async def run_agent_with_error_handling(agent, query):
         async with agent:
             result = await agent.run(query)
             return result.output
-            
+
     except ExceptionGroup as eg:
         # Handle nested exception groups from MCP
         root_cause = extract_root_cause(eg)
-        
+
         if isinstance(root_cause, httpx.ConnectError):
             return "Connection failed: Unable to reach MCP server."
         elif isinstance(root_cause, httpx.HTTPStatusError):
@@ -313,7 +320,7 @@ async def run_agent_with_error_handling(agent, query):
             return "Timeout error: MCP server took too long to respond."
         else:
             return f"Unexpected error: {type(root_cause).__name__}: {root_cause}"
-    
+
     except AgentRunError as are:
         return f"Agent execution error: {are}"
     except Exception as e:
@@ -427,17 +434,17 @@ async def main():
     # Set up environment variables
     GRAM_API_KEY = os.getenv("GRAM_API_KEY")
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-    
+
     if not OPENAI_API_KEY:
         raise ValueError("Missing OPENAI_API_KEY environment variable")
-    
+
     # Configure MCP server
     headers = {"Authorization": f"Bearer {GRAM_API_KEY}"} if GRAM_API_KEY else {}
     mcp_server = MCPServerStreamableHTTP(
         url="https://app.getgram.ai/mcp/canipushtoprod",
         headers=headers
     )
-    
+
     try:
         # Create an agent with structured output
         agent = Agent(
@@ -449,24 +456,24 @@ async def main():
             ),
             toolsets=[mcp_server]
         )
-        
+
         # Test queries
         queries = [
             "Analyze if we can deploy today",
             "What's the risk of deploying on Friday?",
             "Check deployment viability for a critical update"
         ]
-        
+
         async with agent:
             print(f"Connected to MCP server")
-            
+
             for query in queries:
                 print(f"\n📝 Query: {query}")
-                
+
                 # Run the agent
                 result = await agent.run(query)
                 analysis = result.output
-                
+
                 # Print structured results
                 print(f"💬 Can Deploy: {analysis.can_deploy}")
                 print(f"⚠️  Risk Level: {analysis.risk_level}")
@@ -474,7 +481,7 @@ async def main():
                 print(f"💡 Recommendations:")
                 for rec in analysis.recommendations:
                     print(f"   - {rec}")
-    
+
     except Exception as e:
         print(f"Error: {e}")
 
@@ -562,13 +569,13 @@ async def list_tools():
     mcp_server = MCPServerStreamableHTTP(
         url="https://app.getgram.ai/mcp/canipushtoprod"
     )
-    
+
     # Create agent
     agent = Agent(
         OpenAIModel("gpt-4o"),
         toolsets=[mcp_server]
     )
-    
+
     async with agent:
         # Agent is now connected and tools are available
         print("MCP server connected successfully")
