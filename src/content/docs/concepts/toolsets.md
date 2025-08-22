@@ -34,26 +34,16 @@ The Gram Playground provides an interactive environment for testing your toolset
 
 When your toolset is ready, you can deploy it as an MCP server or integrate it directly into your agents for production use.
 
-<div class="flex justify-center">
-  <video controls>
-    <source src="/videos/creating_toolsets.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</div>
-
 
 ## Toolsets as MCP servers
 
-In addition to enabling powerful agents through well-scoped toolsets, Gram automatically exposes each toolset as an MCP server using the streamable HTTP transport. In the Playground, you can view and retrieve the MCP server configuration for any toolset.
+In addition to enabling powerful agents through well-scoped toolsets, Gram automatically exposes each toolset as an MCP server using the streamable HTTP transport. Under the MCP tab for a toolset, you can view and retrieve the MCP server configuration.
 
 ![MCP server configuration](/img/concepts/toolsets/mcp-server-configuration.png)
 
-Click **Publish Settings** to open a modal where you can customize the MCP server URL and set its visibility to public or private.
+You can also scroll down to the **Visibility** section to set the MCP server to public or private.
 
-If the MCP server is set to public, clicking the **MCP Config** button will reveal two configuration options:
-
-- **Public MCP Server:** No authentication required.
-- **Authenticated Server (with Gram key):** Requires a Gram API key for access.
+Under the the **MCP Installation** section, you can choose to install the MCP server using Pass-through authentication or Gram authentication.
 
 ![MCP server configuration](/img/concepts/toolsets/mcp-server-toolsets-config-options.png)
 

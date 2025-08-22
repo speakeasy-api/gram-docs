@@ -59,7 +59,7 @@ The requirements for MCP OAuth can be found [here](https://modelcontextprotocol.
 
 While this is still fairly unadopted, companies like [Stripe](https://docs.stripe.com/mcp), [Asana](https://developers.asana.com/docs/integrating-with-asanas-mcp-server) & more have started to support DCR in their OAuth flows to accommodate MCP. If you want to host an MCP server for large-scale use by external developers, you should plan to build out support for DCR in your API.
 
-If your underlying API supports the necesarilly OAuth requirements, you can easily place any OAuth server in front of any Gram MCP Server with just a few clicks!
+If your underlying API supports the necessary OAuth requirements, you can easily place any OAuth server in front of any Gram MCP Server with just a few clicks!
 
 Only one OAuth flow can be placed in front of an MCP server, so it is very important that your MCP server only includes a single downstream API provider that takes in OAuth.
 
@@ -86,6 +86,8 @@ The artifact you are able to produce should look something like this:
   ]
 }
 ```
+
+Note: An MCP Client such as Claude will use the same client_id in perpetuity unless you explicitly provide a `client_secret_expires_at` value in your `/register` response. When implementing DCR, it is extremely important that you persist the client_ids you issue. MCP clients follow the OAuth specification precisely when it comes to retaining client_ids from DCR and they will not forget them when you uninstall a server!
 
 
 ### OAuth Proxy

@@ -11,20 +11,27 @@ Here are the steps to deploy an MCP server using Gram:
 
 ## Generate a Gram API key
 
-- In **Settings**, click **Create API Key**.
-- Give the API key a name, and click **Create**.
+In **Settings**, click **New API Key**. Give the API key a name, and click **Create**.
 
-![Creating an API key](/img/guides/04-adding-api-key.png)
+![Creating an API key](/img/guides/build-mcp/04-adding-api-key.png)
 
 ## Get the MCP server configuration
 
-- In the Playground, click the **MCP** tab.
+In the sidebar, under **Consume**, click the **MCP** tab to view the MCP servers you have created.
 
-![MCP server configuration](/img/guides/04-mcp-server-configuration.png)
+![MCP servers](/img/guides/build-mcp/04-mcp-servers.png)
 
-- Click **MCP Config** to view the server configuration.
+Click the MCP server you want to configure. This will take you to the MCP server configuration page.
 
-![MCP server configuration](/img/guides/04-mcp-config-gram.png)
+![MCP server configuration](/img/guides/build-mcp/04-mcp-details.png)
+
+Here you can see your hosted MCP server details. You can also change the custom slug for the MCP server and set a custom domain. 
+
+If you scroll down to the **Visibility** section, you can change the visibility of the MCP server. You can make it public or private. 
+
+![MCP server visibility](/img/guides/build-mcp/04-mcp-visibility.png)
+
+Under the **MCP Installation** section, you can see the MCP server installation details. You can also copy the MCP server configuration to your MCP client and choose to use the MCP server with or without authentication. 
 
 ## Configure an MCP client
 
@@ -75,6 +82,3 @@ Common MCP server issues and fixes:
 - Use custom tools to create workflows with precise steps.
 - Create focused toolsets for different use cases.
 
-:::tip[Related guides]
-- [Core Gram concepts](/blog/gram-concepts)
-:::

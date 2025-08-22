@@ -14,6 +14,7 @@ const tobiasThin = await fs.readFile("./src/fonts/Tobias-Thin.otf");
 const speakeasyWordmark = await fs.readFile(
   "./src/assets/speakeasy-wordmark.png",
 );
+const gramLogo = await fs.readFile("./src/assets/gram-logo.png");
 
 export async function renderOGImage(title: string, description?: string) {
   const svg = await satori(
@@ -56,19 +57,15 @@ export async function renderOGImage(title: string, description?: string) {
                     flexDirection: "column",
                   },
                   children: [
-                    jsx("p", {
+                    jsx("img", {
+                      src: gramLogo.buffer,
+                      alt: "Gram",
+                      width: "300px",
+                      height: "80px",
                       style: {
-                        margin: 0,
-                        fontFamily: "Tobias, monospace",
-                        fontWeight: 100,
-                        fontSize: "90px",
-                        lineHeight: "99px",
-                        textTransform: "lowercase",
                         marginBottom: 26,
-                        color: "black",
                         marginLeft: "-4px",
                       },
-                      children: "Gram",
                     }),
                     jsx("p", {
                       style: {
