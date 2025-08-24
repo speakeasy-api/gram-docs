@@ -32,9 +32,7 @@ When prompted, upload the [Push Advisor OpenAPI document](https://github.com/rit
 
 Follow the steps to configure a toolset and publish an MCP server. At the end of the setup, you'll have a Gram-hosted MCP server ready to use.
 
-For this guide, we'll use the public server URL format:
-
-`https://app.getgram.ai/mcp/canipushtoprod`
+For this guide, we'll use the public server URL `https://app.getgram.ai/mcp/canipushtoprod`
 
 For authenticated servers, you'll need an API key. [Generate an API key](/concepts/api-keys) in the **Settings** tab.
 
@@ -129,7 +127,7 @@ const result = await streamText({
     toolCalls?.forEach(call => {
       console.log(`🔧 Called tool: ${call.toolName}`);
     });
-    
+
     toolResults?.forEach(result => {
       console.log(`📊 Tool result: ${JSON.stringify(result.output)}`);
     });
@@ -360,7 +358,7 @@ const result = await streamText({
     toolCalls?.forEach(call => {
       console.log(`Tool called: ${call.toolName}`);
     });
-    
+
     toolResults?.forEach(result => {
       console.log(`Tool result: ${JSON.stringify(result.output)}`);
     });
@@ -405,7 +403,7 @@ try {
   mcpClient = await createMCPClient({
     transport: httpTransport,
   });
-  
+
   const tools = await mcpClient.tools();
   // Use tools...
 } catch (error) {
@@ -430,7 +428,7 @@ let mcpClient;
 
 try {
   // ... MCP client setup ...
-  
+
   const result = await generateText({
     model: openai('gpt-4o'),
     tools,
@@ -466,7 +464,7 @@ try {
 }
 ```
 
-For more advanced error handling patterns and troubleshooting, consult the **[Vercel AI SDK GitHub Repository](https://github.com/vercel/ai/blob/926259fd79833d581aa1376c4b2e8eb015df550f/packages/ai/src/generate-text/tool-error.ts#L5)**.
+For more advanced error handling patterns and troubleshooting, consult the **[Vercel AI SDK GitHub repository](https://github.com/vercel/ai/blob/926259fd79833d581aa1376c4b2e8eb015df550f/packages/ai/src/generate-text/tool-error.ts#L5)**.
 
 ## Generating text responses with tool calls
 
@@ -700,7 +698,7 @@ async function main() {
         toolCalls?.forEach(call => {
           console.log(`\n🔧 Called tool: ${call.toolName}`);
         });
-        
+
         toolResults?.forEach(result => {
           console.log(`📊 Result: ${JSON.stringify(result.output)}`);
         });
