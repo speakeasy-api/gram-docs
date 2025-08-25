@@ -32,9 +32,7 @@ When prompted, upload the [Push Advisor OpenAPI document](https://github.com/rit
 
 Follow the steps to configure a toolset and publish an MCP server. At the end of the setup, you'll have a Gram-hosted MCP server ready to use.
 
-For this guide, we'll use the public server URL format:
-
-`https://app.getgram.ai/mcp/canipushtoprod`
+For this guide, we'll use the public server URL `https://app.getgram.ai/mcp/canipushtoprod`
 
 For authenticated servers, you'll need an API key. [Generate an API key](/concepts/api-keys) in the **Settings** tab.
 
@@ -47,9 +45,9 @@ LangChain supports MCP servers through the `langchain-mcp-adapters` library usin
 First, install the required packages:
 
 ```bash
-pip install langchain-mcp-adapters langchain-openai python-dotenv
+pip install langchain-mcp-adapters langchain-openai python-dotenv langgraph-prebuilt
 # or for Anthropic
-# pip install langchain-mcp-adapters langchain-anthropic python-dotenv
+# pip install langchain-mcp-adapters langchain-anthropic python-dotenv langgraph-prebuilt
 ```
 
 ### Environment setup
@@ -289,20 +287,20 @@ async def create_mcp_agent():
                 }
             }
         )
-        
+
         tools = await client.get_tools()
-        
+
         if not tools:
             print("Warning: No tools available from MCP server")
             return None
-        
+
         agent = create_react_agent(
             ChatOpenAI(model="gpt-4-turbo"),
             tools
         )
-        
+
         return agent
-        
+
     except ConnectionError as e:
         print(f"Failed to connect to MCP server: {e}")
         return None
@@ -361,7 +359,7 @@ for message in response["messages"]:
         for tool_call in message.tool_calls:
             print(f"Tool called: {tool_call['name']}")
             print(f"Arguments: {tool_call['args']}")
-    
+
     if hasattr(message, "name") and message.name:
         # This is a tool result message
         print(f"Tool result from {message.name}: {message.content}")
@@ -447,10 +445,10 @@ async def main():
     # Set up environment variables
     GRAM_API_KEY = os.getenv("GRAM_API_KEY")
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-    
+
     if not OPENAI_API_KEY:
         raise ValueError("Missing OPENAI_API_KEY environment variable")
-    
+
     # Configure MCP client
     mcp_config = {
         "gram-pushadvisor": {
@@ -458,50 +456,50 @@ async def main():
             "transport": "streamable_http",
         }
     }
-    
+
     # Add authentication if API key is available
     if GRAM_API_KEY:
         mcp_config["gram-pushadvisor"]["headers"] = {
             "Authorization": f"Bearer {GRAM_API_KEY}"
         }
-    
+
     try:
         # Create MCP client
         client = MultiServerMCPClient(mcp_config)
-        
+
         # Get tools from the MCP server
         tools = await client.get_tools()
         print(f"Connected to MCP server with {len(tools)} tools")
-        
+
         # Create an agent with the MCP tools
         agent = create_react_agent(
             ChatOpenAI(model="gpt-4-turbo"),
             tools
         )
-        
+
         # Test queries
         queries = [
             "Can I push to production today?",
             "What's the vibe today?",
             "Is it safe to deploy?"
         ]
-        
+
         for query in queries:
             print(f"\n📝 Query: {query}")
             response = await agent.ainvoke(
                 {"messages": [{"role": "user", "content": query}]}
             )
-            
+
             # Print the final response
             final_message = response["messages"][-1]
             print(f"💬 Response: {final_message.content}")
-            
+
             # Log tool usage
             for message in response["messages"]:
                 if hasattr(message, "tool_calls") and message.tool_calls:
                     for tool_call in message.tool_calls:
                         print(f"   🔧 Used tool: {tool_call['name']}")
-    
+
     except Exception as e:
         print(f"Error: {e}")
 
@@ -595,9 +593,9 @@ async def list_tools():
             }
         }
     )
-    
+
     tools = await client.get_tools()
-    
+
     print("Available tools:")
     for tool in tools:
         print(f"- {tool.name}: {tool.description}")
