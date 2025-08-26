@@ -222,7 +222,7 @@ try {
 Here's what each parameter in the `createMCPClient` configuration does:
 
 - `StreamableHTTPClientTransport` uses Streamable HTTP transport (as opposed to SSE or STDIO).
-- `new URL(...)` is your Gram-hosted MCP server URL.
+- `new URL(...)` adds your Gram-hosted MCP server URL.
 - `headers` adds optional HTTP headers for authentication (passed as the second parameter to the transport constructor).
 
 ## Tool filtering and schema approaches
@@ -635,7 +635,7 @@ The Vercel AI SDK's approach to MCP differs from OpenAI and Anthropic's native i
 
 - **The Vercel AI SDK** works with any AI provider (including OpenAI, Anthropic, and Google).
 - **OpenAI** only works with OpenAI models.
-- **Anthropic** only works with Anthropic models
+- **Anthropic** only works with Anthropic models.
 
 ### Transport options
 
