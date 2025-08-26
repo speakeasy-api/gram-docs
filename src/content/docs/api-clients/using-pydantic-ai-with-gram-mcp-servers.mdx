@@ -7,7 +7,7 @@ sidebar:
 
 [Pydantic AI](https://ai.pydantic.dev/) supports MCP servers through the `pydantic-ai-mcp-client` library. This allows you to give your Pydantic AI agents direct access to your tools and infrastructure by connecting to [Gram-hosted MCP servers](/gram-quickstart).
 
-This guide will show you how to connect Pydantic AI to a Gram-hosted MCP server using an example [Push Advisor API](https://github.com/ritza-co/gram-examples/blob/main/push-advisor-api/openapi.yaml). You'll learn how to create an MCP server from an OpenAPI document, set up the connection, configure authentication, and use natural language to query the example API.
+This guide shows you how to connect Pydantic AI to a Gram-hosted MCP server using an example [Push Advisor API](https://github.com/ritza-co/gram-examples/blob/main/push-advisor-api/openapi.yaml). You'll learn how to create an MCP server from an OpenAPI document, set up the connection, configure authentication, and use natural language to query the example API.
 
 Find the full code and OpenAPI document in the [Push Advisor API repository](https://github.com/ritza-co/gram-examples/tree/main/push-advisor-api).
 
@@ -15,16 +15,16 @@ Find the full code and OpenAPI document in the [Push Advisor API repository](htt
 
 You'll need:
 
-- A [Gram account](https://app.getgram.ai).
-- An [OpenAI API key](https://platform.openai.com/api-keys) or [Anthropic API key](https://console.anthropic.com/).
-- Python 3.9+ environment set up on your machine.
-- Basic familiarity with Python and making API requests.
+- A [Gram account](https://app.getgram.ai)
+- An [OpenAI API key](https://platform.openai.com/api-keys) or [Anthropic API key](https://console.anthropic.com/)
+- A Python environment set up on your machine (using Python 3.9 or a more recent version)
+- Basic familiarity with Python and making API requests
 
 ## Creating a Gram-hosted MCP server
 
 If you already have a Gram-hosted MCP server configured, you can skip to [connecting Pydantic AI to your Gram-hosted MCP server](#connecting-pydantic-ai-to-your-gram-hosted-mcp-server).
 
-For this guide, we'll use the public server URL: `https://app.getgram.ai/mcp/canipushtoprod`
+For this guide, we'll use the public server URL `https://app.getgram.ai/mcp/canipushtoprod`.
 
 For authenticated servers, you'll need an API key. [Generate an API key](/concepts/api-keys) in the **Settings** tab. For an in-depth guide to how Gram works and more details on creating a Gram-hosted MCP server, check out our [introduction to Gram](/introduction).
 
@@ -59,7 +59,7 @@ from dotenv import load_dotenv
 load_dotenv()
 ```
 
-To run the `async` code given in the sections to follow you can import `asyncio` and wrap the code in an async function definition as shown below:
+To run the `async` code given in the sections to follow, you can import `asyncio` and wrap the code in an async function definition as shown below:
 
 ```python
 import asyncio
@@ -139,8 +139,8 @@ async with agent:
 
 Here's what each parameter in the `MCPServerStreamableHTTP` configuration does:
 
-- `url` - Your Gram-hosted MCP server URL.
-- `headers` - Optional HTTP headers for authentication.
+- `url` is your Gram-hosted MCP server URL.
+- `headers` adds optional HTTP headers for authentication.
 - The server uses streamable HTTP transport, which is compatible with Gram's HTTP-based MCP servers.
 
 ## Working with tool responses
@@ -496,30 +496,30 @@ Pydantic AI's approach to MCP differs from other frameworks:
 
 ### Connection method
 
-- **Pydantic AI**: Uses `MCPServerStreamableHTTP` as toolsets
-- **LangChain**: Uses `MultiServerMCPClient` with multiple servers
-- **OpenAI**: Uses `tools` array with `type: "mcp"` in Responses API
-- **Anthropic**: Uses `mcp_servers` parameter in Messages API
-- **Vercel AI SDK**: Uses `experimental_createMCPClient`
+- **Pydantic AI** uses `MCPServerStreamableHTTP` as toolsets.
+- **LangChain** uses `MultiServerMCPClient` with multiple servers.
+- **OpenAI** uses a `tools` array with the `type: "mcp"` in the Responses API.
+- **Anthropic** uses `mcp_servers` parameter in Messages API
+- **Vercel AI SDK** uses `experimental_createMCPClient`.
 
 ### Type safety
 
-- **Pydantic AI**: Strong type safety with Pydantic models for structured outputs
-- **LangChain**: Dynamic typing with tool discovery
-- **Others**: Basic type support without structured output capabilities
+- **Pydantic AI** offers strong type safety with Pydantic models for structured outputs.
+- **LangChain** offers dynamic typing with tool discovery.
+- **Others** offer basic type support without structured output capabilities.
 
 ### Framework features
 
-- **Pydantic AI**: Dependency injection, structured outputs, type validation
-- **LangChain**: Workflow abstractions, chains, multi-server support
-- **Others**: Direct API usage without additional abstractions
+- **Pydantic AI** includes dependency injection, structured outputs, and type validation.
+- **LangChain** includes workflow abstractions, chains, and multi-server support.
+- **Others** include direct API usage without additional abstractions.
 
 ### Transport support
 
-- **Pydantic AI**: Streamable HTTP transport for remote servers
-- **LangChain**: Both `streamable_http` and `stdio` transports
-- **Vercel AI SDK**: SSE, stdio, or custom transports
-- **Others**: Direct HTTP connections
+- **Pydantic AI** uses Streamable HTTP transport for remote servers.
+- **LangChain** uses both `streamable_http` and `stdio` transports
+- **The Vercel AI SDK** uses SSE, stdio, or custom transports.
+- **Others** use direct HTTP connections.
 
 ## Testing your integration
 
@@ -527,13 +527,13 @@ If you encounter issues during integration, follow these steps to troubleshoot:
 
 ### Validate MCP server connectivity
 
-Before integrating into your application, test your Gram-hosted MCP server in the [Gram Playground](https://app.getgram.ai) to ensure tools work correctly.
+Before integrating into your application, test your Gram-hosted MCP server in the [Gram Playground](https://app.getgram.ai) to ensure the tools work correctly.
 
 ### Use the MCP Inspector
 
 Anthropic provides an [MCP Inspector](https://modelcontextprotocol.io/legacy/tools/inspector) command line tool that helps you test and debug MCP servers before integrating them with Pydantic AI. You can use it to validate your Gram-hosted MCP server's connectivity and functionality.
 
-To test your Gram-hosted MCP server with the Inspector:
+Run the following command to test your Gram-hosted MCP server with the Inspector:
 
 ```bash
 # Install and run the MCP Inspector
