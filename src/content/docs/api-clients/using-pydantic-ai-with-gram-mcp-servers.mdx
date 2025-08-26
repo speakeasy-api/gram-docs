@@ -139,9 +139,10 @@ async with agent:
 
 Here's what each parameter in the `MCPServerStreamableHTTP` configuration does:
 
-- `url` is your Gram-hosted MCP server URL.
+- `url` adds your Gram-hosted MCP server URL.
 - `headers` adds optional HTTP headers for authentication.
-- The server uses streamable HTTP transport, which is compatible with Gram's HTTP-based MCP servers.
+
+The server uses Streamable HTTP transport, which is compatible with Gram's HTTP-based MCP servers.
 
 ## Working with tool responses
 
@@ -496,10 +497,10 @@ Pydantic AI's approach to MCP differs from other frameworks:
 
 ### Connection method
 
-- **Pydantic AI** uses `MCPServerStreamableHTTP` as toolsets.
+- **Pydantic AI** uses `MCPServerStreamableHTTP` as `toolsets`.
 - **LangChain** uses `MultiServerMCPClient` with multiple servers.
-- **OpenAI** uses a `tools` array with the `type: "mcp"` in the Responses API.
-- **Anthropic** uses `mcp_servers` parameter in Messages API
+- **OpenAI** uses a `tools` array with `type: "mcp"` in the Responses API.
+- **Anthropic** uses `mcp_servers` parameter in the Messages API.
 - **Vercel AI SDK** uses `experimental_createMCPClient`.
 
 ### Type safety
@@ -517,7 +518,7 @@ Pydantic AI's approach to MCP differs from other frameworks:
 ### Transport support
 
 - **Pydantic AI** uses Streamable HTTP transport for remote servers.
-- **LangChain** uses both `streamable_http` and `stdio` transports
+- **LangChain** uses both `streamable_http` and `stdio` transports.
 - **The Vercel AI SDK** uses SSE, stdio, or custom transports.
 - **Others** use direct HTTP connections.
 
