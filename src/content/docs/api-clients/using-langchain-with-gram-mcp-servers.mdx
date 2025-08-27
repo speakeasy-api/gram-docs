@@ -527,8 +527,8 @@ LangChain's approach to MCP differs from direct API integrations:
 ### Connection method
 
 - **LangChain** uses `MultiServerMCPClient` with support for multiple servers.
-- **OpenAI** uses `tools` array with `type: "mcp"` in the Responses API.
-- **Anthropic** uses `mcp_servers` parameter in the Messages API.
+- **OpenAI** uses the `tools` array with `type: "mcp"` in the Responses API.
+- **Anthropic** uses the `mcp_servers` parameter in the Messages API.
 - **The Vercel AI SDK** uses `experimental_createMCPClient` with a single server.
 
 ### Transport support
@@ -553,7 +553,7 @@ LangChain's approach to MCP differs from direct API integrations:
 ### Multi-server support
 
 - **LangChain** has native support for multiple MCP servers in one client.
-- **Others** only allow a single server per connection( requiring you to create multiple clients).
+- **Others** only allow a single server per connection (requiring you to create multiple clients).
 
 ## Testing your integration
 
