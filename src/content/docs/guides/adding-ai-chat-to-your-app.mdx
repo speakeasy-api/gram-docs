@@ -1,62 +1,66 @@
 ---
-title: "Add AI Chat to Your CRUD App"
-description: "Learn how to add a chat interface to your existing CRUD application in four practical steps while keeping your current backend and business logic completely unchanged."
+title: "Add AI chat to a CRUD app"
+description: "Four practical steps to add a chat interface to an existing CRUD application without changing the backend or business logic."
 sidebar:
   order: 1
 ---
 
-You built a CRUD app. Your users create tasks, update records, and filter through data. But they spend too much time navigating your UI for simple requests. What if instead of clicking through filters and forms, they could just ask for what they need?
+You've built a CRUD app. Users create tasks, update records, and filter through data, but they spend too much time navigating the UI for simple requests. Instead of clicking through filters and forms, what if they could just ask for what they need? For example:
 
-"Show me all tasks assigned to Sarah that are due this week." "Move the client presentation task to done." "Create a task for the database migration due Friday."
+```
+- Show me all tasks assigned to Sarah that are due this week. 
+- Move the client presentation task to done. 
+- Create a task for the database migration due Friday.
+```
 
-This guide shows you how to add a chat interface to your existing CRUD application in four practical steps. Your users get natural language interaction, while you keep your current backend, security model, and business logic completely unchanged.
+This guide shows you how to add a chat interface to an existing CRUD application in four practical steps. Users get natural language interaction, while your current backend, security model, and business logic remain unchanged.
 
 <video width="600" controls style="display: block; margin: 0 auto;">
   <source src="/videos/taskboard-show-tasks.mp4" type="video/mp4" />
     Your browser does not support the video tag.
 </video>
 
-We'll use the [TaskBoard example app](https://github.com/ritza-co/TaskBoard) as a demo. The main branch shows our starting point (CRUD app without chat), and the [completed-ai-chat branch](https://github.com/ritza-co/TaskBoard/tree/completed-ai-chat) shows the final result.
+We'll use [this TaskBoard app](https://github.com/ritza-co/TaskBoard) as a demo. The `main` branch contains the starting CRUD app, and the [`completed-ai-chat` branch](https://github.com/ritza-co/TaskBoard/tree/completed-ai-chat) contains the final result with chat functionality.
 
-![Github branches](/img/blog/adding-ai-chat-to-your-app-guide/github-branches.png)
+![TaskBoard repository showing main and completed-ai-chat branches](/img/blog/adding-ai-chat-to-your-app-guide/github-branches.png)
 
 :::note[Live Demo]
-Try a [live demo of the TaskBoard app with a chat assistant here](https://taskboard.abduldavids.co.za).
+[Try the live TaskBoard demo with chat assistant](https://taskboard.abduldavids.co.za).
 :::
 
-### Adding an AI assistant to a task management app
+## Solution overview
 
-Here's how we'll transform a standard CRUD application into one with natural language capabilities.
-
-We have a working task management app with a standard structure:
+The starting task management app has a standard structure:
 
 ```
 TaskBoard/
-├── taskboard/                 # Your existing Next.js app
+├── taskboard/                 # Existing Next.js app
 │   ├── src/
-│   │   ├── app/api/           # Your CRUD API routes
+│   │   ├── app/api/           # CRUD API routes
 │   │   │   ├── items/         # Task CRUD operations
 │   │   │   ├── login/         # User authentication
 │   │   │   └── register/      # User registration
 │   │   ├── components/        # React components
-│   │   └── lib/               # Database & auth helpers
+│   │   └── lib/               # Database and auth helpers
 │   └── prisma/                # SQLite database
 └── docker-compose.yml         # Container setup
 ```
 
-Here's what the app looks like currently:
+The app interface before adding chat:
 
-![The TaskBoard user interface](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-interface.png)
+![TaskBoard interface showing kanban columns with tasks that users click and drag to manage](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-interface.png)
 
-Users interact with your app manually: clicking, typing and moving tasks. It works, but we want users to "feel the AGI" when interacting with their tasks.
+Users interact with the app by clicking, typing, and moving tasks. 
 
-### What we'll add
+The app works, but we want users to "feel the AGI" when interacting with tasks.
 
-We'll add a small chat microservice and popup chat component to your existing app:
+### App structure with chat
+
+We'll add a small chat microservice and popup chat component to the existing app:
 
 ```
 TaskBoard/
-├── taskboard/                 # Your existing Next.js app (unchanged)
+├── taskboard/                 # Existing Next.js app (unchanged)
 │   ├── src/
 │   │   ├── app/api/
 │   │   │   ├── items/
@@ -74,27 +78,53 @@ TaskBoard/
 └── docker-compose.yml         # Updated: runs both services
 ```
 
-Here's what the app looks like with the chat component added:
+Here's the app interface with the chat component added:
 
-![TaskBoard with chat functionality](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-with-chat.png)
+![TaskBoard interface with added floating chat popup](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-with-chat.png)
 
-### How it works
+### The request flow
 
-For the chat service, we'll use [OpenAI's Agents SDK](https://openai.github.io/openai-agents-python/) to connect to your existing API. Here's the complete flow:
+For the chat service, we'll use the [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) to connect to the existing TaskBoard API. Here's the complete flow:
 
-1. User types: "Show me overdue tasks"
-2. Chat popup → Your Next.js API → Chat Service
-3. OpenAI Agents SDK calls your existing `/api/items` endpoint
-4. Response flows back with results formatted as natural language
-5. TaskBoard UI updates to show the filtered results
+1. User types "Show me overdue tasks."
+2. Chat popup sends request to Next.js backend, which forwards it to the chat service.
+3. OpenAI Agents SDK calls the `/api/items` endpoint.
+4. Response flows back with results formatted as natural language.
+5. TaskBoard UI updates to show the filtered results.
 
-![Using the TaskBoard chat to ask the agent to delete a task](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-delete-task.png)
+![Screenshot of TaskBoard chat interface showing user message requesting task deletion and AI agent's response](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-delete-task.png)
 
-Your existing app stays exactly the same. Same database, same authentication, same business logic. You're just adding a new component to what you already built.
+The existing app doesn't change: Same database, authentication, and business logic. We're just adding a new component to what is already built.
 
-### Architecture details
+### Traditional vs chat-enabled workflows
 
-Here's the complete architecture we're building:
+**Before (manual interaction only)**:
+- User clicks "Add Task" button → TaskBoard UI → POST /api/items → Database
+- User drags task to "Done" → TaskBoard UI → PATCH /api/items → Database
+
+**After (+ natural language chat)**:
+
+*Option 1: Traditional UI (unchanged)*
+- User clicks "Add Task" → TaskBoard UI → POST /api/items → Database → UI updates
+
+*Option 2: Using the chat popup*
+1. User types "Create a task for the client meeting tomorrow"
+2. Chat UI → /api/chat → FastAPI Chat Service → mcp-agent
+3. Gram MCP Server → POST /api/items → Database
+4. Success response → Chat Service → Chat UI shows "✅ Task created"
+5. TaskBoard UI automatically refreshes and shows the new task
+
+Most importantly, your existing `/api/items` endpoints don't change at all. We're just adding a way to call the same APIs your UI already uses, but using an LLM to interpret the user's intent.
+
+The complete architecture looks like this:
+
+![Diagram of the MCP-powered chat integration architecture](/img/blog/adding-ai-chat-to-your-app-guide/architecture-diagram.png)
+
+We use [MCP (Model Context Protocol)](https://modelcontextprotocol.io/docs/getting-started/intro) to provide the OpenAI Agent with specific tools that can call your TaskBoard API. Gram converts your API endpoints into MCP tools that the agent can use.
+
+### Traditional vs chat-enabled workflows
+
+The complete architecture looks like this:
 
 ![Diagram of the MCP-powered chat integration architecture](/img/blog/adding-ai-chat-to-your-app-guide/architecture-diagram.png)
 
@@ -678,6 +708,8 @@ npm install react-markdown remark-gfm
 ### CSS styling
 
 The ChatComponent uses custom CSS classes and animations that need to be defined in your global stylesheet. For the complete CSS setup refer to the TaskBoard repository's [`globals.css`](https://github.com/ritza-co/TaskBoard/blob/completed-ai-chat/taskboard/src/app/globals.css) file.
+
+update the `globals.css` code in the demo with the code from the completed version
 
 Copy the relevant styles from the repository to ensure your chat component renders the generated text correctly.
 
