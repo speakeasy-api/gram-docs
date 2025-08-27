@@ -67,6 +67,18 @@ from dotenv import load_dotenv
 load_dotenv()
 ```
 
+To run the `async` code given in the sections to follow you can import `asyncio` and wrap the code in an async function as shown below:
+
+```python
+import asyncio
+
+async def main():
+    # wrap async code
+    # ................
+
+asyncio.run(main())
+```
+
 ### Basic connection (public server)
 
 Here's a basic example using a public Gram MCP server with streamable HTTP transport:
