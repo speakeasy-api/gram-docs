@@ -81,7 +81,7 @@ asyncio.run(main())
 
 ### Basic connection (public server)
 
-Here's a basic example using a public Gram MCP server with streamable HTTP transport:
+Here's a basic example using a public Gram MCP server with Streamable HTTP transport:
 
 ```python
 from langchain_mcp_adapters.client import MultiServerMCPClient
@@ -534,7 +534,7 @@ LangChain's approach to MCP differs from direct API integrations:
 ### Transport support
 
 - **LangChain** supports both `streamable_http` and `stdio` transports.
-- **OpenAI** supports direct HTTP/HTTPS connections.
+- **OpenAI** supports direct HTTP and HTTPS connections.
 - **Anthropic** supports URL-based HTTP connections.
 - **The Vercel AI SDK** supports SSE, stdio, and custom transports.
 
