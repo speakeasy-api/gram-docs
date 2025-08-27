@@ -501,7 +501,7 @@ Pydantic AI's approach to MCP differs from other frameworks:
 - **LangChain** uses `MultiServerMCPClient` with multiple servers.
 - **OpenAI** uses a `tools` array with `type: "mcp"` in the Responses API.
 - **Anthropic** uses `mcp_servers` parameter in the Messages API.
-- **Vercel AI SDK** uses `experimental_createMCPClient`.
+- **The Vercel AI SDK** uses `experimental_createMCPClient`.
 
 ### Type safety
 
@@ -513,13 +513,13 @@ Pydantic AI's approach to MCP differs from other frameworks:
 
 - **Pydantic AI** includes dependency injection, structured outputs, and type validation.
 - **LangChain** includes workflow abstractions, chains, and multi-server support.
-- **Others** include direct API usage without additional abstractions.
+- **Others** are limited to direct API usage without additional abstractions.
 
 ### Transport support
 
-- **Pydantic AI** uses Streamable HTTP transport for remote servers.
-- **LangChain** uses both `streamable_http` and `stdio` transports.
-- **The Vercel AI SDK** uses SSE, stdio, or custom transports.
+- **Pydantic AI** supports Streamable HTTP transport for remote servers.
+- **LangChain** supports both `streamable_http` and `stdio` transports.
+- **The Vercel AI SDK** supports SSE, stdio, or custom transports.
 - **Others** use direct HTTP connections.
 
 ## Testing your integration
