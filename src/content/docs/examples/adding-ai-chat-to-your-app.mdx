@@ -44,7 +44,7 @@ TaskBoard/
 
 The app interface before adding chat:
 
-![TaskBoard interface showing kanban columns with tasks that users click and drag to manage](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-interface.png)
+![TaskBoard interface showing kanban columns with tasks that users click and drag to manage](/img/guides/adding-ai-chat-to-your-app/taskboard-interface.png)
 
 Users interact with the app by clicking, typing, and moving tasks. 
 
@@ -76,7 +76,7 @@ TaskBoard/
 
 Here's the app interface with the chat component added:
 
-![TaskBoard interface with added floating chat popup](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-with-chat.png)
+![TaskBoard interface with added floating chat popup](/img/guides/adding-ai-chat-to-your-app/taskboard-with-chat.png)
 
 ### Understanding the data flow of a chat-based task board
 
@@ -88,7 +88,7 @@ For the chat service, we'll use the [OpenAI Agents SDK](https://openai.github.io
 - Response flows back with results formatted as natural language.
 - TaskBoard UI updates to show the filtered results.
 
-![Screenshot of TaskBoard chat interface showing user message requesting task deletion and AI agent's response](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-delete-task.png)
+![Screenshot of TaskBoard chat interface showing user message requesting task deletion and AI agent's response](/img/guides/adding-ai-chat-to-your-app/taskboard-delete-task.png)
 
 The existing app doesn't change: Same database, authentication, and business logic. We're just adding a new component to what is already built.
 
@@ -111,7 +111,7 @@ Note that the existing `/api/items` endpoints don't change at all. The chat func
 
 The complete chat-enabled architecture looks like this:
 
-![Diagram of the MCP-powered chat integration architecture](/img/blog/adding-ai-chat-to-your-app-guide/architecture-diagram.png)
+![Diagram of the MCP-powered chat integration architecture](/img/guides/adding-ai-chat-to-your-app/architecture-diagram.png)
 
 Using the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/docs/getting-started/intro), Gram converts the TaskBoard API endpoints into tools the agent can use.
 
@@ -198,7 +198,7 @@ Gram parses the uploaded OpenAPI document and converts the endpoints into MCP to
 
 In the **MCP** tab, find the MCP server and set it to **Public** under **Visibility**.
 
-![Gram MCP server dashboard showing Visibility settings with Public option selected and MCP Installation section showing the server URL](/img/blog/adding-ai-chat-to-your-app-guide/gram-public-mcp-server.png)
+![Gram MCP server dashboard showing Visibility settings with Public option selected and MCP Installation section showing the server URL](/img/guides/adding-ai-chat-to-your-app/gram-public-mcp-server.png)
 
 In the **MCP Installation** section, copy the server URL from the `"args"` array (for example, `https://app.getgram.ai/mcp/your-server-id`). You'll use this when you configure the chat microservice in Step 3.
 
@@ -218,7 +218,7 @@ Copy the public URL from the ngrok terminal output (such as `https://abc123.ngro
 
 In Gram, go to **Environments** from the sidebar, and select the **Default** environment. Add the public URL you copied as a `TASKBOARD_SERVER_URL` environment variable.
 
-![TaskBoard dialog for adding environment variables](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-env-var.png)
+![TaskBoard dialog for adding environment variables](/img/guides/adding-ai-chat-to-your-app/taskboard-env-var.png)
 
 :::note[Production deployment]
 This guide uses ngrok for local development testing. In production, you'd replace `TASKBOARD_SERVER_URL` with your actual API URL (like `https://api.taskboard.com`).
@@ -230,7 +230,7 @@ To verify that the MCP server has been configured correctly, navigate to the **P
 
 Try queries like "Show me all my tasks" or "Create a task called 'Review quarterly reports.'"
 
-![Testing the TaskBoard MCP tools in the Gram Playground](/img/blog/adding-ai-chat-to-your-app-guide/testing-mcp-taskboard.png)
+![Testing the TaskBoard MCP tools in the Gram Playground](/img/guides/adding-ai-chat-to-your-app/testing-mcp-taskboard.png)
 
 :::note
 In the Playground, you'll need to provide a `userId` or ask the agent to use authentication tools. The chat integration will handle user authentication automatically.
@@ -240,7 +240,7 @@ In the Playground, you'll need to provide a `userId` or ask the agent to use aut
 
 Next, you'll add a floating chat interface to the TaskBoard app that won't interfere with existing functionality.
 
-![TaskBoard interface with chat functionality](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-with-chat.png)
+![TaskBoard interface with chat functionality](/img/guides/adding-ai-chat-to-your-app/taskboard-with-chat.png)
 
 The chat component will appear as a floating button in the lower-right corner of the screen. When clicked, the button expands into a chat window.
 
@@ -855,4 +855,4 @@ You should see:
 - Make sure the `userId` is being passed correctly through the chat flow.
 - Verify that the API middleware is working: `curl "http://localhost:3000/api/items?userId=test"`.
 
-![Chat service logs displayed in the terminal](/img/blog/adding-ai-chat-to-your-app-guide/chat-service-logging.png)
+![Chat service logs displayed in the terminal](/img/guides/adding-ai-chat-to-your-app/chat-service-logging.png)
