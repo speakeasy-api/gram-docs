@@ -5,22 +5,22 @@ sidebar:
   order: 1
 ---
 
-You've built a CRUD app. Users create tasks, update records, and filter through data, but they spend too much time navigating the UI for simple requests. Instead of clicking through filters and forms, what if they could just ask for what they need? For example:
+If you have any kind of SaaS application, you're probably used to your users using it via a frontend. But now, instead of clicking through filters and forms, they want to just ask an AI agent for what they need. For example:
 
 ```
 - Show me all tasks assigned to Sarah that are due this week. 
-- Move the client presentation task to done. 
-- Create a task for the database migration due Friday.
+- How many users visited my blog last week?
+- Find me the top three candidates who applied yesterday
 ```
 
-This guide shows you how to add a chat interface to an existing CRUD application in four practical steps. Users get natural language interaction, while your current backend, security model, and business logic remain unchanged.
+This guide shows you how to add a chat interface to an existing application. You can give your users natural language interaction, while your current backend, security model, and business logic remain unchanged.
 
 <video width="600" controls style="display: block; margin: 0 auto;">
   <source src="/videos/taskboard-show-tasks.mp4" type="video/mp4" />
     Your browser does not support the video tag.
 </video>
 
-We'll use [this TaskBoard app](https://github.com/ritza-co/TaskBoard) as a demo. The `main` branch contains the starting CRUD app, and the [`completed-ai-chat` branch](https://github.com/ritza-co/TaskBoard/tree/completed-ai-chat) contains the final result with chat functionality.
+We'll use [this TaskBoard app](https://github.com/ritza-co/TaskBoard) as a demo. The `main` branch contains the starting app, and the [`completed-ai-chat` branch](https://github.com/ritza-co/TaskBoard/tree/completed-ai-chat) contains the final result with chat functionality.
 
 ![TaskBoard repository showing main and completed-ai-chat branches](/img/blog/adding-ai-chat-to-your-app-guide/github-branches.png)
 
@@ -28,9 +28,11 @@ We'll use [this TaskBoard app](https://github.com/ritza-co/TaskBoard) as a demo.
 [Try the live TaskBoard demo with chat assistant](https://taskboard.abduldavids.co.za).
 :::
 
-## Solution overview
+This guide will show you how to use Gram to create an MCP server that works with your existing API. We'll also create a basic chat modal to interact with that MCP server via OpenAI.
 
-The starting task management app has a standard structure:
+## An overview of the TaskBoard project
+
+The starting task management app is structured like this:
 
 ```
 TaskBoard/
@@ -52,9 +54,9 @@ The app interface before adding chat:
 
 Users interact with the app by clicking, typing, and moving tasks. 
 
-The app works, but we want users to "feel the AGI" when interacting with tasks.
+The app works, but we want users to be able to chat with their tasks.
 
-### App structure with chat
+### Overview of the TaskBoard project with added chat
 
 We'll add a small chat microservice and popup chat component to the existing app:
 
@@ -82,7 +84,7 @@ Here's the app interface with the chat component added:
 
 ![TaskBoard interface with added floating chat popup](/img/blog/adding-ai-chat-to-your-app-guide/taskboard-with-chat.png)
 
-### The request flow
+### Understanding the data flow of a chat-based task board
 
 For the chat service, we'll use the [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) to connect to the existing TaskBoard API. Here's the complete flow:
 
@@ -103,14 +105,7 @@ The existing app doesn't change: Same database, authentication, and business log
 - User clicks "Add Task" → TaskBoard UI → POST `/api/items` → database → UI updates
 - User drags task to "Done" → TaskBoard UI → PATCH `/api/items` → database → UI updates
 
-**After** adding natural language chat, users have two options for the same operations.
-
-Using the traditional UI interaction (unchanged):
-
-- User clicks "Add Task" → TaskBoard UI → POST `/api/items` → database → UI updates
-- User drags task to "Done" → TaskBoard UI → PATCH `/api/items` → database → UI updates
-
-Using the chat popup:
+**After** users have the option to use the chat popup:
 
 - User types "Create a task for the client meeting tomorrow"
 - Chat UI → `/api/chat` → FastAPI chat service → `mcp-agent`
@@ -741,7 +736,7 @@ export const config = {
 };
 ```
 
-## Set up Docker
+### Set up Docker
 
 Now set up Docker to run the TaskBoard app and the chat service together.
 
