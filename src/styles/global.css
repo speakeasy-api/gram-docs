@@ -182,6 +182,13 @@
       background-color: var(--color-info-500);
     }
   }
+
+  /* Hide the topic switcher on desktop since we have header navigation, but show on mobile */
+  @media (min-width: 50rem) {
+    .starlight-sidebar-topics {
+      display: none;
+    }
+  }
 }
 
 @layer utilities {

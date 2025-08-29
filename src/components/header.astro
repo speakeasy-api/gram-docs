@@ -15,12 +15,15 @@ const shouldRenderSearch =
   config.pagefind ||
   config.components.Search !== "@astrojs/starlight/components/Search.astro";
 const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
+
+// Check if we're on a docs page (not the home page)
+const isDocsPage = Astro.url.pathname !== '/' && Astro.url.pathname !== '';
 ---
 
 <div
   class="flex h-full items-center justify-between gap-4 text-xl md:grid md:grid-cols-[1fr_1fr_1fr] md:content-center"
 >
-  <div>
+  <div class="flex items-center gap-6">
     <a
       href={siteTitleHref}
       class="flex items-center no-underline"
@@ -32,6 +35,22 @@ const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
         class="transition-all duration-200 ease-in-out dark:invert mt-1"
       />
     </a>
+    {isDocsPage && (
+      <nav class="hidden md:flex items-center gap-3">
+        <a
+          href="/introduction"
+          class="px-3 py-1.5 text-sm font-medium rounded-md bg-neutral-100 text-neutral-700 hover:bg-neutral-200 hover:text-neutral-900 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700 dark:hover:text-neutral-100 transition-colors"
+        >
+          Documentation
+        </a>
+        <a
+          href="/guides"
+          class="px-3 py-1.5 text-sm font-medium rounded-md bg-neutral-100 text-neutral-700 hover:bg-neutral-200 hover:text-neutral-900 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700 dark:hover:text-neutral-100 transition-colors"
+        >
+          Guides
+        </a>
+      </nav>
+    )}
   </div>
   <div class="flex print:hidden">
     {shouldRenderSearch && <Search />}
