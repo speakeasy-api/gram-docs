@@ -2,6 +2,9 @@
   "name": "gram-docs",
   "type": "module",
   "version": "0.0.1",
+  "packages": [
+    "."
+  ],
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
