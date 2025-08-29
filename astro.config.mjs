@@ -108,7 +108,7 @@ export default defineConfig({
           },
           {
             label: "Guides", 
-            link: "/guides/",
+            link: "/clients/using-claude-code-with-gram-mcp-servers",
             items: [
               {
                 label: "Integration Guides",
