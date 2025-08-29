@@ -33,10 +33,11 @@ export default defineConfig({
   integrations: [
     starlight({
       routeMiddleware: ["./src/route-data.ts"],
-
+      
       title: "Gram",
       tagline: "Ship powerful integrations for agents and LLMs ",
       favicon: "/favicon.png",
+      
       head: [
         {
           tag: "link",
