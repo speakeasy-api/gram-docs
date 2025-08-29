@@ -118,6 +118,10 @@ export default defineConfig({
                 label: "API Usage",
                 autogenerate: { directory: "api-clients" },
               },
+              {
+                label: "Examples",
+                autogenerate: { directory: "examples" },
+              },
             ],
           },
         ]),
