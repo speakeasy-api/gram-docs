@@ -2,6 +2,9 @@
   "name": "gram-docs",
   "type": "module",
   "version": "0.0.1",
+  "packages": [
+    "."
+  ],
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -20,6 +23,7 @@
     "satori": "^0.13.1",
     "sharp": "^0.32.5",
     "starlight-llms-txt": "^0.5.1",
+    "starlight-sidebar-topics": "^0.6.0",
     "tailwindcss": "^4.1.7"
   },
   "devDependencies": {
