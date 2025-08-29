@@ -103,14 +103,6 @@ export default defineConfig({
                 label: "Productionize an MCP server",
                 autogenerate: { directory: "host-mcp" },
               },
-              {
-                label: "Integrate with MCP Clients",
-                autogenerate: { directory: "clients" },
-              },
-              {
-                label: "Use MCP Programmatically",
-                autogenerate: { directory: "api-clients" },
-              },
             ],
           },
           {
@@ -118,10 +110,12 @@ export default defineConfig({
             link: "/guides/",
             items: [
               {
-                label: "Guides",
-                items: [
-                  "guides"
-                ],
+                label: "Integration Guides",
+                autogenerate: { directory: "clients" },
+              },
+              {
+                label: "API Usage",
+                autogenerate: { directory: "api-clients" },
               },
             ],
           },
