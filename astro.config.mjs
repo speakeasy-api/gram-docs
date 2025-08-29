@@ -4,6 +4,7 @@ import starlight from "@astrojs/starlight";
 import tailwindcss from "@tailwindcss/vite";
 import vercel from "@astrojs/vercel";
 import starlightLlmsTxt from "starlight-llms-txt";
+import starlightSidebarTopics from "starlight-sidebar-topics";
 
 // https://astro.build/config
 export default defineConfig({
@@ -32,10 +33,11 @@ export default defineConfig({
   integrations: [
     starlight({
       routeMiddleware: ["./src/route-data.ts"],
-
+      
       title: "Gram",
       tagline: "Ship powerful integrations for agents and LLMs ",
       favicon: "/favicon.png",
+      
       head: [
         {
           tag: "link",
@@ -77,36 +79,50 @@ export default defineConfig({
         baseUrl: "https://github.com/speakeasy-api/gram-docs/edit/main/",
       },
       customCss: ["./src/fonts/font-face.css", "./src/styles/global.css"],
-      sidebar: [
-        {
-          label: "Start here",
-          items: [
-            "introduction",
-            "gram-quickstart",
-          ],
-        },
-        {
-          label: "Gram Concepts",
-          autogenerate: { directory: "concepts" },
-        },
-        {
-          label: "Build an MCP server",
-          autogenerate: { directory: "build-mcp" },
-        },
-        {
-          label: "Productionize an MCP server",
-          autogenerate: { directory: "host-mcp" },
-        },
-        {
-          label: "Integrate with MCP Clients",
-          autogenerate: { directory: "clients" },
-        },
-        {
-          label: "Use MCP Programmatically",
-          autogenerate: { directory: "api-clients" },
-        },
+      plugins: [
+        starlightSidebarTopics([
+          {
+            label: "Documentation",
+            link: "/introduction/",
+            items: [
+              {
+                label: "Start here",
+                items: [
+                  "introduction",
+                  "gram-quickstart",
+                ],
+              },
+              {
+                label: "Gram Concepts",
+                autogenerate: { directory: "concepts" },
+              },
+              {
+                label: "Build an MCP server",
+                autogenerate: { directory: "build-mcp" },
+              },
+              {
+                label: "Productionize an MCP server",
+                autogenerate: { directory: "host-mcp" },
+              },
+            ],
+          },
+          {
+            label: "Guides", 
+            link: "/clients/using-claude-code-with-gram-mcp-servers",
+            items: [
+              {
+                label: "Integration Guides",
+                autogenerate: { directory: "clients" },
+              },
+              {
+                label: "API Usage",
+                autogenerate: { directory: "api-clients" },
+              },
+            ],
+          },
+        ]),
+        starlightLlmsTxt({ projectName: "gram" })
       ],
-      plugins: [starlightLlmsTxt({ projectName: "gram" })],
     }),
   ],
 });
