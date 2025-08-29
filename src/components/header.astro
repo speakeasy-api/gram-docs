@@ -18,6 +18,13 @@ const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
 
 // Check if we're on a docs page (not the home page)
 const isDocsPage = Astro.url.pathname !== '/' && Astro.url.pathname !== '';
+
+// Check which section is currently active
+const pathname = Astro.url.pathname;
+const isGuidesSection = pathname.startsWith('/guides') || 
+                       pathname.startsWith('/clients') || 
+                       pathname.startsWith('/api-clients');
+const isDocumentationSection = isDocsPage && !isGuidesSection;
 ---
 
 <div
@@ -36,16 +43,24 @@ const isDocsPage = Astro.url.pathname !== '/' && Astro.url.pathname !== '';
       />
     </a>
     {isDocsPage && (
-      <nav class="hidden md:flex items-center gap-3">
+      <nav class="hidden md:flex items-center gap-6">
         <a
           href="/introduction"
-          class="px-3 py-1.5 text-sm font-medium rounded-md bg-neutral-100 text-neutral-700 hover:bg-neutral-200 hover:text-neutral-900 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700 dark:hover:text-neutral-100 transition-colors"
+          class={`px-3 py-2 text-sm transition-colors no-underline border-b-2 ${
+            isDocumentationSection 
+              ? 'font-bold text-neutral-900 dark:text-neutral-100 border-blue-500' 
+              : 'font-medium text-neutral-600 dark:text-neutral-400 border-transparent hover:text-neutral-900 dark:hover:text-neutral-100'
+          }`}
         >
           Documentation
         </a>
         <a
           href="/guides"
-          class="px-3 py-1.5 text-sm font-medium rounded-md bg-neutral-100 text-neutral-700 hover:bg-neutral-200 hover:text-neutral-900 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700 dark:hover:text-neutral-100 transition-colors"
+          class={`px-3 py-2 text-sm transition-colors no-underline border-b-2 ${
+            isGuidesSection
+              ? 'font-bold text-neutral-900 dark:text-neutral-100 border-blue-500'
+              : 'font-medium text-neutral-600 dark:text-neutral-400 border-transparent hover:text-neutral-900 dark:hover:text-neutral-100'
+          }`}
         >
           Guides
         </a>
