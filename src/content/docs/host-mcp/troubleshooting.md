@@ -35,11 +35,11 @@ requests from the LLM client to hosted MCP servers:
 ```json ""mcp-remote""
 {
   "mcpServers": {
-    "GramShouldIPush": {
+    "remote-example": {
       "command": "npx",
       "args": [
         "mcp-remote",
-        "https://app.getgram.ai/mcp/default/should-i-push/default"
+        "https://remote.mcp.server/sse"
       ]
     }
   }
@@ -48,21 +48,34 @@ requests from the LLM client to hosted MCP servers:
 
 Since version `0.1.26` of the `mcp-remote` package, some users have <a
 href="https://github.com/geelen/mcp-remote/issues/156"
-target="blank">reported</a> servers failing to start due to `Client
-transport closed` errors.
+target="blank">reported</a> servers failing to start, with `Client transport
+closed` appearing in client logs.
 
 This is typically due to the LLM client attempting to use an older version of
-Node to execute `mcp-remote` than what is required. To resolve this, suffix the
-`mcp-remote` argument in the MCP configuration with `@0.1.25`:
+Node to execute `mcp-remote` than what is required.
+
+#### Solutions
+
+##### Use Node 20 or Higher (Recommended)
+
+Ensure that you are using Node.js version 20 or higher. Instructions for
+installing and managing Node.js versions can be found on the <a
+href="https://nodejs.org/en/download/" target="_blank">official Node.js
+website</a>.
+
+##### Pin `mcp-remote` to Version `0.1.25`
+
+If you're not able to install a compatible version of Node, you can pin the
+`mcp-remote` package to version `0.1.25` in your MCP configuration.
 
 ```json ins="@0.1.25"
 {
   "mcpServers": {
-    "GramShouldIPush": {
+    "remote-example": {
       "command": "npx",
       "args": [
         "mcp-remote@0.1.25",
-        "https://app.getgram.ai/mcp/default/should-i-push/default"
+        "https://remote.mcp.server/sse"
       ]
     }
   }
