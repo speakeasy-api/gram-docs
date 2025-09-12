@@ -5,7 +5,11 @@ sidebar:
   order: 3
 ---
 
-Starting March 2025, the MCP specification recommends OAuth-based authentication for MCP Servers. If your API already supports OAuth, placing an OAuth provider in front of your MCP Server is a great option.
+Starting March 2025, the MCP specification recommends OAuth-based authentication for MCP Servers. However, it's important to understand that **user-facing OAuth exchange is not actually a true requirement for an MCP server**. There are several valid approaches to authentication:
+
+1. **Direct Access Tokens**: Passing in access tokens directly as headers to servers is completely valid
+2. **Client Credentials Flow**: For server-to-server authentication 
+3. **User-facing OAuth Flow**: For scenarios requiring dynamic user authentication
 
 The Gram product exposes a variety of different options for OAuth that you can integrate into your Gram MCP Servers.
 Your OpenAPI spec must include OAuth as a security option for your endpoints.
@@ -27,12 +31,44 @@ components:
             pets:write: Modify pet information
 ```
 
+## Choosing Your Authentication Approach
+
+Before implementing OAuth, consider what kind of credentials you expect end users to provide when initializing your MCP servers:
+
+### Option 1: Pre-obtained Access Tokens (Recommended for most cases)
+- **What users provide**: A valid access token they obtained from your service
+- **How they get it**: Through your existing dashboard, API, or token generation system  
+- **Best for**: Existing APIs with token generation, internal tools, controlled environments
+- **Complexity**: Low - no OAuth flow implementation needed
+
+### Option 2: Client Credentials (Server-to-Server)
+- **What users provide**: `client_id` and `client_secret` 
+- **How they get it**: Register an application in your developer portal
+- **Best for**: APIs designed for server-to-server authentication
+- **Complexity**: Medium - automatic token exchange and caching
+
+### Option 3: User-facing OAuth Flow 
+- **What users provide**: Nothing initially - they authenticate interactively
+- **How it works**: Dynamic OAuth flow when the MCP server is accessed
+- **Best for**: Public-facing servers requiring user consent
+- **Complexity**: High - requires DCR implementation or OAuth proxy
+
+**Gram can integrate OAuth into a server in any way that's currently possible within the MCP context.** The key is choosing the approach that best fits your existing authentication system and user experience goals.
+
 ## Access Token Based Authentication
 
-Gram always allows passing pre-obtained OAuth access tokens directly to an MCP server. This will be available to a developer for any OAuth flow:
-- authorizationCode
-- clientCredentials
-- implicit
+**This is often the simplest and most practical approach for MCP servers.** Gram allows passing pre-obtained OAuth access tokens directly to an MCP server through headers. This is completely valid and doesn't require implementing complex OAuth flows.
+
+This approach works with access tokens from any OAuth flow:
+- `authorizationCode` - User grants permission, you exchange code for token
+- `clientCredentials` - Server-to-server authentication with client credentials  
+- `implicit` - Direct token generation (less secure, not recommended)
+
+**When to use this approach:**
+- You already have a system for obtaining access tokens
+- You want to avoid the complexity of OAuth flows in your MCP server
+- Your users can generate tokens through your existing dashboard or API
+- You're building internal tools where token management is handled elsewhere
 
 ## Client Credentials Flow
 
@@ -51,9 +87,18 @@ Please [book in time with our team](https://calendly.com/sagar-speakeasy/30min) 
 
 When the MCP spec refers to placing a user-facing OAuth flow in front of a server, it is typically referring to the `authorizationCode` flow.
 
-Gram fully supports registering an OAuth server in front of MCP servers for your users to interact with. Something that is important to keep in mind is that the MCP specification has very specific requirements for how a company's OAuth API needs to work. The main requirement is that **MCP clients require OAuth2.1 and Dynamic Client Registration**.
+Gram fully supports registering an OAuth server in front of MCP servers for your users to interact with. Something that is important to keep in mind is that the MCP specification has very specific requirements for how a company's OAuth API needs to work. 
 
-The requirements for MCP OAuth can be found [here](https://modelcontextprotocol.io/specification/draft/basic/authorization#overview). Dynamic Client Registration (DCR) is typically the feature that most companies do not currently support.
+## Why DCR is Required for MCP
+
+**The main requirement is that MCP clients require OAuth2.1 and Dynamic Client Registration (DCR).** This requirement exists because the MCP spec currently does not define a standard way for an MCP client to provide an OAuth `client_id`/`client_secret` from the user.
+
+Here's the challenge DCR solves:
+- **Traditional OAuth**: Requires pre-registered client credentials (`client_id`/`client_secret`)
+- **MCP Context**: Users install MCP servers dynamically, without pre-coordination
+- **DCR Solution**: Allows MCP clients to dynamically register themselves and obtain client credentials on-the-fly
+
+The requirements for MCP OAuth can be found [here](https://modelcontextprotocol.io/specification/draft/basic/authorization#overview). Dynamic Client Registration (DCR) is typically the feature that most companies do not currently support, which is why **several companies with public-facing MCPs have implemented DCR into their OAuth capabilities** to enable the self-serve option.
 
 ### Registering your own OAuth Server
 
@@ -92,14 +137,34 @@ Note: An MCP Client such as Claude will use the same client_id in perpetuity unl
 
 ### OAuth Proxy
 
-For companies whose OAuth systems do not yet support the MCP requirements, Gram offers an OAuth proxy that translates between MCP requirements and standard OAuth implementations. This proxy will perform an MCP-compliant exchange with an MCP Client on your API's behalf:
+For companies whose OAuth systems do not yet support the MCP requirements, Gram offers an OAuth proxy that translates between MCP requirements and standard OAuth implementations. **This is essentially a workaround to avoid implementing the full MCP requirements of DCR**, but it comes with important caveats.
 
-- Expose the MCP client requirements of OAuth 2.1/Dynamic Client Registration
-- The server will integrate with your actual OAuth API behind the scenes, based on a single `client_id` and `client_secret` pairing you provide in your server configuration.
+How the OAuth proxy works:
+- **Frontend**: Exposes OAuth 2.1 and DCR to MCP clients on your behalf
+- **Backend**: Communicates with your OAuth APIs using a single set of credentials
+- **Translation**: Handles the complexity of MCP-compliant OAuth flows
 
 Functionally, this is very similar to solutions others might be familiar with, such as the [Cloudflare OAuth proxy](https://blog.cloudflare.com/remote-model-context-protocol-servers-mcp/#workers-oauth-provider-an-oauth-2-1-provider-library-for-cloudflare-workers).
 
-This solution works well for many use cases, though it may not be suitable for every scenario depending on your server's specific goals. This is useful for MCP servers that don't require dynamic public clients, or in cases where acting as a single underlying OAuth provider is a reasonable tradeoff.
+## Important Caveats and Limitations
+
+**Single Client Credentials**: Because your OAuth APIs require a specific `client_id`/`client_secret`, your MCP server stores a single set of these values to act as a shared client. This means:
+- All users share the same underlying OAuth client
+- You lose per-user client isolation
+- Rate limiting and quotas apply to the shared client
+
+**Suitability Considerations**: 
+- ✅ **Good for**: Internal tools, controlled user bases, POCs and demos
+- ❌ **May not be suitable for**: Public servers serving all your customers, scenarios requiring per-user client isolation
+- ⚠️ **Consider carefully**: Whether having all users share a single OAuth client is acceptable for your use case
+
+**Our recommendation**: For an MCP server that publicly serves all users, implementing DCR or having customers pass in access tokens directly is typically the best option.
+
+### OAuth Proxy for POCs and Testing
+
+For building POCs and testing OAuth flows, we're happy to help set up an OAuth proxy with a specific `client_id`/`client_secret` pairing so you can demonstrate the OAuth flow functionality without implementing full DCR support.
+
+**Configuration Requirements**
 
 You will store the following in Gram to enable our OAuth proxy to interact with your underlying OAuth provider:
 - Authorization Endpoint
@@ -108,3 +173,18 @@ You will store the following in Gram to enable our OAuth proxy to interact with 
 - List of Scopes (optional)
 - Token endpoint auth methods supported (optional)
 - You may need to whitelist oauth proxy redirect uris in your OAuth provider (https://{mcp_server_domain}.com/oauth/{mcp_slug}/callback)
+
+## Summary
+
+When implementing authentication for your MCP server, remember:
+
+1. **OAuth exchange is NOT required** - passing access tokens directly is completely valid
+2. **Choose the right approach** for your use case:
+   - Access tokens: Simple, works with existing systems
+   - Client credentials: Good for server-to-server auth
+   - User-facing OAuth: Best for public servers (requires DCR or proxy)
+3. **DCR is only needed** if you want MCP clients to handle OAuth flows automatically
+4. **OAuth proxy is available** as a workaround for DCR, but comes with limitations
+5. **We can help** with white-glove service for proxy setup or DCR compliance
+
+The goal is to choose the authentication method that works best with your existing infrastructure while providing the right user experience for your MCP server's intended use case.
