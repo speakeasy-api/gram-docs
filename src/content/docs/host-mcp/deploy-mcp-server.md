@@ -40,11 +40,11 @@ Under the **MCP Installation** section, you can see the MCP server installation 
 ```json
 {
     "mcpServers": {
-      "GramShoudipush": {
+      "GramShouldIPush": {
         "command": "npx",
         "args": [
           "mcp-remote",
-          "https://app.getgram.ai/mcp/default/shoud-i-push/default",
+          "https://app.getgram.ai/mcp/default/should-i-push/default",
           "--header",
           "Authorization: ${GRAM_KEY}"
         ],
