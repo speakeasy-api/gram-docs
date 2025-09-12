@@ -10,10 +10,14 @@ Gram allows you to manage settings that control how users access your Gram-hoste
 ![Four MCP server configuration options showing combinations of public/private and passthrough/managed authentication](/img/guides/mcp-server-four-options.png)
 
 Common use cases for each combination:
-- **Public + Pass-through**: Production APIs where customers already have their own API keys
+- **Public + Pass-through**: Production APIs where customers already have their own API keys or OAuth tokens
 - **Public + Managed**: Free trials or demos where you provide temporary access without exposing your API keys
 - **Private + Pass-through**: Internal tools where team members use their individual API credentials
 - **Private + Managed**: Development environments where you control both access and credentials centrally
+
+:::note[OAuth and Server Visibility]
+OAuth configuration is independent of your server visibility settings. Both public and private servers can use any OAuth approach (access tokens, client credentials, external OAuth server, or OAuth proxy). However, only public servers can use [Managed OAuth](/build-mcp/adding-oauth) flows where end users authenticate directly through Gram.
+:::
 
 ## Public Servers
 
