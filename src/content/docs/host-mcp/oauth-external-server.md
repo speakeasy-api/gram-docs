@@ -5,7 +5,19 @@ sidebar:
   order: 7
 ---
 
-When building production MCP servers, you often need to protect sensitive endpoints with OAuth authentication. This guide shows you how to build an MCP server with external OAuth authentication. We'll use FusionAuth as an example, but you can use any OAuth 2.0 provider you have set up (such as Auth0, Okta, Keycloak, or your own OAuth server).
+When building production MCP servers, you often need to protect sensitive endpoints with OAuth authentication. This guide shows you how to build an MCP server with external OAuth authentication using your own OAuth provider that supports the MCP requirements.
+
+:::tip[When to use External OAuth]
+External OAuth with Gram is ideal when:
+- Your OAuth provider already supports OAuth 2.1 and Dynamic Client Registration (DCR)
+- You want full control over the OAuth flow and user experience
+- You're building for public use and want each MCP client to have its own OAuth credentials
+- You already have an established OAuth infrastructure
+
+If your OAuth system doesn't support DCR yet, consider using [Gram's OAuth Proxy](/build-mcp/adding-oauth#oauth-proxy) or having users [pass access tokens directly](/build-mcp/adding-oauth#access-token-based-authentication).
+:::
+
+We'll use FusionAuth as an example, but you can use any OAuth 2.0 provider you have set up (such as Auth0, Okta, Keycloak, or your own OAuth server) that meets the MCP requirements.
 
 We'll build an enhanced version of the Push Advisor API from earlier guides, adding OAuth-protected endpoints that demonstrate real-world authentication patterns.
 
