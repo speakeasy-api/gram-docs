@@ -2,7 +2,7 @@
 title: Build MCP servers with external OAuth
 description: Build OAuth-protected MCP servers with external authentication providers like FusionAuth
 sidebar:
-  order: 7
+  order: 2
 ---
 
 When building production MCP servers, you often need to protect sensitive endpoints with OAuth authentication. This guide shows you how to build an MCP server with external OAuth authentication. We'll use FusionAuth as an example, but you can use any OAuth 2.0 provider you have set up (such as Auth0, Okta, Keycloak, or your own OAuth server).
