@@ -1,5 +1,5 @@
 ---
-title: Add OAuth to an MCP Server
+title: Add OAuth to a Public MCP Server
 description: Configure authentication for MCP servers using different OAuth methods
 sidebar:
   order: 3
