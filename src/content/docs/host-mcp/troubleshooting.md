@@ -58,14 +58,14 @@ Node to execute `mcp-remote` than what is required.
 
 ##### Use Node 20 or Higher (Recommended)
 
-Ensure that you are using Node.js version 20 or higher. Instructions for
+Ensure that you are using Node.js version 20 or higher. If you run into issues, check in claude desktop logs for what node version it is selecting. Claude desktop has at times shown a tendency to select the lowest version of Node is can find on your machine, regardless of what the default node version is. Instructions for
 installing and managing Node.js versions can be found on the <a
 href="https://nodejs.org/en/download/" target="_blank">official Node.js
 website</a>.
 
 ##### Pin `mcp-remote` to Version `0.1.25`
 
-If you're not able to install a compatible version of Node, you can pin the
+If you're not able to install or change to a compatible version of Node, you can pin the
 `mcp-remote` package to version `0.1.25` in your MCP configuration.
 
 ```json ins="@0.1.25"
