@@ -208,3 +208,36 @@
     --sl-color-white: var(--text-foreground);
 }
 }
+
+@layer components {
+  /* FAQ Accordion Styling - Only for main content area */
+  main .sl-markdown-content details {
+    @apply border border-gray-300 dark:border-gray-600 rounded-md mb-3 bg-white dark:bg-gray-800;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  main .sl-markdown-content details summary {
+    @apply px-4 py-3 cursor-pointer font-medium text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors;
+    list-style: none;
+  }
+
+  main .sl-markdown-content details summary::-webkit-details-marker {
+    display: none;
+  }
+
+
+  main .sl-markdown-content details[open] summary {
+    @apply border-b border-gray-200 dark:border-gray-600;
+  }
+
+  main .sl-markdown-content details > div,
+  main .sl-markdown-content details > p,
+  main .sl-markdown-content details > ul,
+  main .sl-markdown-content details > ol {
+    @apply px-4 py-3 text-gray-700 dark:text-gray-300;
+  }
+
+  main .sl-markdown-content details > :last-child {
+    @apply pb-4;
+  }
+}

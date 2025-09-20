@@ -90,6 +90,7 @@ export default defineConfig({
                 items: [
                   "introduction",
                   "gram-quickstart",
+                  "faq",
                 ],
               },
               {
