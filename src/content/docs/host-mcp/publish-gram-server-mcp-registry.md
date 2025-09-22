@@ -17,7 +17,7 @@ To publish your MCP server to the MCP registry, you need to make your MCP server
 - Remote deployment: Host your MCP server as a web service that clients connect to.
 - Hybrid deployment: Offer both package and remote deployment options.
 
-We'll focus on remote deployment in this guide as we believe managed MCP servers will become more popular.
+We'll do remote deployment in this guide.
 
 ## Prerequisites
 
@@ -135,7 +135,7 @@ In your domain registrar's DNS management interface do the following:
 3. Set the value to the output you copied from the previous command.
 4. Save the record and wait for DNS propagation (usually 5-15 minutes).
 
-You can check the status of the DNS propagation using the Linux `dig` command:
+You can check the status of the DNS propagation using the Linux `dig` command and searching for the TXT record value:
 
 ```bash
 dig TXT yourcompany.com | grep "v=MCPv1; k=ed25519; p=qC5H12wereF434F1aSHdYsRPGruUhY0="
@@ -143,7 +143,7 @@ dig TXT yourcompany.com | grep "v=MCPv1; k=ed25519; p=qC5H12wereF434F1aSHdYsRPGr
 
 When checking DNS propagation for your newly added TXT record, you'll initially see `status: NXDOMAIN` in your `dig` output, which means that the DNS resolver cannot find the domain or the specific record type you're querying. Once DNS propagation is complete, the status will change to `status: NOERROR`.
 
-In namecheap, you can add a new TXT record in the **Advanced DNS** settings page:
+In [namecheap](https://www.namecheap.com/), a popular domain hosting provider, you can add a new TXT record in the **Advanced DNS** settings page:
 
 ![Namecheap - adding a DNS TXT record](/img/guides/publish-gram-server-mcp-registry/adding-dns-record.png)
 
