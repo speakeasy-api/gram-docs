@@ -7,7 +7,7 @@ sidebar:
 
 The official [Model Context Protocol (MCP) Registry](https://registry.modelcontextprotocol.io/) is an open catalog and API for publicly available MCP servers. It's like an app store for MCP servers -  it provides MCP clients with a list of MCP servers. By publishing your Gram-hosted MCP server to the registry, you make it discoverable. 
 
-The registry is owned by the MCP open-source community and backed by major trusted contributors to the MCP ecosytem such as Anthropic, GitHub, and Microsoft.
+The registry is owned by the MCP open-source community and backed by major trusted contributors to the MCP ecosystem such as Anthropic, GitHub, and Microsoft.
 
 This guide will show you how to prepare your Gram MCP server and publish it to the MCP Registry. You'll learn how to configure your server details, handle DNS authentication, and verify your publication. 
 
@@ -116,10 +116,12 @@ Next, get the public key for the DNS record:
 echo "yourdomain.com. IN TXT \"v=MCPv1; k=ed25519; p=$(openssl pkey -in key.pem -pubout -outform DER | tail -c 32 | base64)\""
 ```
 
-This command outputs a TXT record that you need to add to your domain's DNS configuration. For example:
+This command extracts the public key from your private key file, encodes it in base64 format, and formats it as a DNS TXT record for MCP Registry verification. 
 
-```
-yourcompany.com. IN TXT "v=MCPv1; k=ed23428; p=qC5H12wereF434F1aSHdYsRPGruUhY0="
+The output shows what you need to add to add to your domain's DNS configuration. For example:
+
+``` 
+yourcompany.com. IN TXT "v=MCPv1; k=ed25519; p=qC5H12wereF434F1aSHdYsRPGruUhY0="
 ```
 
 Copy the value in parentheses.
@@ -136,7 +138,7 @@ In your domain registrar's DNS management interface do the following:
 You can check the status of the DNS propagation using the Linux `dig` command:
 
 ```bash
-dig TXT yourcompany.com | grep "v=MCPv1; k=ed23428; p=qC5H12wereF434F1aSHdYsRPGruUhY0="
+dig TXT yourcompany.com | grep "v=MCPv1; k=ed25519; p=qC5H12wereF434F1aSHdYsRPGruUhY0="
 ```
 
 When checking DNS propagation for your newly added TXT record, you'll initially see `status: NXDOMAIN` in your `dig` output, which means that the DNS resolver cannot find the domain or the specific record type you're querying. Once DNS propagation is complete, the status will change to `status: NOERROR`.
@@ -153,6 +155,8 @@ Once DNS propagation is complete, authenticate with the MCP Registry using DNS-b
 ```bash
 mcp-publisher login dns --domain yourcompany.com --private-key $(openssl pkey -in key.pem -noout -text | grep -A3 "priv:" | tail -n +2 | tr -d ' :\n')
 ```
+
+This command authenticates you with the MCP Registry by extracting the private key from your `key.pem` file and using it to prove domain ownership through the DNS TXT record you created.
 
 ## Publish your server to the MCP Registry
 
