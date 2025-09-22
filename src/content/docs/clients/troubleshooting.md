@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting
-description: Overcome common issues when hosting and using MCP servers.
+description: Overcome common issues when installing MCP servers.
 sidebar:
   order: 99 # last
 ---
@@ -24,9 +24,7 @@ about MCP, and may be helpful when troubleshooting issues:
   of MCP support. _Many LLM clients to do not support all of Gram MCP Server
   features_.
 
-## Client Transport Closed Errors
-
-### Using `mcp-remote`
+## Issues with MCP Remote & Node Environments
 
 Some LLM clients, such as **Claude**, are not yet able to connect to remote MCP
 servers natively. To overcome this, the `mcp-remote` CLI tool is used to proxy
