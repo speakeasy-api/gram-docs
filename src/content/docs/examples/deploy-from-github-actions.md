@@ -15,16 +15,12 @@ This allows you to deploy changes automatically whenever you push to your reposi
 
 Before setting up GitHub Actions deployment, ensure you have:
 
-- A Gram Producer API key
+- A Gram [Producer key](/concepts/api-keys#producer-keys)
 - A repository with your OpenAPI specification or toolset configuration
 
 ## Setup
 
-### 1. Create a Producer API Key
-
-Generate a Producer API key from your Gram dashboard. Producer keys have the necessary permissions to trigger deployments and manage toolsets.
-
-### 2. Add API Key to Repository Secrets
+### 1. Add API Key to Repository Secrets
 
 1. Go to your repository's **Settings** > **Secrets and variables** > **Actions**
 2. Click **New repository secret**
@@ -32,7 +28,7 @@ Generate a Producer API key from your Gram dashboard. Producer keys have the nec
 4. Value: Your Producer API key
 5. Click **Add secret**
 
-### 3. Create a deployment config
+### 2. Create a deployment config
 
 The deployment config will replace any existing Gram deployment in your project.
 
@@ -68,7 +64,7 @@ Example:
 }
 ```
 
-### 4. Create GitHub Actions Workflow
+### 3. Create GitHub Actions Workflow
 
 Create `.github/workflows/deploy.yml` in your repository.
 
@@ -76,7 +72,7 @@ Force the deployment to be processed by passing a random value to `--idempotency
 
 ```yaml
 # .github/workflows/deploy.yml
-name: Deploy to gram
+name: Deploy to gram (staging)
 
 on:
   pull_request:
@@ -85,7 +81,7 @@ on:
 
 jobs:
   push-deployment:
-    name: Push deployment
+    name: Push deployment to staging project
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -103,7 +99,7 @@ jobs:
         env:
           GRAM_API_KEY: ${{ secrets.GRAM_API_KEY }}
         run: |
-          gram push --project default --config ./fixtures/gram.json --idempotency-key="$(uuidgen)"
+          gram push --project staging --config ./fixtures/gram.json --idempotency-key="$(uuidgen)"
 ```
 
 ## Workflow Customization

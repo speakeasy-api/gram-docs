@@ -105,7 +105,7 @@ export default defineConfig({
                 autogenerate: { directory: "host-mcp" },
               },
               {
-                label: "Command Line",
+                label: "Command Line (beta)",
                 items: [
                   {
                     label: "Installation",
