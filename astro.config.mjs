@@ -104,10 +104,23 @@ export default defineConfig({
                 label: "Productionize an MCP server",
                 autogenerate: { directory: "host-mcp" },
               },
+              {
+                label: "Command Line (beta)",
+                items: [
+                  {
+                    label: "Installation",
+                    link: "/command-line/installation",
+                  },
+                  {
+                    label: "Use",
+                    link: "/command-line/use",
+                  },
+                ],
+              },
             ],
           },
           {
-            label: "Guides", 
+            label: "Guides",
             link: "/guides",
             items: [
               {
