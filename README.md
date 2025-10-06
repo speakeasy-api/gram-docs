@@ -6,6 +6,12 @@
    </picture>
  </a>
 
+# This is an Archive
+
+This repository has been migrated into the main [Gram
+repository](https://github.com/speakeasy-api/gram). Please submit
+any future changes or pull requests there.
+
 # Gram Docs
 
 [![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
